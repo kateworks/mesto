@@ -11,7 +11,7 @@
   margin: 0 auto;
 }
 
-@media screen and (max-width: 320px) {
+@media screen and (max-width: 400px) {
   .header {
     min-height: 56px;
     padding-top: 28px;
