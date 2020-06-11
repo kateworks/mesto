@@ -1,0 +1,14 @@
+
+.shaded {
+  opacity: 1;
+  transition: opacity .5s ease-in-out;
+}
+
+.shaded:hover {
+  opacity: .6;
+}
+
+.shaded:focus {
+  opacity: .6;
+}
+
