@@ -1,6 +1,8 @@
 
 let addButton = document.querySelector('.profile__btn_action_add');
 let editButton = document.querySelector('.profile__btn_action_edit');
+let popupWindow = document.querySelector('.popup');
+let closeButton = document.querySelector('.popup__btn_action_close');
 
 // Находим форму в DOM
 // let formElement = // Воспользуйтесь методом querySelector()
@@ -27,11 +29,16 @@ function addProfile() {
 }
 
 function editProfile() {
-  console.log("Edit profile");
+  popupWindow.classList.add('popup_opened');
+}
+
+function cancelChanges() {
+  popupWindow.classList.remove('popup_opened');
 }
 
 addButton.addEventListener('click', addProfile);
 editButton.addEventListener('click', editProfile);
+closeButton.addEventListener('click', cancelChanges);
 
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»

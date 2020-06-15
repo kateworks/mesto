@@ -23,6 +23,21 @@
       Содержимое сайта 
     -->
     <content class="main">
+      <section class="popup">
+        <div class="popup__container">
+          <img class="popup__btn popup__btn_action_close" src="./images/popup-btn-close.svg"
+            alt="Закрыть форму без сохранения данных" 
+            title="Закрыть форму без сохранения данных">
+    
+          <form class="popup__form">
+            <input type="text" id="name" name="name" class="popup__item" 
+              placeholder="Имя Фамилия" required>
+            <input type="text" id="work" name="work" class="popup__item" 
+              placeholder="Занятие" required>
+            <input type="submit" class="popup__btn_action_submit">
+          </form>
+        </div>
+      </section>
       <section class="profile">
         <img src="./images/profile-avatar.jpg" 
           alt="Аватар профиля" title="Аватар профиля" class="profile__avatar">
