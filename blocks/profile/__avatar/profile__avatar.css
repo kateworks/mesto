@@ -6,4 +6,10 @@
   flex-shrink: 0;
   padding: 0;
   margin: 0;
+  margin-right: 30px;
 }
+
+@media screen and (max-width: 730px) {
+  .profile__avatar {
+    margin-right: 0;
+  }
