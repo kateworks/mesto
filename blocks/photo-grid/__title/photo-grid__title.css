@@ -9,7 +9,7 @@
   white-space: nowrap;
   overflow: hidden;
 
+  max-width: calc(100% - 25px);
   padding: 0;
-  padding-right: 10px;
   margin: 0;
 }

@@ -1,16 +1,14 @@
 
+@import url(./__list/photo-grid__list.css);
 @import url(./__item/photo-grid__item.css);
+@import url(./__card/photo-grid__card.css);
 @import url(./__image/photo-grid__image.css);
 @import url(./__description/photo-grid__description.css);
 @import url(./__title/photo-grid__title.css);
-@import url(./__like/photo-grid__like.css);
+@import url(./__btn/photo-grid__btn.css);
+@import url(./__btn/_action/photo-grid__btn_action_like.css);
 
 .photo-grid {
-  list-style-type: none;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(282px, 1fr));
-  grid-gap: 18px;
-
   max-width: 882px;
   padding: 0;
   padding-top: 50px;

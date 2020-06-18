@@ -1,13 +1,9 @@
 
-.popup__btn {
+.photo-grid__btn {
   background: none;
   box-shadow: none;
   border: none;
-  
+
   padding: 0;
   margin: 0;
-}
-
-.popup__btn:hover {
-  cursor: pointer;
 }
