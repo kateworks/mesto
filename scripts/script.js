@@ -11,11 +11,6 @@ let work = document.querySelector('.profile__work');
 
 function openPopup() {
   popupWindow.classList.add('popup_opened');
-  let nameInput = formElement.querySelector('.popup__item_type_name');
-  let workInput = formElement.querySelector('.popup__item_type_work');
-
-  let name = document.querySelector('.profile__name');
-  let work = document.querySelector('.profile__work');
 
   nameInput.value = name.textContent;
   workInput.value = work.textContent;
