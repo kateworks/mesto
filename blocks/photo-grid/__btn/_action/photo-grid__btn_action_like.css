@@ -7,9 +7,10 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
-  transition: .3s;
+  transition: .3s ease-in-out;
 }
 
 .photo-grid__btn_action_like:hover {
+  cursor: pointer;
   transform: scale(1.12);  
 }
