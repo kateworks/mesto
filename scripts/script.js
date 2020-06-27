@@ -1,6 +1,6 @@
 
-let editButton = document.querySelector('.profile__btn_action_edit');
 let popupWindow = document.querySelector('.popup');
+let editButton = document.querySelector('.profile__btn_action_edit');
 let closeButton = document.querySelector('.popup__btn_action_close');
 
 let formElement = document.querySelector('.popup__form');
@@ -11,7 +11,6 @@ let work = document.querySelector('.profile__work');
 
 function openPopup() {
   popupWindow.classList.add('popup_opened');
-
   nameInput.value = name.textContent;
   workInput.value = work.textContent;
 }

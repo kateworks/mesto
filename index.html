@@ -43,83 +43,6 @@
 
       <section class="photo-grid">
         <ul class="photo-grid__list">
-          <li class="photo-grid__item">
-            <div class="photo-grid__card">
-              <img src="./images/photo-grid-peterhof.jpg" 
-                alt="Петергоф" title="Петергоф" class="photo-grid__image">
-              <div class="photo-grid__description">
-                  <h2 class="photo-grid__title">Петергоф</h2>
-                  <button class="photo-grid__btn photo-grid__btn_action_like" 
-                    title="Нравится">
-                  </button>
-              </div>
-            </div>
-          </li>
-  
-          <li class="photo-grid__item">
-            <div class="photo-grid__card">
-              <img src="./images/photo-grid-aleksandria.jpg" 
-                alt="Парк Александрия" title="Парк Александрия" class="photo-grid__image">
-              <div class="photo-grid__description">
-                  <h2 class="photo-grid__title">Парк Александрия</h2>
-                  <button class="photo-grid__btn photo-grid__btn_action_like" 
-                    title="Нравится">
-                  </button>
-              </div>
-            </div>
-          </li>
-  
-          <li class="photo-grid__item">
-            <div class="photo-grid__card">
-              <img src="./images/photo-grid-oranienbaum-1.jpg" 
-                alt="Ораниенбаум" title="Ораниенбаум" class="photo-grid__image">
-              <div class="photo-grid__description">
-                  <h2 class="photo-grid__title">Ораниенбаум</h2>
-                  <button class="photo-grid__btn photo-grid__btn_action_like" 
-                    title="Нравится">
-                  </button>
-              </div>
-            </div>
-          </li>
-  
-          <li class="photo-grid__item">
-            <div class="photo-grid__card">
-              <img src="./images/photo-grid-peterhof-1.jpg" 
-                alt="Петергоф"  title="Петергоф" class="photo-grid__image">
-              <div class="photo-grid__description">
-                  <h2 class="photo-grid__title">Петергоф</h2>
-                  <button class="photo-grid__btn photo-grid__btn_action_like" 
-                    title="Нравится">
-                  </button>
-              </div>
-            </div>
-          </li>
-  
-          <li class="photo-grid__item">
-            <div class="photo-grid__card">
-              <img src="./images/photo-grid-peterhof-3.jpg" 
-                alt="Петергоф" title="Петергоф" class="photo-grid__image">
-              <div class="photo-grid__description">
-                  <h2 class="photo-grid__title">Петергоф</h2>
-                  <button class="photo-grid__btn photo-grid__btn_action_like" 
-                    title="Нравится">
-                  </button>
-              </div>
-            </div>
-          </li>
-  
-          <li class="photo-grid__item">
-            <div class="photo-grid__card">
-              <img src="./images/photo-grid-peterhof-4.jpg" 
-                alt="Петергоф" title="Петергоф" class="photo-grid__image">
-              <div class="photo-grid__description">
-                  <h2 class="photo-grid__title">Петергоф</h2>
-                  <button class="photo-grid__btn photo-grid__btn_action_like" 
-                    title="Нравится">
-                  </button>
-              </div>
-            </div>
-          </li>
         </ul>  
       </section>
     </main>
@@ -158,6 +81,25 @@
     </div>
 
   </div>
+
+    <!-- ***************************************************************
+      Подключаем шаблоны и файлы JavaScript
+    -->      
+    <template id="card-template">
+      <div class="photo-grid__card">
+        <img src="" 
+          alt="" title="" class="photo-grid__image">
+        <div class="photo-grid__description">
+            <h2 class="photo-grid__title"></h2>
+            <button class="photo-grid__btn photo-grid__btn_action_like" 
+              title="Нравится">
+            </button>
+        </div>
+      </div>
+    </template>
+
+    <script src="./scripts/cards-init.js"></script>
+    <script src="./scripts/cards.js"></script>
   <script src="./scripts/script.js"></script>
 </body>
 </html>
