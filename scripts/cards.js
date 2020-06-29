@@ -10,11 +10,18 @@ const cardTemplate = document.querySelector('#card-template').content;
 let viewPopup = document.querySelector('.popup_content_image');
 let closeViewButton = viewPopup.querySelector('.popup__btn_action_close');
 
-// Добавление карточки с фотографией
-const addCard = function(newCard) {
+// Добавление карточки с фотографией в список
+const addListItem = function(item) {
   const listItem = document.createElement('li');
   listItem.classList.add('.photo-grid__item');
 
+  const cardElement = createCard(item);
+  listItem.append(cardElement);
+  cardsList.prepend(listItem);
+}
+
+// Создание карточки
+const createCard = function(newCard) {
   const cardElement = cardTemplate.cloneNode(true);
   cardElement.querySelector('.photo-grid__title').textContent = newCard.name;
 
@@ -26,12 +33,10 @@ const addCard = function(newCard) {
   cardElement.querySelector('.photo-grid__btn_action_like').addEventListener('click', likeCard);
   cardElement.querySelector('.photo-grid__btn_action_del').addEventListener('click', deleteCard);
   cardElement.querySelector('.photo-grid__image').addEventListener('click', viewCard);
-
-  listItem.append(cardElement);
-  cardsList.prepend(listItem);
+  return cardElement;
 }
 
-// Ставим отметку "Нравится"
+// Добавление отметки "Нравится"
 const likeCard = function(evt) {
   const card = evt.target.closest('.photo-grid__card');
   const likeButton = card.querySelector('.photo-grid__btn_action_like');
@@ -64,11 +69,11 @@ const viewCard = function(evt) {
 }
 
 // Добавление на страницу карточек из массива
-const setInitialCards = function() {
+const createCardList = function() {
   initialCards.forEach((item) => {
-    addCard(item);
+    addListItem(item);
   });
 }
 
-setInitialCards();
+createCardList();
 closeViewButton.addEventListener('click', closePopup);
