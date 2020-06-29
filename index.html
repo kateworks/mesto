@@ -57,7 +57,7 @@
     <!-- ***************************************************************
       Всплывающее окно редактирования профиля
     -->      
-    <div class="popup">
+    <div class="popup popup_content_form">
       <div class="popup__container">
         <button type="button" class="popup__btn popup__btn_action_close"
           title="Закрыть форму без сохранения данных">
@@ -80,29 +80,37 @@
       </div>
     </div>
 
+    <div class="popup popup_content_image">
+      <div class="popup__image-box">
+        <button type="button" class="popup__btn popup__btn_action_close"
+          title="Закрыть окно просмотра">
+        </button>    
+      </div>
+    </div>
+
   </div>
 
-    <!-- ***************************************************************
-      Подключаем шаблоны и файлы JavaScript
-    -->      
-    <template id="card-template">
-      <div class="photo-grid__card">
-        <img src="#" 
-          alt="_" title="_" class="photo-grid__image">
-        <div class="photo-grid__description">
-            <h2 class="photo-grid__title"></h2>
-            <button class="photo-grid__btn photo-grid__btn_action_like shaded" 
-              title="Нравится">
-            </button>
-        </div>
-        <button class="photo-grid__btn photo-grid__btn_action_del shaded"
-          title="Удалить">
-        </button>
+  <!-- ***************************************************************
+    Подключаем шаблоны и файлы JavaScript
+  -->      
+  <template id="card-template">
+    <div class="photo-grid__card">
+      <img src="#" 
+        alt="_" title="_" class="photo-grid__image">
+      <div class="photo-grid__description">
+          <h2 class="photo-grid__title"></h2>
+          <button class="photo-grid__btn photo-grid__btn_action_like shaded" 
+            title="Нравится">
+          </button>
       </div>
-    </template>
+      <button class="photo-grid__btn photo-grid__btn_action_del shaded"
+        title="Удалить">
+      </button>
+    </div>
+  </template>
 
-    <script src="./scripts/cards-init.js"></script>
-    <script src="./scripts/cards.js"></script>
+  <script src="./scripts/cards-init.js"></script>
   <script src="./scripts/script.js"></script>
+  <script src="./scripts/cards.js"></script>
 </body>
 </html>

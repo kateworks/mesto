@@ -6,6 +6,10 @@
 const cardsList = document.querySelector('.photo-grid__list');
 const cardTemplate = document.querySelector('#card-template').content;
 
+// -----   Форма просмотра карточки  -----
+let viewPopup = document.querySelector('.popup_content_image');
+let closeViewButton = viewPopup.querySelector('.popup__btn_action_close');
+
 // Добавление карточки с фотографией
 const addCard = function(newCard) {
   const listItem = document.createElement('li');
@@ -21,6 +25,7 @@ const addCard = function(newCard) {
 
   cardElement.querySelector('.photo-grid__btn_action_like').addEventListener('click', likeCard);
   cardElement.querySelector('.photo-grid__btn_action_del').addEventListener('click', deleteCard);
+  cardElement.querySelector('.photo-grid__image').addEventListener('click', viewCard);
 
   listItem.append(cardElement);
   cardsList.prepend(listItem);
@@ -44,6 +49,11 @@ const deleteCard = function(evt) {
   listItem.remove();
 }
 
+const viewCard = function(evt) {
+  const image = evt.target.closest('.photo-grid__image');
+  viewPopup.classList.add('popup_opened');
+}
+
 // Добавление на страницу карточек из массива
 const setInitialCards = function() {
   initialCards.forEach((item) => {
@@ -52,3 +62,4 @@ const setInitialCards = function() {
 }
 
 setInitialCards();
+closeViewButton.addEventListener('click', closePopup);
