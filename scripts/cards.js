@@ -49,8 +49,17 @@ const deleteCard = function(evt) {
   listItem.remove();
 }
 
+// Просмотр фотографии
 const viewCard = function(evt) {
-  const image = evt.target.closest('.photo-grid__image');
+  const card = evt.target.closest('.photo-grid__card');
+  const text = card.querySelector('.photo-grid__title').textContent;
+  const imagePopup = viewPopup.querySelector('.popup__image');
+
+  imagePopup.src = card.querySelector('.photo-grid__image').src;
+  imagePopup.title = text;
+  imagePopup.alt = text;
+  viewPopup.querySelector('.popup__image-caption').textContent = text;
+  
   viewPopup.classList.add('popup_opened');
 }
 
