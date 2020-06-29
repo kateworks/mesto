@@ -11,6 +11,6 @@
 }
 
 .photo-grid__btn_action_like:hover {
-  cursor: pointer;
   transform: scale(1.12);  
 }
+

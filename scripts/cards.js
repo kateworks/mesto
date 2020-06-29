@@ -6,17 +6,7 @@
 const cardsList = document.querySelector('.photo-grid__list');
 const cardTemplate = document.querySelector('#card-template').content;
 
-// Ставим отметку "Нравится"
-const likeCard = function(evt) {
-  const card = evt.target.closest('.photo-grid__card');
-  const likeButton = card.querySelector('.photo-grid__btn_action_like');
-  const title = likeButton.title;
-
-  likeButton.classList.toggle('photo-grid__btn_clicked');
-  likeButton.title = (title === 'Нравится') ? 'Больше не нравится' : 'Нравится';
-}
-
-// Добавление карточек с фотографиями
+// Добавление карточки с фотографией
 const addCard = function(newCard) {
   const listItem = document.createElement('li');
   listItem.classList.add('.photo-grid__item');
@@ -30,10 +20,28 @@ const addCard = function(newCard) {
   cardImage.title = newCard.name;
 
   cardElement.querySelector('.photo-grid__btn_action_like').addEventListener('click', likeCard);
-  // delete card
+  cardElement.querySelector('.photo-grid__btn_action_del').addEventListener('click', deleteCard);
 
   listItem.append(cardElement);
   cardsList.prepend(listItem);
+}
+
+// Ставим отметку "Нравится"
+const likeCard = function(evt) {
+  const card = evt.target.closest('.photo-grid__card');
+  const likeButton = card.querySelector('.photo-grid__btn_action_like');
+  const title = likeButton.title;
+
+  likeButton.classList.toggle('photo-grid__btn_clicked');
+  likeButton.title = (title === 'Нравится') ? 'Больше не нравится' : 'Нравится';
+}
+
+// Удаление карточки
+const deleteCard = function(evt) {
+  const card = evt.target.closest('.photo-grid__card');
+  const listItem = card.parentElement;
+  card.remove();
+  listItem.remove();
 }
 
 // Добавление на страницу карточек из массива

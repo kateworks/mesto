@@ -8,6 +8,7 @@
 @import url(./__btn/photo-grid__btn.css);
 @import url(./__btn/_action/photo-grid__btn_action_like.css);
 @import url(./__btn/_clicked/photo-grid__btn_clicked.css);
+@import url(./__btn/_action/photo-grid__btn_action_del.css);
 
 .photo-grid {
   max-width: 882px;
