@@ -81,17 +81,23 @@ const createCardList = function() {
 }
 
 //--------------------------------------------------------------------------------------
+// Всплывающее окно добавления карточки
 
 const saveNewCard = function(evt) {
   evt.preventDefault();
   const newItem = {name: '', link: ''};
-  newItem.name = newPlaceForm.querySelector('.popup__item_type_name').value;
-  newItem.link = newPlaceForm.querySelector('.popup__item_type_info').value;
+  const nameInput = newPlaceForm.querySelector('.popup__item_type_name');
+  const linkInput = newPlaceForm.querySelector('.popup__item_type_info');
+
+  newItem.name = nameInput.value;
+  newItem.link = linkInput.value;
   addListItem(newItem);
+
+  nameInput.value = '';
+  linkInput.value = '';
   closePopup(evt);
 }
 
-// Создание формы добавления карточки 
 const createAddPopup = function() {
   const popupEditTemplate = document.querySelector('#popup-edit-template').content;
   const popupElement = popupEditTemplate.cloneNode(true);
@@ -108,7 +114,6 @@ const createAddPopup = function() {
 
   return document.querySelector('.popup_content_card');
 }
-
 //--------------------------------------------------------------------------------------
 
 createCardList();
