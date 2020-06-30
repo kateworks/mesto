@@ -9,7 +9,7 @@ let work = document.querySelector('.profile__work');
 let editPopup = document.querySelector('.popup_content_form');
 let editForm = editPopup.querySelector('.popup__form');
 let nameInput = editForm.querySelector('.popup__item_type_name');
-let workInput = editForm.querySelector('.popup__item_type_work');
+let workInput = editForm.querySelector('.popup__item_type_info');
 let closeButton = editPopup.querySelector('.popup__btn_action_close');
 
 const editProfile = function () {
@@ -25,10 +25,15 @@ const saveProfile = function(evt) {
     closePopup(evt);
   }
 
+
+//--------------------------------------------------------------------------------------
+
 const closePopup = function(evt) {
   let popup = evt.target.closest('.popup');
   popup.classList.remove('popup_opened');
 }
+
+//--------------------------------------------------------------------------------------
 
 editButton.addEventListener('click', editProfile);
 closeButton.addEventListener('click', closePopup);

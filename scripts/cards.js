@@ -1,15 +1,19 @@
-//-------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 // Функции для работы с карточками
 // Исходный массив находится в cards-init.js
-//-------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 
 const cardsList = document.querySelector('.photo-grid__list');
-const cardTemplate = document.querySelector('#card-template').content;
 
-// -----   Форма просмотра карточки  -----
-let viewPopup = document.querySelector('.popup_content_image');
-let closeViewButton = viewPopup.querySelector('.popup__btn_action_close');
+// -----   Всплывающее окно просмотра карточки  -----
+const viewPopup = document.querySelector('.popup_content_image');
+const closeViewButton = viewPopup.querySelector('.popup__btn_action_close');
 
+// -----   Всплывающее окно добавления карточки  -----
+let newPlacePopup, newPlaceForm; 
+const newPlaceButton = document.querySelector('.profile__btn_action_add');
+
+//--------------------------------------------------------------------------------------
 // Добавление карточки с фотографией в список
 const addListItem = function(item) {
   const listItem = document.createElement('li');
@@ -22,6 +26,7 @@ const addListItem = function(item) {
 
 // Создание карточки
 const createCard = function(newCard) {
+  const cardTemplate = document.querySelector('#card-template').content;
   const cardElement = cardTemplate.cloneNode(true);
   cardElement.querySelector('.photo-grid__title').textContent = newCard.name;
 
@@ -75,5 +80,43 @@ const createCardList = function() {
   });
 }
 
+//--------------------------------------------------------------------------------------
+
+const saveNewCard = function(evt) {
+  evt.preventDefault();
+  const newItem = {name: '', link: ''};
+  newItem.name = newPlaceForm.querySelector('.popup__item_type_name').value;
+  newItem.link = newPlaceForm.querySelector('.popup__item_type_info').value;
+  addListItem(newItem);
+  closePopup(evt);
+}
+
+// Создание формы добавления карточки 
+const createAddPopup = function() {
+  const popupEditTemplate = document.querySelector('#popup-edit-template').content;
+  const popupElement = popupEditTemplate.cloneNode(true);
+
+  popupElement.querySelector('.popup__heading').textContent = "Новое место";
+  popupElement.querySelector('.popup__item_type_name').placeholder = "Название";
+  popupElement.querySelector('.popup__item_type_info').placeholder = "Ссылка на картинку";
+
+  popupElement.querySelector('.popup__form').addEventListener('submit', saveNewCard);
+  popupElement.querySelector('.popup__btn_action_close').addEventListener('click', closePopup);
+
+  popupElement.querySelector('.popup').classList.add('popup_content_card');
+  document.querySelector('.page').append(popupElement);
+
+  return document.querySelector('.popup_content_card');
+}
+
+//--------------------------------------------------------------------------------------
+
 createCardList();
+
 closeViewButton.addEventListener('click', closePopup);
+
+newPlacePopup = createAddPopup();
+newPlaceForm = newPlacePopup.querySelector('.popup__form');
+newPlaceButton.addEventListener('click', function() {
+  newPlacePopup.classList.add('popup_opened');
+});

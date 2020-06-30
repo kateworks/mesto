@@ -69,17 +69,19 @@
             class="popup__item popup__item_type_name" 
             placeholder="Имя Фамилия" required>
           <input type="text" id="work" name="work" 
-            class="popup__item popup__item_type_work" 
+            class="popup__item popup__item_type_info" 
             placeholder="Занятие" required>
           <button type="submit" value="Сохранить" 
             class="popup__btn popup__btn_action_submit">
               Сохранить  
           </button>
-          
         </form>
       </div>
     </div>
 
+    <!-- ***************************************************************
+      Всплывающее окно добавления фотографии
+    -->      
     <div class="popup popup_content_image">
       <div class="popup__image-box">
         <button type="button" class="popup__btn popup__btn_action_close shaded"
@@ -111,6 +113,30 @@
       <button class="photo-grid__btn photo-grid__btn_action_del shaded"
         title="Удалить">
       </button>
+    </div>
+  </template>
+
+  <template id="popup-edit-template">
+    <div class="popup">
+      <div class="popup__container">
+        <button type="button" class="popup__btn popup__btn_action_close shaded"
+          title="Закрыть форму без сохранения данных">
+        </button>
+  
+        <form class="popup__form" name="editProfileForm">
+          <h3 class="popup__heading">_</h3>
+          <input type="text" id="name" name="name" 
+            class="popup__item popup__item_type_name" 
+            placeholder="Имя Фамилия" required>
+          <input type="text" id="work" name="work" 
+            class="popup__item popup__item_type_info" 
+            placeholder="Занятие" required>
+          <button type="submit" value="Сохранить" 
+            class="popup__btn popup__btn_action_submit">
+              Сохранить  
+          </button>
+        </form>
+      </div>
     </div>
   </template>
 
