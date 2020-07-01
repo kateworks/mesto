@@ -39,7 +39,7 @@ const createCard = function(newCard) {
 
   cardElement.querySelector('.photo-grid__btn_action_like').addEventListener('click', likeCard);
   cardElement.querySelector('.photo-grid__btn_action_del').addEventListener('click', deleteCard);
-  cardElement.querySelector('.photo-grid__image').addEventListener('click', viewCard);
+  cardElement.querySelector('.photo-grid__image').addEventListener('click', () => viewCard(newCard));
   return cardElement;
 }
 
@@ -62,16 +62,11 @@ const deleteCard = function(evt) {
 }
 
 // Просмотр фотографии
-const viewCard = function(evt) {
-  const card = evt.target.closest('.photo-grid__card');
-  const text = card.querySelector('.photo-grid__title').textContent;
+const viewCard = function(card) {
   const imagePopup = viewPopup.querySelector('.popup__image');
-
-  imagePopup.src = card.querySelector('.photo-grid__image').src;
-  imagePopup.title = text;
-  imagePopup.alt = text;
-  viewPopup.querySelector('.popup__image-caption').textContent = text;
-  
+  imagePopup.src = card.link;
+  imagePopup.alt = card.name;
+  viewPopup.querySelector('.popup__image-caption').textContent = card.name;
   togglePopup(viewPopup);
 }
 
