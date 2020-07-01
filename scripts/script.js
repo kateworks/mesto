@@ -1,7 +1,7 @@
 
 // -----   Профиль пользователя   -----
-let name = document.querySelector('.profile__name');
-let work = document.querySelector('.profile__work');
+const name = document.querySelector('.profile__name');
+const work = document.querySelector('.profile__work');
 
 // -----   Всплывающее окно редактирования профиля  -----
 const editProfileButton = document.querySelector('.profile__btn_action_edit');

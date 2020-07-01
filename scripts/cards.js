@@ -13,6 +13,10 @@ const closeViewButton = viewPopup.querySelector('.popup__btn_action_close');
 const newPlaceButton = document.querySelector('.profile__btn_action_add');
 const newPlacePopup = document.querySelector('.popup_content_card'); 
 const newPlaceForm = newPlacePopup.querySelector('.popup__form');
+
+const titleInput = newPlaceForm.querySelector('.popup__item_type_name');
+const linkInput = newPlaceForm.querySelector('.popup__item_type_info');
+
 const newPlaceCloseButton = newPlacePopup.querySelector('.popup__btn_action_close');
 
 //--------------------------------------------------------------------------------------
@@ -45,12 +49,7 @@ const createCard = function(newCard) {
 
 // Добавление отметки "Нравится"
 const likeCard = function(evt) {
-  const card = evt.target.closest('.photo-grid__card');
-  const likeButton = card.querySelector('.photo-grid__btn_action_like');
-  const title = likeButton.title;
-
-  likeButton.classList.toggle('photo-grid__btn_clicked');
-  likeButton.title = (title === 'Нравится') ? 'Больше не нравится' : 'Нравится';
+  evt.target.classList.toggle('photo-grid__btn_clicked');
 }
 
 // Удаление карточки
@@ -79,16 +78,12 @@ const createCardList = function() {
 
 const saveNewCard = function(evt) {
   evt.preventDefault();
-
   const newItem = {name: '', link: ''};
-  const nameInput = newPlaceForm.querySelector('.popup__item_type_name');
-  const linkInput = newPlaceForm.querySelector('.popup__item_type_info');
-
-  newItem.name = nameInput.value;
+  newItem.name = titleInput.value;
   newItem.link = linkInput.value;
   addListItem(newItem);
 
-  nameInput.value = '';
+  titleInput.value = '';
   linkInput.value = '';
   togglePopup(newPlacePopup);
 }
