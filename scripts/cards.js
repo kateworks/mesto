@@ -10,9 +10,10 @@ const viewPopup = document.querySelector('.popup_content_image');
 const closeViewButton = viewPopup.querySelector('.popup__btn_action_close');
 
 // -----   Всплывающее окно добавления карточки  -----
-const placeFields = ['Новое место', 'Название', 'Ссылка на картинку'];
-let newPlacePopup, newPlaceForm; 
 const newPlaceButton = document.querySelector('.profile__btn_action_add');
+const newPlacePopup = document.querySelector('.popup_content_card'); 
+const newPlaceForm = newPlacePopup.querySelector('.popup__form');
+const newPlaceCloseButton = newPlacePopup.querySelector('.popup__btn_action_close');
 
 //--------------------------------------------------------------------------------------
 // Добавление карточки с фотографией в список
@@ -71,7 +72,7 @@ const viewCard = function(evt) {
   imagePopup.alt = text;
   viewPopup.querySelector('.popup__image-caption').textContent = text;
   
-  viewPopup.classList.add('popup_opened');
+  togglePopup(viewPopup);
 }
 
 // Добавление на страницу карточек из массива
@@ -83,6 +84,7 @@ const createCardList = function() {
 
 const saveNewCard = function(evt) {
   evt.preventDefault();
+
   const newItem = {name: '', link: ''};
   const nameInput = newPlaceForm.querySelector('.popup__item_type_name');
   const linkInput = newPlaceForm.querySelector('.popup__item_type_info');
@@ -93,18 +95,15 @@ const saveNewCard = function(evt) {
 
   nameInput.value = '';
   linkInput.value = '';
-  closePopup(evt);
+  togglePopup(newPlacePopup);
 }
 
 //--------------------------------------------------------------------------------------
 
 createCardList();
 
-closeViewButton.addEventListener('click', closePopup);
+closeViewButton.addEventListener('click', () => togglePopup(viewPopup));
 
-
-newPlacePopup = createEditPopup('popup_content_card', saveNewCard, placeFields);
-newPlaceForm = newPlacePopup.querySelector('.popup__form');
-newPlaceButton.addEventListener('click', function() {
-  newPlacePopup.classList.add('popup_opened');
-});
+newPlaceButton.addEventListener('click', () => togglePopup(newPlacePopup));
+newPlaceForm.addEventListener('submit', saveNewCard);
+newPlaceCloseButton.addEventListener('click', () => togglePopup(newPlacePopup));
