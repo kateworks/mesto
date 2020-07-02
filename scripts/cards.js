@@ -7,6 +7,8 @@ const cardsList = document.querySelector('.photo-grid__list');
 
 // -----   Всплывающее окно просмотра карточки  -----
 const viewPopup = document.querySelector('.popup_content_image');
+const imageView = viewPopup.querySelector('.popup__image');
+const captionView = viewPopup.querySelector('.popup__image-caption');
 const closeViewButton = viewPopup.querySelector('.popup__btn_action_close');
 
 // -----   Всплывающее окно добавления карточки  -----
@@ -39,7 +41,6 @@ const createCard = function(newCard) {
   const cardImage = cardElement.querySelector('.photo-grid__image');
   cardImage.src = newCard.link;
   cardImage.alt = newCard.name;
-  cardImage.title = newCard.name;
 
   cardElement.querySelector('.photo-grid__btn_action_like').addEventListener('click', likeCard);
   cardElement.querySelector('.photo-grid__btn_action_del').addEventListener('click', deleteCard);
@@ -62,10 +63,9 @@ const deleteCard = function(evt) {
 
 // Просмотр фотографии
 const viewCard = function(card) {
-  const imagePopup = viewPopup.querySelector('.popup__image');
-  imagePopup.src = card.link;
-  imagePopup.alt = card.name;
-  viewPopup.querySelector('.popup__image-caption').textContent = card.name;
+  imageView.src = card.link;
+  imageView.alt = card.name;
+  captionView.textContent = card.name;
   togglePopup(viewPopup);
 }
 
