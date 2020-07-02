@@ -24,12 +24,8 @@ const newPlaceCloseButton = newPlacePopup.querySelector('.popup__btn_action_clos
 //--------------------------------------------------------------------------------------
 // Добавление карточки с фотографией в список
 const addListItem = function(item) {
-  const listItem = document.createElement('li');
-  listItem.classList.add('.photo-grid__item');
-
   const cardElement = createCard(item);
-  listItem.append(cardElement);
-  cardsList.prepend(listItem);
+  cardsList.prepend(cardElement);
 }
 
 // Создание карточки
@@ -56,9 +52,7 @@ const likeCard = function(evt) {
 // Удаление карточки
 const deleteCard = function(evt) {
   const card = evt.target.closest('.photo-grid__card');
-  const listItem = card.parentElement;
   card.remove();
-  listItem.remove();
 }
 
 // Просмотр фотографии
