@@ -20,6 +20,15 @@ const togglePopup = function(popup) {
   popup.classList.toggle('popup_opened');
 }
 
+const closeByClickingOverlay = function(evt) {
+  if (evt.target !== evt.currentTarget) { return; }
+  togglePopup(evt.target);
+}
+
+const closeByPressingEsc = function(evt, popup) {
+  if (evt.key === 'Escape') { togglePopup(popup); }
+}
+
 const editProfile = function(evt) {
   togglePopup(editProfilePopup);
   nameInput.value = name.textContent;
@@ -35,8 +44,11 @@ const saveProfile = function(evt) {
 
 //--------------------------------------------------------------------------------------
 
-editProfileButton.addEventListener('click', editProfile);
+editProfilePopup.addEventListener('keydown', () => closeByPressingEsc(event, editProfilePopup));
+editProfilePopup.addEventListener('click', closeByClickingOverlay);
+
 editProfileForm.addEventListener('submit', saveProfile);
+editProfileButton.addEventListener('click', editProfile);
 closeProfileButton.addEventListener('click', () => togglePopup(editProfilePopup))
 
 
