@@ -93,4 +93,6 @@ newPlaceForm.addEventListener('submit', saveNewCard);
 newPlaceButton.addEventListener('click', () => togglePopup(newPlacePopup));
 newPlaceCloseButton.addEventListener('click', () => togglePopup(newPlacePopup));
 
+viewPopup.addEventListener('keydown', () => closeByPressingEsc(event, viewPopup));
+viewPopup.addEventListener('click', () => closeByClickingOverlay(event, viewPopup));
 closeViewButton.addEventListener('click', () => togglePopup(viewPopup));
