@@ -13,7 +13,6 @@
 @import url(./__image-caption/popup__image-caption.css);
 
 @import url(./__btn/popup__btn.css);
-@import url(./__btn/_disabled/popup__btn_disabled.css);
 @import url(./__btn/_action/popup__btn_action_submit.css);
 @import url(./__btn/_action/popup__btn_action_close.css);
 

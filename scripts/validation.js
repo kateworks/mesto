@@ -1,9 +1,11 @@
+//--------------------------------------------------------------------------------------
+// Проверка корректности вводимых данных
+//--------------------------------------------------------------------------------------
 
 const popupInfo = {
   formSelector: '.popup__form',
   inputSelector: '.popup__item',
   submitButtonSelector: '.popup__btn_action_submit',
-  disabledButtonClass: 'popup__btn_disabled',
   inputErrorClass: 'popup__item_type_error',
   errorClass: 'popup__error_visible'
 }
@@ -36,12 +38,8 @@ const hasInvalidInput = (inputList) => {
   })
 };
 
-const toggleButtonState = (inputList, buttonElement, disabledBtnClass) => {
-  if (hasInvalidInput(inputList)) {
-    buttonElement.classList.add(disabledBtnClass);
-  } else {
-    buttonElement.classList.remove(disabledBtnClass);
-  }
+const toggleButtonState = (inputList, buttonElement) => {
+  buttonElement.disabled = hasInvalidInput(inputList);
 };
 
 const setEventListeners = (formElement, popupData) => {
@@ -51,29 +49,28 @@ const setEventListeners = (formElement, popupData) => {
   inputList.forEach((inputElement) => {
     inputElement.addEventListener('input', () => {
       checkInputValidity(formElement, inputElement, popupData);
-      toggleButtonState(inputList, buttonElement, popupData.disabledButtonClass);
+      toggleButtonState(inputList, buttonElement);
     });
   });
 };
-
-
-// При вызове формы снимаем блокировку с кнопки <Сохранить>
-// и убираем сообщения об ошибках, которые могли остаться при выходе по <ESC>
-const setInitialState = (formElement, popupData) => {
-  const inputList = Array.from(formElement.querySelectorAll(popupData.inputSelector));
-  const buttonElement = formElement.querySelector(popupData.submitButtonSelector);
-
-  inputList.forEach((inputElement) => {
-    checkInputValidity(formElement, inputElement, popupData);
-    toggleButtonState(inputList, buttonElement, popupData.disabledButtonClass);
-  });
-}
 
 // Выполняем проверку вводимых данных
 const enableValidation = (popupData) => {
   formList = Array.from(document.querySelectorAll(popupData.formSelector));
   formList.forEach((formElement) => {
     setEventListeners(formElement, popupData);
+  });
+}
+
+// При вызове формы убираем сообщения об ошибках, 
+// которые могли остаться при выходе по <ESC>
+const setInitialState = (formElement, popupData) => {
+  const inputList = Array.from(formElement.querySelectorAll(popupData.inputSelector));
+  const buttonElement = formElement.querySelector(popupData.submitButtonSelector);
+
+  inputList.forEach((inputElement) => {
+    hideInputError(formElement, inputElement, popupData);
+    toggleButtonState(inputList, buttonElement);
   });
 }
 

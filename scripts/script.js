@@ -16,8 +16,18 @@ const closeProfileButton = editProfilePopup.querySelector('.popup__btn_action_cl
 
 //--------------------------------------------------------------------------------------
 // Открытие/закрытие popup (используется в cards.js, script.js)
+
+const closeByPressingEsc = function(evt, popup) {
+  if (evt.key === 'Escape') { togglePopup(popup); }
+}
+
 const togglePopup = function(popup) {
   popup.classList.toggle('popup_opened');
+  if (popup.classList.contains('popup_opened')) {
+    popup.addEventListener('keydown', () => closeByPressingEsc(event, popup));
+  } else {
+    popup.removeEventListener('keydown', () => closeByPressingEsc(event, popup));
+  }
 }
 
 const closeByClickingOverlay = function(evt, popup) {
@@ -25,9 +35,6 @@ const closeByClickingOverlay = function(evt, popup) {
   togglePopup(popup);
 }
 
-const closeByPressingEsc = function(evt, popup) {
-  if (evt.key === 'Escape') { togglePopup(popup); }
-}
 //--------------------------------------------------------------------------------------
 
 const editProfile = function(evt) {
@@ -46,7 +53,7 @@ const saveProfile = function(evt) {
 
 //--------------------------------------------------------------------------------------
 
-editProfilePopup.addEventListener('keydown', () => closeByPressingEsc(event, editProfilePopup));
+
 editProfilePopup.addEventListener('click', () => closeByClickingOverlay(event, editProfilePopup));
 
 editProfileForm.addEventListener('submit', saveProfile);

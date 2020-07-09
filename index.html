@@ -95,10 +95,19 @@
         </button>
         <form class="popup__form" name="add-place">
           <h3 class="popup__heading">Новое место</h3>
-          <input type="text" id="title" name="title" 
-            class="popup__item popup__item_type_name" placeholder="Название" required>
-          <input type="text" id="link" name="link" 
-            class="popup__item popup__item_type_info" placeholder="Ссылка на картинку" required>
+
+          <label class="popup__field">
+            <input type="text" id="title" name="title" maxlength="30" minlength="1" 
+              class="popup__item popup__item_type_name" placeholder="Название" required>
+            <span class="popup__error" id="title-error">Ошибка</span>
+          </label>
+
+          <label class="popup__field">
+            <input type="url" id="link" name="link" pattern="https?://.+" 
+              class="popup__item popup__item_type_info" placeholder="Ссылка на картинку" required>
+              <span class="popup__error" id="link-error">Ошибка</span>
+          </label>
+          
           <button type="submit" value="Сохранить" 
             class="popup__btn popup__btn_action_submit">
               Сохранить  
@@ -131,7 +140,7 @@
   <template id="card-template">
     <li class="photo-grid__card">
       <img src="#" 
-          alt="_" title="_" class="photo-grid__image">
+          alt="_" class="photo-grid__image">
       <div class="photo-grid__description">
           <h2 class="photo-grid__title"></h2>
           <button class="photo-grid__btn photo-grid__btn_action_like shaded" 

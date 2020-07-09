@@ -70,6 +70,13 @@ const createCardList = function() {
   });
 }
 
+const editNewCard = function(evt) {
+  togglePopup(newPlacePopup);
+  titleInput.value = '';
+  linkInput.value = '';
+  setInitialState(newPlaceForm, popupInfo);
+}
+
 const saveNewCard = function(evt) {
   evt.preventDefault();
   const newItem = {name: '', link: ''};
@@ -86,13 +93,11 @@ const saveNewCard = function(evt) {
 
 createCardList();
 
-newPlacePopup.addEventListener('keydown', () => closeByPressingEsc(event, newPlacePopup));
 newPlacePopup.addEventListener('click', () => closeByClickingOverlay(event, newPlacePopup));
 
 newPlaceForm.addEventListener('submit', saveNewCard);
-newPlaceButton.addEventListener('click', () => togglePopup(newPlacePopup));
+newPlaceButton.addEventListener('click', editNewCard);
 newPlaceCloseButton.addEventListener('click', () => togglePopup(newPlacePopup));
 
-viewPopup.addEventListener('keydown', () => closeByPressingEsc(event, viewPopup));
 viewPopup.addEventListener('click', () => closeByClickingOverlay(event, viewPopup));
 closeViewButton.addEventListener('click', () => togglePopup(viewPopup));
