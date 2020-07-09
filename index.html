@@ -57,12 +57,12 @@
     <!-- ***************************************************************
       Всплывающее окно редактирования профиля
     -->      
-    <div tabindex="-1" class="popup popup_content_profile">
+    <div class="popup popup_content_profile">
       <div class="popup__container">
         <button tabindex="4" type="button" class="popup__btn popup__btn_action_close shaded"
           title="Закрыть форму без сохранения данных">
         </button>
-        <form class="popup__form" name="editProfileForm">
+        <form class="popup__form" name="edit-profile">
           <h3 class="popup__heading">Редактировать профиль</h3>
 
           <label class="popup__field">
@@ -93,7 +93,7 @@
         <button type="button" class="popup__btn popup__btn_action_close shaded"
           title="Закрыть форму без сохранения данных">
         </button>
-        <form class="popup__form" name="newCardForm">
+        <form class="popup__form" name="add-place">
           <h3 class="popup__heading">Новое место</h3>
           <input type="text" id="title" name="title" 
             class="popup__item popup__item_type_name" placeholder="Название" required>

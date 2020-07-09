@@ -86,8 +86,11 @@ const saveNewCard = function(evt) {
 
 createCardList();
 
-closeViewButton.addEventListener('click', () => togglePopup(viewPopup));
+newPlacePopup.addEventListener('keydown', () => closeByPressingEsc(event, newPlacePopup));
+newPlacePopup.addEventListener('click', () => closeByClickingOverlay(event, newPlacePopup));
 
-newPlaceButton.addEventListener('click', () => togglePopup(newPlacePopup));
 newPlaceForm.addEventListener('submit', saveNewCard);
+newPlaceButton.addEventListener('click', () => togglePopup(newPlacePopup));
 newPlaceCloseButton.addEventListener('click', () => togglePopup(newPlacePopup));
+
+closeViewButton.addEventListener('click', () => togglePopup(viewPopup));
