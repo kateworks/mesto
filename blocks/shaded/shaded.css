@@ -11,3 +11,7 @@
   opacity: .6;
 }
 
+.shaded:focus {
+  opacity: .6;
+}
+

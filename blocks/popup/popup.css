@@ -3,6 +3,9 @@
 @import url(./__form/popup__form.css);
 @import url(./__heading/popup__heading.css);
 @import url(./__item/popup__item.css);
+@import url(./__item/_type/popup__item_type_error.css);
+@import url(./__error/popup__error.css);
+@import url(./__error/_visible/popup__error_visible.css);
 
 @import url(./__image-box/popup__image-box.css);
 @import url(./__figure/popup__figure.css);
@@ -10,6 +13,7 @@
 @import url(./__image-caption/popup__image-caption.css);
 
 @import url(./__btn/popup__btn.css);
+@import url(./__btn/_disabled/popup__btn_disabled.css);
 @import url(./__btn/_action/popup__btn_action_submit.css);
 @import url(./__btn/_action/popup__btn_action_close.css);
 

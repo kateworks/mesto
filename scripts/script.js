@@ -11,10 +11,10 @@ const editProfileForm = editProfilePopup.querySelector('.popup__form');
 const nameInput = editProfileForm.querySelector('.popup__item_type_name');
 const workInput = editProfileForm.querySelector('.popup__item_type_info');
 
+const saveProfileButton = editProfileForm.querySelector('.popup__btn_action_submit');
 const closeProfileButton = editProfilePopup.querySelector('.popup__btn_action_close');
 
 //--------------------------------------------------------------------------------------
-
 // Открытие/закрытие popup (используется в cards.js, script.js)
 const togglePopup = function(popup) {
   popup.classList.toggle('popup_opened');
@@ -28,11 +28,13 @@ const closeByClickingOverlay = function(evt) {
 const closeByPressingEsc = function(evt, popup) {
   if (evt.key === 'Escape') { togglePopup(popup); }
 }
+//--------------------------------------------------------------------------------------
 
 const editProfile = function(evt) {
   togglePopup(editProfilePopup);
   nameInput.value = name.textContent;
   workInput.value = work.textContent;
+  setInitialState(editProfileForm, popupInfo);
 }
 
 const saveProfile = function(evt) {
@@ -46,6 +48,7 @@ const saveProfile = function(evt) {
 
 editProfilePopup.addEventListener('keydown', () => closeByPressingEsc(event, editProfilePopup));
 editProfilePopup.addEventListener('click', closeByClickingOverlay);
+editProfilePopup.addEventListener('focus', () => { nameInput.focus(); })
 
 editProfileForm.addEventListener('submit', saveProfile);
 editProfileButton.addEventListener('click', editProfile);
