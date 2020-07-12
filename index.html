@@ -57,8 +57,8 @@
     <!-- ***************************************************************
       Всплывающее окно редактирования профиля
     -->      
-    <div class="popup popup_content_profile">
-      <div class="popup__container">
+    <div tabindex="0" class="popup popup_content_profile">
+      <div tabindex="0" class="popup__container">
         <button tabindex="4" type="button" class="popup__btn popup__btn_action_close shaded"
           title="Закрыть форму без сохранения данных">
         </button>
@@ -88,27 +88,27 @@
     <!-- ***************************************************************
       Всплывающее окно добавления фотографии
     -->      
-    <div class="popup popup_content_card">
-      <div class="popup__container">
-        <button type="button" class="popup__btn popup__btn_action_close shaded"
+    <div tabindex="0" class="popup popup_content_card">
+      <div tabindex="0" class="popup__container">
+        <button tabindex="4" type="button" class="popup__btn popup__btn_action_close shaded"
           title="Закрыть форму без сохранения данных">
         </button>
         <form class="popup__form" name="add-place">
           <h3 class="popup__heading">Новое место</h3>
 
           <label class="popup__field">
-            <input type="text" id="title" name="title" maxlength="30" minlength="1" 
+            <input tabindex="1" type="text" id="title" name="title" maxlength="30" minlength="1" 
               class="popup__item popup__item_type_name" placeholder="Название" required>
             <span class="popup__error" id="title-error">Ошибка</span>
           </label>
 
           <label class="popup__field">
-            <input type="url" id="link" name="link" pattern="https?://.+" 
+            <input tabindex="2" type="url" id="link" name="link" pattern="https?://.+" 
               class="popup__item popup__item_type_info" placeholder="Ссылка на картинку" required>
               <span class="popup__error" id="link-error">Ошибка</span>
           </label>
           
-          <button type="submit" value="Сохранить" 
+          <button tabindex="3" type="submit" value="Сохранить" 
             class="popup__btn popup__btn_action_submit">
               Сохранить  
           </button>

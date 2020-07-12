@@ -93,11 +93,11 @@ const saveNewCard = function(evt) {
 
 createCardList();
 
-newPlacePopup.addEventListener('click', () => closeByClickingOverlay(event, newPlacePopup));
+newPlacePopup.addEventListener('click', closeByClickingOverlay);
 
 newPlaceForm.addEventListener('submit', saveNewCard);
 newPlaceButton.addEventListener('click', editNewCard);
 newPlaceCloseButton.addEventListener('click', () => togglePopup(newPlacePopup));
 
-viewPopup.addEventListener('click', () => closeByClickingOverlay(event, viewPopup));
+viewPopup.addEventListener('click', closeByClickingOverlay);
 closeViewButton.addEventListener('click', () => togglePopup(viewPopup));

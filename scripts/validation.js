@@ -56,7 +56,8 @@ const setEventListeners = (formElement, popupData) => {
 
 // Выполняем проверку вводимых данных
 const enableValidation = (popupData) => {
-  formList = Array.from(document.querySelectorAll(popupData.formSelector));
+  const formList = Array.from(document.querySelectorAll(popupData.formSelector));
+  
   formList.forEach((formElement) => {
     setEventListeners(formElement, popupData);
   });

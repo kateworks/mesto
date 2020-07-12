@@ -17,22 +17,25 @@ const closeProfileButton = editProfilePopup.querySelector('.popup__btn_action_cl
 //--------------------------------------------------------------------------------------
 // Открытие/закрытие popup (используется в cards.js, script.js)
 
-const closeByPressingEsc = function(evt, popup) {
-  if (evt.key === 'Escape') { togglePopup(popup); }
+const closeByPressingEsc = function(evt) {
+  if (evt.key !== 'Escape') { return; }
+  const activePopup = document.querySelector('.popup_opened');
+  togglePopup(activePopup);
 }
 
 const togglePopup = function(popup) {
   popup.classList.toggle('popup_opened');
   if (popup.classList.contains('popup_opened')) {
-    popup.addEventListener('keydown', () => closeByPressingEsc(event, popup));
+    popup.addEventListener('keydown', closeByPressingEsc);
   } else {
-    popup.removeEventListener('keydown', () => closeByPressingEsc(event, popup));
+    popup.removeEventListener('keydown', closeByPressingEsc);
   }
 }
 
-const closeByClickingOverlay = function(evt, popup) {
+const closeByClickingOverlay = function(evt) {
   if (evt.target !== evt.currentTarget) { return; }
-  togglePopup(popup);
+  const activePopup = document.querySelector('.popup_opened');
+  togglePopup(activePopup);
 }
 
 //--------------------------------------------------------------------------------------
@@ -53,11 +56,12 @@ const saveProfile = function(evt) {
 
 //--------------------------------------------------------------------------------------
 
-
-editProfilePopup.addEventListener('click', () => closeByClickingOverlay(event, editProfilePopup));
+editProfilePopup.addEventListener('click', closeByClickingOverlay);
 
 editProfileForm.addEventListener('submit', saveProfile);
 editProfileButton.addEventListener('click', editProfile);
-closeProfileButton.addEventListener('click', () => togglePopup(editProfilePopup))
+closeProfileButton.addEventListener('click', () => togglePopup(editProfilePopup));
+
+
 
 
