@@ -26,9 +26,9 @@ const closeByPressingEsc = function(evt) {
 const togglePopup = function(popup) {
   popup.classList.toggle('popup_opened');
   if (popup.classList.contains('popup_opened')) {
-    popup.addEventListener('keydown', closeByPressingEsc);
+    document.addEventListener('keydown', closeByPressingEsc);
   } else {
-    popup.removeEventListener('keydown', closeByPressingEsc);
+    document.removeEventListener('keydown', closeByPressingEsc);
   }
 }
 
