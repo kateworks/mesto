@@ -15,30 +15,6 @@ const saveProfileButton = editProfileForm.querySelector('.popup__btn_action_subm
 const closeProfileButton = editProfilePopup.querySelector('.popup__btn_action_close');
 
 //--------------------------------------------------------------------------------------
-// Открытие/закрытие popup (используется в cards.js, script.js)
-
-const closeByPressingEsc = function(evt) {
-  if (evt.key !== 'Escape') { return; }
-  const activePopup = document.querySelector('.popup_opened');
-  togglePopup(activePopup);
-}
-
-const togglePopup = function(popup) {
-  popup.classList.toggle('popup_opened');
-  if (popup.classList.contains('popup_opened')) {
-    document.addEventListener('keydown', closeByPressingEsc);
-  } else {
-    document.removeEventListener('keydown', closeByPressingEsc);
-  }
-}
-
-const closeByClickingOverlay = function(evt) {
-  if (evt.target !== evt.currentTarget) { return; }
-  const activePopup = document.querySelector('.popup_opened');
-  togglePopup(activePopup);
-}
-
-//--------------------------------------------------------------------------------------
 
 const editProfile = function(evt) {
   togglePopup(editProfilePopup);
