@@ -26,7 +26,7 @@ export const initialCards = [
   }
 ];
 
-// export const initialCards = [
+// export const initialCards2 = [
 //   {
 //       name: 'Архыз',
 //       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'

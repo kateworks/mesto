@@ -2,7 +2,16 @@
 // Модуль index.js
 //--------------------------------------------------------------------------------------
 import {initialCards} from './cards-init.js';
+import {openPopup, setCloseEvents, closePopup} from './popup.js';
+import {FormValidator} from './FormValidator.js';
 import {Card} from './Card.js';
+
+const popupData = {
+  inputSelector: '.popup__item',
+  submitButtonSelector: '.popup__btn_action_submit',
+  inputErrorClass: 'popup__item_type_error',
+  errorClass: 'popup__error_visible'
+}
 
 const cardsList = document.querySelector('.photo-grid__list');
 
@@ -14,6 +23,8 @@ const viewBtnClose = viewPopup.querySelector('.popup__btn_action_close');
 const addCardPopup = document.querySelector('.popup_content_card'); 
 const addCardBtnOpen = document.querySelector('.profile__btn_action_add');
 const addCardForm = addCardPopup.querySelector('.popup__form');
+const addCardValidation = new FormValidator(popupData, addCardForm);
+
 const addCardBtnClose = addCardPopup.querySelector('.popup__btn_action_close');
 
 const titleInput = addCardForm.querySelector('.popup__item_type_name');
@@ -23,6 +34,7 @@ const linkInput = addCardForm.querySelector('.popup__item_type_info');
 const editProfilePopup = document.querySelector('.popup_content_profile');;
 const editProfileBtnOpen = document.querySelector('.profile__btn_action_edit');
 const editProfileForm = editProfilePopup.querySelector('.popup__form');
+const editProfileValidation = new FormValidator(popupData, editProfileForm);
 
 const editProfileBtnSave = editProfileForm.querySelector('.popup__btn_action_submit');
 const editProfileBtnClose = editProfilePopup.querySelector('.popup__btn_action_close');
@@ -35,43 +47,15 @@ const name = document.querySelector('.profile__name');
 const work = document.querySelector('.profile__work');
 
 //--------------------------------------------------------------------------------------
-// Функции закрытия popup
-const closePopup = function() {
-  const popup = document.querySelector('.popup_opened');
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupByEsc);
-}
-
-const closePopupByEsc = function(evt) {
-  if (evt.key !== 'Escape') return;
-  closePopup();
-}
-
-const closePopupByOverlay = function(evt) {
-  if (evt.target !== evt.currentTarget) return;
-  closePopup();
-}
-
-//--------------------------------------------------------------------------------------
-// Функция открытия popup
-const openPopup = function(popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', closePopupByEsc);
-}
-
-const setCloseEvents = function(popup, closeButton) {
-  popup.addEventListener('click', closePopupByOverlay);
-  closeButton.addEventListener('click', closePopup);  
-}
-
-//--------------------------------------------------------------------------------------
 // Добавление новой карточки
+//--------------------------------------------------------------------------------------
 
 // Настройка окна добавления карточки
 const setAddCardPopup = function() {
   addCardBtnOpen.addEventListener('click', editNewCard);
   addCardForm.addEventListener('submit', saveNewCard);
-  setCloseEvents(addCardPopup, addCardBtnClose) ;
+  setCloseEvents(addCardPopup, addCardBtnClose);
+  addCardValidation.enableValidation();
 }
 
 const emptyInputs = function() {
@@ -81,9 +65,9 @@ const emptyInputs = function() {
 
 // Открытие окна добавления карточки
 const editNewCard = function(evt) {
-  openPopup(addCardPopup);
   emptyInputs();
-  //setInitialState(newPlaceForm, popupInfo);
+  addCardValidation.setInitialState();
+  openPopup(addCardPopup);
 }
 
 // Добавление карточки с фотографией в список
@@ -112,6 +96,7 @@ const createCardList = function(templateSelector, cardSelector) {
 
 //--------------------------------------------------------------------------------------
 // Просмотр фотографии
+//--------------------------------------------------------------------------------------
 
 // Настройка окна просмотра
 const setViewPopup = function() {
@@ -129,20 +114,22 @@ export const openViewPopup = function(data) {
 
 //--------------------------------------------------------------------------------------
 // Редактирование профиля
+//--------------------------------------------------------------------------------------
 
 // Настройка окна редактирования
 const setEditProfilePopup = function() {
   editProfileBtnOpen.addEventListener('click', editProfile);
   editProfileForm.addEventListener('submit', saveProfile);
   setCloseEvents(editProfilePopup, editProfileBtnClose);
+  editProfileValidation.enableValidation();
 }
 
 // Открытие окна редактирования профиля
 const editProfile = function(evt) {
-  openPopup(editProfilePopup);
   nameInput.value = name.textContent;
   workInput.value = work.textContent;
-  //setInitialState(editProfileForm, popupInfo);
+  editProfileValidation.setInitialState();
+  openPopup(editProfilePopup);
 }
 
 // Сохранение профиля
