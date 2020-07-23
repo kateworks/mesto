@@ -6,7 +6,7 @@
   background-image: url(../../../../images/photo-grid-btn-like.svg);
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 20px;
+  background-size: 20px 20px;
   transition: .3s ease-in-out;
 }
 

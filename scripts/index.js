@@ -19,6 +19,21 @@ const addCardBtnClose = addCardPopup.querySelector('.popup__btn_action_close');
 const titleInput = addCardForm.querySelector('.popup__item_type_name');
 const linkInput = addCardForm.querySelector('.popup__item_type_info');
 
+// -----   Всплывающее окно редактирования профиля  -----
+const editProfilePopup = document.querySelector('.popup_content_profile');;
+const editProfileBtnOpen = document.querySelector('.profile__btn_action_edit');
+const editProfileForm = editProfilePopup.querySelector('.popup__form');
+
+const editProfileBtnSave = editProfileForm.querySelector('.popup__btn_action_submit');
+const editProfileBtnClose = editProfilePopup.querySelector('.popup__btn_action_close');
+
+const nameInput = editProfileForm.querySelector('.popup__item_type_name');
+const workInput = editProfileForm.querySelector('.popup__item_type_info');
+
+// -----   Профиль пользователя   -----
+const name = document.querySelector('.profile__name');
+const work = document.querySelector('.profile__work');
+
 //--------------------------------------------------------------------------------------
 // Функции закрытия popup
 const closePopup = function() {
@@ -44,54 +59,47 @@ const openPopup = function(popup) {
   document.addEventListener('keydown', closePopupByEsc);
 }
 
+const setCloseEvents = function(popup, closeButton) {
+  popup.addEventListener('click', closePopupByOverlay);
+  closeButton.addEventListener('click', closePopup);  
+}
+
+//--------------------------------------------------------------------------------------
+// Добавление новой карточки
+
+// Настройка окна добавления карточки
+const setAddCardPopup = function() {
+  addCardBtnOpen.addEventListener('click', editNewCard);
+  addCardForm.addEventListener('submit', saveNewCard);
+  setCloseEvents(addCardPopup, addCardBtnClose) ;
+}
+
 const emptyInputs = function() {
   titleInput.value = '';
   linkInput.value = '';
 }
 
+// Открытие окна добавления карточки
 const editNewCard = function(evt) {
   openPopup(addCardPopup);
   emptyInputs();
   //setInitialState(newPlaceForm, popupInfo);
 }
 
+// Добавление карточки с фотографией в список
+const addListItem = function(item, templateSelector, cardSelector) {
+  const card = new Card(item, templateSelector, cardSelector);
+  const cardElement = card.createCard();
+  cardsList.prepend(cardElement);
+}
+
+// Сохранение данных карточки
 const saveNewCard = function(evt) {
   evt.preventDefault();
   const newItem = {name: titleInput.value, link: linkInput.value};
   addListItem(newItem,'#card-template', '.photo-grid__card');
   emptyInputs();
   closePopup();
-}
-
-//--------------------------------------------------------------------------------------
-// Открытие окна просмотра фотографии
-export const openViewPopup = function(data) {
-  const viewImage = viewPopup.querySelector('.popup__image');
-  viewImage.src = data.link;
-  viewImage.alt = data.name;
-  viewPopup.querySelector('.popup__image-caption').textContent = data.name;
-  openPopup(viewPopup);
-}
-
-const setViewPopup = function() {
-  viewPopup.addEventListener('click', closePopupByOverlay);
-  viewBtnClose.addEventListener('click', closePopup);  
-}
-
-const setAddCardPopup = function() {
-  addCardBtnOpen.addEventListener('click', editNewCard);
-  addCardForm.addEventListener('submit', saveNewCard);
-
-  addCardPopup.addEventListener('click', closePopupByOverlay);
-  addCardBtnClose.addEventListener('click', closePopup);  
-}
-
-//--------------------------------------------------------------------------------------
-// Добавление карточки с фотографией в список
-const addListItem = function(item, templateSelector, cardSelector) {
-  const card = new Card(item, templateSelector, cardSelector);
-  const cardElement = card.createCard();
-  cardsList.prepend(cardElement);
 }
 
 //--------------------------------------------------------------------------------------
@@ -103,10 +111,55 @@ const createCardList = function(templateSelector, cardSelector) {
 }
 
 //--------------------------------------------------------------------------------------
-console.log('--- index.js ---');
+// Просмотр фотографии
+
+// Настройка окна просмотра
+const setViewPopup = function() {
+  setCloseEvents(viewPopup, viewBtnClose);
+}
+
+// Открытие окна просмотра
+export const openViewPopup = function(data) {
+  const viewImage = viewPopup.querySelector('.popup__image');
+  viewImage.src = data.link;
+  viewImage.alt = data.name;
+  viewPopup.querySelector('.popup__image-caption').textContent = data.name;
+  openPopup(viewPopup);
+}
+
+//--------------------------------------------------------------------------------------
+// Редактирование профиля
+
+// Настройка окна редактирования
+const setEditProfilePopup = function() {
+  editProfileBtnOpen.addEventListener('click', editProfile);
+  editProfileForm.addEventListener('submit', saveProfile);
+  setCloseEvents(editProfilePopup, editProfileBtnClose);
+}
+
+// Открытие окна редактирования профиля
+const editProfile = function(evt) {
+  openPopup(editProfilePopup);
+  nameInput.value = name.textContent;
+  workInput.value = work.textContent;
+  //setInitialState(editProfileForm, popupInfo);
+}
+
+// Сохранение профиля
+const saveProfile = function(evt) {
+  evt.preventDefault();
+  name.textContent = nameInput.value;
+  work.textContent = workInput.value;
+  closePopup();
+}
+
+//--------------------------------------------------------------------------------------
+//console.log('--- index.js --- starts');
 createCardList('#card-template', '.photo-grid__card');
 setViewPopup();
 setAddCardPopup();
+setEditProfilePopup();
+//console.log('--- index.js --- stops');
 
 
 
