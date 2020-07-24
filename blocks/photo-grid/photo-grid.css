@@ -1,13 +1,5 @@
 
 @import url(./__list/photo-grid__list.css);
-@import url(./__card/photo-grid__card.css);
-@import url(./__image/photo-grid__image.css);
-@import url(./__description/photo-grid__description.css);
-@import url(./__title/photo-grid__title.css);
-@import url(./__btn/photo-grid__btn.css);
-@import url(./__btn/_action/photo-grid__btn_action_like.css);
-@import url(./__btn/_clicked/photo-grid__btn_clicked.css);
-@import url(./__btn/_action/photo-grid__btn_action_del.css);
 
 .photo-grid {
   max-width: 882px;

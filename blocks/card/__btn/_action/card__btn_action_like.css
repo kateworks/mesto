@@ -1,16 +1,16 @@
 
-.photo-grid__btn_action_like {
+.card__btn_action_like {
   width: 20px;
   height: 29px;
 
-  background-image: url(../../../../images/photo-grid-btn-like.svg);
+  background-image: url(../../../../images/card-btn-like.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 20px 20px;
   transition: .3s ease-in-out;
 }
 
-.photo-grid__btn_action_like:hover {
+.card__btn_action_like:hover {
   transform: scale(1.12);  
 }
 

@@ -1,5 +1,5 @@
 
-.photo-grid__btn {
+.card__btn {
   background: none;
   box-shadow: none;
   border: none;
@@ -9,6 +9,6 @@
   margin: 0;
 }
 
-.photo-grid__btn {
+.card__btn {
   cursor: pointer;
 }

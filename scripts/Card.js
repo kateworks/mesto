@@ -24,7 +24,7 @@ export class Card {
 
   _handleLikeEvent() {
     this._isLiked = !this._isLiked;
-    this._likeBtn.classList.toggle('photo-grid__btn_clicked');
+    this._likeBtn.classList.toggle('card__btn_clicked');
   }
 
   _handleViewEvent() {
@@ -43,13 +43,13 @@ export class Card {
 
   createCard() {
     this._element = this._getTemplate();
-    this._likeBtn = this._element.querySelector('.photo-grid__btn_action_like');
-    this._delBtn = this._element.querySelector('.photo-grid__btn_action_del');
-    this._image = this._element.querySelector('.photo-grid__image');
+    this._likeBtn = this._element.querySelector('.card__btn_action_like');
+    this._delBtn = this._element.querySelector('.card__btn_action_del');
+    this._image = this._element.querySelector('.card__image');
 
     this._setEventListeners();
 
-    this._element.querySelector('.photo-grid__title').textContent = this._title;
+    this._element.querySelector('.card__title').textContent = this._title;
     this._image.src = this._link;
     this._image.alt = this._title;
     return this._element;

@@ -11,8 +11,8 @@ const popupData = {
   inputSelector: '.popup__item',
   submitButtonSelector: '.popup__btn_action_submit',
   inputErrorClass: 'popup__item_type_error',
-  errorClass: 'popup__error_visible'
-}
+  errorClass: 'popup__error_visible',
+};
 
 const cardsList = document.querySelector('.photo-grid__list');
 
@@ -51,35 +51,35 @@ const setAddCardPopup = function() {
   addCardForm.addEventListener('submit', saveNewCard);
   setCloseEvents(addCardPopup, addCardBtnClose);
   addCardValidation.enableValidation();
-}
+};
 
 const emptyInputs = function() {
   titleInput.value = '';
   linkInput.value = '';
-}
+};
 
 // Открытие окна добавления карточки
 const editNewCard = function() {
   emptyInputs();
   addCardValidation.setInitialState();
   openPopup(addCardPopup);
-}
+};
 
 // Добавление карточки с фотографией в список
 const addListItem = function(item, templateSelector, cardSelector) {
   const card = new Card(item, templateSelector, cardSelector);
   const cardElement = card.createCard();
   cardsList.prepend(cardElement);
-}
+};
 
 // Сохранение данных карточки
 const saveNewCard = function(evt) {
   evt.preventDefault();
   const newItem = {name: titleInput.value, link: linkInput.value};
-  addListItem(newItem,'#card-template', '.photo-grid__card');
+  addListItem(newItem,'#card-template', '.card');
   emptyInputs();
   closePopup();
-}
+};
 
 //--------------------------------------------------------------------------------------
 // Добавление на страницу карточек из массива
@@ -87,7 +87,7 @@ const createCardList = function(templateSelector, cardSelector) {
   initialCards.forEach((item) => {
     addListItem(item, templateSelector, cardSelector);
   });
-}
+};
 
 //--------------------------------------------------------------------------------------
 // Редактирование профиля
@@ -99,7 +99,7 @@ const setEditProfilePopup = function() {
   editProfileForm.addEventListener('submit', saveProfile);
   setCloseEvents(editProfilePopup, editProfileBtnClose);
   editProfileValidation.enableValidation();
-}
+};
 
 // Открытие окна редактирования профиля
 const editProfile = function() {
@@ -107,7 +107,7 @@ const editProfile = function() {
   workInput.value = work.textContent;
   editProfileValidation.setInitialState();
   openPopup(editProfilePopup);
-}
+};
 
 // Сохранение профиля
 const saveProfile = function(evt) {
@@ -115,15 +115,15 @@ const saveProfile = function(evt) {
   name.textContent = nameInput.value;
   work.textContent = workInput.value;
   closePopup();
-}
+};
 
 //--------------------------------------------------------------------------------------
-//console.log('--- index.js --- starts');
-createCardList('#card-template', '.photo-grid__card');
+
+createCardList('#card-template', '.card');
 setViewPopup();
 setAddCardPopup();
 setEditProfilePopup();
-//console.log('--- index.js --- stops');
+
 
 
 

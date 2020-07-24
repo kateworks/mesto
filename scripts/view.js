@@ -11,7 +11,7 @@ const viewBtnClose = viewPopup.querySelector('.popup__btn_action_close');
 // Настройка окна просмотра
 export const setViewPopup = function() {
   setCloseEvents(viewPopup, viewBtnClose);
-}
+};
 
 // Открытие окна просмотра
 export const openViewPopup = function(data) {
@@ -20,6 +20,6 @@ export const openViewPopup = function(data) {
   viewImage.alt = data.name;
   viewPopup.querySelector('.popup__image-caption').textContent = data.name;
   openPopup(viewPopup);
-}
+};
 
 
