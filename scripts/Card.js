@@ -2,7 +2,7 @@
 // Модуль Card.js
 // Класс Card
 //--------------------------------------------------------------------------------------
-import {openViewPopup} from './index.js';
+import {openViewPopup} from './view.js';
 
 export class Card {
   constructor(data, templateSelector, cardSelector) {
