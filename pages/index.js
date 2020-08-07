@@ -1,28 +1,31 @@
 //--------------------------------------------------------------------------------------
 // Модуль index.js
 //--------------------------------------------------------------------------------------
+
+import {
+  listSelector, 
+  cardTemplateSelector,
+  cardSelector,
+  popupData,
+  popupViewSelector
+} from '../utils/constants.js';
+
+import {initialCards} from '../utils/cards-init.js';
 import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 
-import {initialCards} from '../components/cards-init.js';
-import {openPopup, setCloseEvents, closePopup} from '../components/popup.js';
-import {setViewPopup} from '../components/view.js';
+import PopupWithImage from '../components/PopupWithImage.js';
+
 import {FormValidator} from '../components/FormValidator.js';
 
-const popupData = {
-  inputSelector: '.popup__item',
-  submitButtonSelector: '.popup__btn_action_submit',
-  inputErrorClass: 'popup__item_type_error',
-  errorClass: 'popup__error_visible',
-};
-
-const listSelector = '.photo-grid__list';
-const cardTemplateSelector = '#card-template';
-const cardSelector = '.card';
 
 // Добавление карточки с фотографией в список
 const addListItem = function(item) {
-  const card = new Card(item, cardTemplateSelector, cardSelector);
+  const card = new Card(
+    { data: item, handleCardClick: () => popupView.open(item) }, 
+    cardTemplateSelector, 
+    cardSelector
+  );
   const cardElement = card.createCard();
   cardsList.addItem(cardElement);
 };
@@ -31,6 +34,15 @@ const cardsList = new Section({
   items: initialCards, 
   renderer: (item) => addListItem(item)
 }, listSelector);
+
+const popupView = new PopupWithImage(popupViewSelector);
+popupView.setEventListeners();
+
+cardsList.renderItems();
+
+
+
+
 
 // -----   Всплывающее окно добавления карточки  -----
 const addCardPopup = document.querySelector('.popup_content_card'); 
@@ -65,7 +77,7 @@ const work = document.querySelector('.profile__work');
 const setAddCardPopup = function() {
   addCardBtnOpen.addEventListener('click', editNewCard);
   addCardForm.addEventListener('submit', saveNewCard);
-  setCloseEvents(addCardPopup, addCardBtnClose);
+  //setCloseEvents(addCardPopup, addCardBtnClose);
   addCardValidation.enableValidation();
 };
 
@@ -91,14 +103,6 @@ const saveNewCard = function(evt) {
 };
 
 //--------------------------------------------------------------------------------------
-// +++Добавление на страницу карточек из массива
-// const createCardList = function(templateSelector, cardSelector) {
-//   initialCards.forEach((item) => {
-//     addListItem(item);
-//   });
-// };
-
-//--------------------------------------------------------------------------------------
 // Редактирование профиля
 //--------------------------------------------------------------------------------------
 
@@ -106,7 +110,7 @@ const saveNewCard = function(evt) {
 const setEditProfilePopup = function() {
   editProfileBtnOpen.addEventListener('click', editProfile);
   editProfileForm.addEventListener('submit', saveProfile);
-  setCloseEvents(editProfilePopup, editProfileBtnClose);
+  //setCloseEvents(editProfilePopup, editProfileBtnClose);
   editProfileValidation.enableValidation();
 };
 
@@ -129,9 +133,6 @@ const saveProfile = function(evt) {
 //--------------------------------------------------------------------------------------
 
 
-cardsList.renderItems();
-
-setViewPopup();
 setAddCardPopup();
 setEditProfilePopup();
 

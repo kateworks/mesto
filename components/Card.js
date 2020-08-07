@@ -2,15 +2,15 @@
 // Модуль Card.js
 // Класс Card
 //--------------------------------------------------------------------------------------
-import {openViewPopup} from './view.js';
 
 export default class Card {
-  constructor(data, templateSelector, cardSelector) {
+  constructor({ data, handleCardClick }, templateSelector, cardSelector) {
     this._templateSelector = templateSelector;
     this._className = cardSelector;
     this._title = data.name;
     this._link = data.link;
     this._isLiked = false;
+    this._handleViewEvent = handleCardClick;
   }
 
   _getTemplate() {
@@ -25,10 +25,6 @@ export default class Card {
   _handleLikeEvent() {
     this._isLiked = !this._isLiked;
     this._likeBtn.classList.toggle('card__btn_clicked');
-  }
-
-  _handleViewEvent() {
-    openViewPopup({link: this._link, name: this._title});
   }
 
   _handleDeleteEvent() {

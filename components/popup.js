@@ -1,35 +1,40 @@
 //--------------------------------------------------------------------------------------
-// Модуль popup.js
-// Функции для работы с popup
+// Модуль Popup.js
+// Класс Popup
 //--------------------------------------------------------------------------------------
+const popupOpenedClass = 'popup_opened';
+const buttonCloseSelector = '.popup__btn_action_close';
 
-// Функции закрытия popup
-export const closePopup = function() {
-  const popup = document.querySelector('.popup_opened');
-  if (!popup) return;
-  popup.classList.remove('popup_opened');
-  document.removeEventListener('keydown', closePopupByEsc);
-};
+export default class Popup {
+  constructor(popupSelector) {
+    this._popup = document.querySelector(popupSelector);
+    this._closeButton = this._popup.querySelector(buttonCloseSelector);
+  }
 
-const closePopupByEsc = function(evt) {
-  if (evt.key !== 'Escape') return;
-  closePopup();
-};
+  _handleEscClose(evt) {
+    if (evt.key !== 'Escape') return;
+    this.close();
+  }
 
-const closePopupByOverlay = function(evt) {
-  if (evt.target !== evt.currentTarget) return;
-  closePopup();
-};
+  _handleOverlayClose(evt) {
+    if (evt.target !== evt.currentTarget) return;
+    this.close();
+  }
 
-export const setCloseEvents = function(popup, closeButton) {
-  popup.addEventListener('click', closePopupByOverlay);
-  closeButton.addEventListener('click', closePopup);  
-};
+  setEventListeners() {
+    this._popup.addEventListener('click', (evt) => { this._handleOverlayClose(evt); });
+    this._closeButton.addEventListener('click', () => { this.close(); });  
+  }
 
-// Функция открытия popup
-export const openPopup = function(popup) {
-  popup.classList.add('popup_opened');
-  document.addEventListener('keydown', closePopupByEsc);
-};
+  open() {
+    this._popup.classList.add(popupOpenedClass);
+    document.addEventListener('keydown', (evt) => { this._handleEscClose(evt); });  
+  }
 
-
+  close() {
+    if (this._popup.classList.contains(popupOpenedClass)) {
+      this._popup.classList.remove(popupOpenedClass);
+      document.removeEventListener('keydown',  () => { this._handleEscClose(); });
+    } 
+  }
+}
