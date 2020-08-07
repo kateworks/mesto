@@ -4,7 +4,7 @@
 //--------------------------------------------------------------------------------------
 import {openViewPopup} from './view.js';
 
-export class Card {
+export default class Card {
   constructor(data, templateSelector, cardSelector) {
     this._templateSelector = templateSelector;
     this._className = cardSelector;

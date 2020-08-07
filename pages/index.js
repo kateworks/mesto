@@ -1,11 +1,13 @@
 //--------------------------------------------------------------------------------------
 // Модуль index.js
 //--------------------------------------------------------------------------------------
-import {openPopup, setCloseEvents, closePopup} from './popup.js';
-import {setViewPopup} from './view.js';
-import {FormValidator} from './FormValidator.js';
-import {initialCards} from './cards-init.js';
-import {Card} from './Card.js';
+import Section from '../components/Section.js';
+import Card from '../components/Card.js';
+
+import {initialCards} from '../components/cards-init.js';
+import {openPopup, setCloseEvents, closePopup} from '../components/popup.js';
+import {setViewPopup} from '../components/view.js';
+import {FormValidator} from '../components/FormValidator.js';
 
 const popupData = {
   inputSelector: '.popup__item',
@@ -14,7 +16,21 @@ const popupData = {
   errorClass: 'popup__error_visible',
 };
 
-const cardsList = document.querySelector('.photo-grid__list');
+const listSelector = '.photo-grid__list';
+const cardTemplateSelector = '#card-template';
+const cardSelector = '.card';
+
+// Добавление карточки с фотографией в список
+const addListItem = function(item) {
+  const card = new Card(item, cardTemplateSelector, cardSelector);
+  const cardElement = card.createCard();
+  cardsList.addItem(cardElement);
+};
+
+const cardsList = new Section({
+  items: initialCards, 
+  renderer: (item) => addListItem(item)
+}, listSelector);
 
 // -----   Всплывающее окно добавления карточки  -----
 const addCardPopup = document.querySelector('.popup_content_card'); 
@@ -65,29 +81,22 @@ const editNewCard = function() {
   openPopup(addCardPopup);
 };
 
-// Добавление карточки с фотографией в список
-const addListItem = function(item, templateSelector, cardSelector) {
-  const card = new Card(item, templateSelector, cardSelector);
-  const cardElement = card.createCard();
-  cardsList.prepend(cardElement);
-};
-
 // Сохранение данных карточки
 const saveNewCard = function(evt) {
   evt.preventDefault();
   const newItem = {name: titleInput.value, link: linkInput.value};
-  addListItem(newItem,'#card-template', '.card');
+  addListItem(newItem);
   emptyInputs();
   closePopup();
 };
 
 //--------------------------------------------------------------------------------------
-// Добавление на страницу карточек из массива
-const createCardList = function(templateSelector, cardSelector) {
-  initialCards.forEach((item) => {
-    addListItem(item, templateSelector, cardSelector);
-  });
-};
+// +++Добавление на страницу карточек из массива
+// const createCardList = function(templateSelector, cardSelector) {
+//   initialCards.forEach((item) => {
+//     addListItem(item);
+//   });
+// };
 
 //--------------------------------------------------------------------------------------
 // Редактирование профиля
@@ -119,7 +128,9 @@ const saveProfile = function(evt) {
 
 //--------------------------------------------------------------------------------------
 
-createCardList('#card-template', '.card');
+
+cardsList.renderItems();
+
 setViewPopup();
 setAddCardPopup();
 setEditProfilePopup();
