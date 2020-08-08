@@ -4,7 +4,7 @@
 //      Проверка корректности вводимых данных
 //--------------------------------------------------------------------------------------
 
-export class FormValidator {
+export default class FormValidator {
   constructor (data, formElement) {
     this._form = formElement;
     this._submit = formElement.querySelector(data.submitButtonSelector);
