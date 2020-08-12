@@ -7,9 +7,13 @@ import {
   cardTemplateSelector,
   cardSelector,
   popupData,
+  profileData,
+  cardData,
   popupViewSelector,
   popupNewCardSelector,
-  buttonNewCardSelector
+  popupEditProfileSelector,
+  buttonNewCardSelector,
+  buttonEditProfileSelector
 } from '../utils/constants.js';
 
 import {initialCards} from '../utils/cards-init.js';
@@ -17,7 +21,7 @@ import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
-
+import UserInfo from '../components/UserInfo.js';
 import FormValidator from '../components/FormValidator.js';
 
 //--------------------------------------------------------------------------------------
@@ -51,12 +55,11 @@ const cardsList = new Section({
 
 const formNewCardSelector = popupNewCardSelector + ' ' + popupData.formSelector;
 
-// Обработка события submit
-const saveNewCard = function(evt) {
-  evt.preventDefault();
-  addListItem( { name: titleInput.value, link: linkInput.value } );
-  popupNewCard.close();
-};
+const buttonNewCard = document.querySelector(buttonNewCardSelector);
+const formNewCard = document.querySelector(formNewCardSelector);
+const titleInput = formNewCard.querySelector(cardData.titleSelector);
+const linkInput = formNewCard.querySelector(cardData.linkSelector);
+const formNewCardValidation = new FormValidator(popupData, formNewCard);
 
 const popupNewCard = new PopupWithForm(
   {
@@ -64,35 +67,56 @@ const popupNewCard = new PopupWithForm(
     formSelector: popupData.formSelector,
     inputSelector: popupData.inputSelector
   }, 
-  saveNewCard
+  (evt) => {
+    evt.preventDefault();
+    console.log(popupNewCard.getInputValues());
+    addListItem( { name: titleInput.value, link: linkInput.value } );
+    //addListItem(popupNewCard.getInputValues());
+    popupNewCard.close();  
+  }
 );
 
-const buttonNewCard = document.querySelector(buttonNewCardSelector);
-const formNewCard = document.querySelector(formNewCardSelector);
+//--------------------------------------------------------------------------------------
+// Редактирование профиля
+//--------------------------------------------------------------------------------------
+const formEditProfileSelector = popupEditProfileSelector + ' ' + popupData.formSelector;
 
-const titleInput = formNewCard.querySelector('.popup__item_type_name');
-const linkInput = formNewCard.querySelector('.popup__item_type_info');
+const userProfile = new UserInfo(profileData);
 
-const formNewCardValidation = new FormValidator(popupData, formNewCard);
+const popupEditProfile = new PopupWithForm(
+  {
+    popupSelector: popupEditProfileSelector,
+    formSelector: popupData.formSelector,
+    inputSelector: popupData.inputSelector
+  },
+  (evt) => {
+    evt.preventDefault();
+    userProfile.setUserInfo(popupEditProfile.getInputValues());
+    popupEditProfile.close();  
+  }
+);
 
+const buttonEditProfile = document.querySelector(buttonEditProfileSelector);
+const formEditProfile = document.querySelector(formEditProfileSelector);
+const formEditProfileValidation = new FormValidator(popupData, formEditProfile);
 
 //--------------------------------------------------------------------------------------
 
-buttonNewCard.addEventListener('click', () => {
-  formNewCardValidation.setInitialState();
-  popupNewCard.open();
-});
-
-popupNewCard.setEventListeners();
-
-formNewCardValidation.enableValidation();
-
 cardsList.renderItems();
 
+popupNewCard.setEventListeners();
+popupEditProfile.setEventListeners();
 
+formNewCardValidation.enableValidation();
+formEditProfileValidation.enableValidation();
 
+buttonNewCard.addEventListener('click', () => {
+  popupNewCard.open({title: '', link: ''});
+  formNewCardValidation.setInitialState();
+});
 
-
-
-
+buttonEditProfile.addEventListener('click', () => {
+  popupEditProfile.open(userProfile.getUserInfo());
+  formEditProfileValidation.setInitialState();
+});
 

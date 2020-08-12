@@ -4,18 +4,20 @@
 //--------------------------------------------------------------------------------------
 
 export default class UserInfo {
-  constructor( { name, info }) {
-    this._name = name;
-    this._info = info;
+  constructor( { nameSelector, infoSelector }) {
+    this._name = document.querySelector(nameSelector);
+    this._info = document.querySelector(infoSelector);
   }
 
   getUserInfo() {
-    return { name: this._name, info: this._info};
+    return { 
+      name: this._name.textContent, 
+      info: this._info.textContent
+    };
   }
 
   setUserInfo( { name, info }) {
-    this._name = name;
-    this._info = info;
-    // добавить данные на страницу
+    this._name.textContent = name;
+    this._info.textContent = info;
   }
 }
