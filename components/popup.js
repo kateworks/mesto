@@ -2,8 +2,8 @@
 // Модуль Popup.js
 // Класс Popup
 //--------------------------------------------------------------------------------------
-const popupOpenedClass = 'popup_opened';
-const buttonCloseSelector = '.popup__btn_action_close';
+
+import {buttonCloseSelector, popupOpenedClass} from '../utils/constants.js';
 
 export default class Popup {
   constructor(popupSelector) {

@@ -7,7 +7,7 @@ export default class Card {
   constructor({ data, handleCardClick }, templateSelector, cardSelector) {
     this._templateSelector = templateSelector;
     this._className = cardSelector;
-    this._title = data.name;
+    this._title = data.title;
     this._link = data.link;
     this._isLiked = false;
     this._handleViewEvent = handleCardClick;

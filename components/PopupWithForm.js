@@ -32,9 +32,9 @@ export default class PopupWithForm extends Popup {
     this._popup.addEventListener('submit', (evt) => { this._submitHandler(evt); } );
   }
 
-  open(values) {
+  open(values = {}) {
     this._inputList.forEach((input) => {
-      input.value = values[input.name];
+      input.value = values[input.name] || '';
     });
     super.open();
   }

@@ -3,10 +3,8 @@
 // Класс PopupWithImage
 //--------------------------------------------------------------------------------------
 
-import Popup from "./Popup.js";
-
-const popupImageSelector = '.popup__image';
-const popupCaptionSelector = '.popup__image-caption';
+import Popup from './Popup.js';
+import { popupImageSelector, popupCaptionSelector} from '../utils/constants.js';
 
 export default class PopupWithImage extends Popup {
 
