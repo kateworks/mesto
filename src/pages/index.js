@@ -2,6 +2,8 @@
 // Модуль index.js
 //--------------------------------------------------------------------------------------
 
+import './index.css';
+
 import {
   listSelector, 
   cardTemplateSelector,
