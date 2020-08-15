@@ -4,7 +4,7 @@
   "description": "Интерактивная страница для размещения фотографий",
   "main": "./src/pages/index.js",
   "scripts": {
-    "build": "(if exist dist rd /s /q dist) && webpack",
+    "build": "rm -rf ./dist && webpack",
     "dev": "webpack-dev-server --open --watch"
   },
   "repository": {
