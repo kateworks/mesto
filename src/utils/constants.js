@@ -17,13 +17,16 @@ export const profileData = {
   infoSelector: '.profile__work'
 };
 
+export const imageData = {
+  imageSelector: '.popup__image',
+  captionSelector:'.popup__image-caption'  
+};
+
 export const popupViewSelector = '.popup_content_image';
 export const popupNewCardSelector = '.popup_content_card';
 export const popupEditProfileSelector = '.popup_content_profile';
 
 export const popupOpenedClass = 'popup_opened';
-export const popupImageSelector = '.popup__image';
-export const popupCaptionSelector = '.popup__image-caption';
 export const buttonCloseSelector = '.popup__btn_action_close';
 
 export const buttonEditProfileSelector = '.profile__btn_action_edit';

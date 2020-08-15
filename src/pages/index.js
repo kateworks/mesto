@@ -9,6 +9,7 @@ import {
   cardTemplateSelector,
   cardSelector,
   popupData,
+  imageData,
   profileData,
   popupViewSelector,
   popupNewCardSelector,
@@ -30,7 +31,7 @@ import FormValidator from '../components/FormValidator.js';
 //--------------------------------------------------------------------------------------
 
 // Просмотр карточки
-const popupView = new PopupWithImage(popupViewSelector);
+const popupView = new PopupWithImage(popupViewSelector, imageData);
 popupView.setEventListeners();
 
 // Добавление карточки с фотографией в список
