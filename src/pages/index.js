@@ -69,9 +69,8 @@ const popupNewCard = new PopupWithForm(
     formSelector: popupData.formSelector,
     inputSelector: popupData.inputSelector
   }, 
-  (evt) => {
-    evt.preventDefault();
-    addListItem(popupNewCard.getInputValues());
+  (item) => {
+    addListItem(item);
     popupNewCard.close();  
   }
 );
@@ -89,9 +88,8 @@ const popupEditProfile = new PopupWithForm(
     formSelector: popupData.formSelector,
     inputSelector: popupData.inputSelector
   },
-  (evt) => {
-    evt.preventDefault();
-    userProfile.setUserInfo(popupEditProfile.getInputValues());
+  (userData) => {
+    userProfile.setUserInfo(userData);
     popupEditProfile.close();  
   }
 );
