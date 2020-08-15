@@ -36,7 +36,10 @@ popupView.setEventListeners();
 // Добавление карточки с фотографией в список
 const addListItem = function(item) {
   const card = new Card(
-    { data: item, handleCardClick: () => popupView.open(item) }, 
+    { 
+      data: item, 
+      handleCardClick: (item) => { popupView.open(item); } 
+    }, 
     cardTemplateSelector, 
     cardSelector
   );

@@ -29,12 +29,15 @@ export default class Card {
 
   _handleDeleteEvent() {
     this._element.remove();
+    this._element = null;
   }
 
   _setEventListeners() {
     this._likeBtn.addEventListener('click', () => this._handleLikeEvent());
     this._delBtn.addEventListener('click', () => this._handleDeleteEvent());
-    this._image.addEventListener('click', () => this._handleViewEvent());
+    this._image.addEventListener( 'click', 
+      ({title, link}) => this._handleViewEvent({ title: this._title, link: this._link })
+    );
   }
 
   createCard() {
