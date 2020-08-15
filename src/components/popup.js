@@ -3,22 +3,20 @@
 // Класс Popup
 //--------------------------------------------------------------------------------------
 
-import {buttonCloseSelector, popupOpenedClass} from '../utils/constants.js';
-
 export default class Popup {
-  constructor(popupSelector) {
+  constructor(popupSelector, { buttonClose, openedClass }) {
     this._popup = document.querySelector(popupSelector);
-    this._closeButton = this._popup.querySelector(buttonCloseSelector);
+    this._closeButton = this._popup.querySelector(buttonClose);
+    this._openedClass = openedClass;
+    this._handleEscClose = this._handleEscClose.bind(this);
   }
 
   _handleEscClose(evt) {
-    if (evt.key !== 'Escape') return;
-    this.close();
+    if (evt.key === 'Escape') this.close();
   }
 
   _handleOverlayClose(evt) {
-    if (evt.target !== evt.currentTarget) return;
-    this.close();
+    if (evt.target === evt.currentTarget) this.close();
   }
 
   setEventListeners() {
@@ -27,14 +25,14 @@ export default class Popup {
   }
 
   open() {
-    this._popup.classList.add(popupOpenedClass);
-    document.addEventListener('keydown', (evt) => { this._handleEscClose(evt); });  
+    this._popup.classList.add(this._openedClass);
+    document.addEventListener('keydown', this._handleEscClose);  
   }
 
   close() {
-    if (this._popup.classList.contains(popupOpenedClass)) {
-      this._popup.classList.remove(popupOpenedClass);
-      document.removeEventListener('keydown',  () => { this._handleEscClose(); });
+    if (this._popup.classList.contains(this._openedClass)) {
+      this._popup.classList.remove(this._openedClass);
+      document.removeEventListener('keydown', this._handleEscClose);
     } 
   }
 }

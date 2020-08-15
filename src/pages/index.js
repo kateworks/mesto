@@ -9,6 +9,7 @@ import {
   cardTemplateSelector,
   cardSelector,
   popupData,
+  popupForm,
   imageData,
   profileData,
   popupViewSelector,
@@ -31,16 +32,13 @@ import FormValidator from '../components/FormValidator.js';
 //--------------------------------------------------------------------------------------
 
 // Просмотр карточки
-const popupView = new PopupWithImage(popupViewSelector, imageData);
+const popupView = new PopupWithImage(popupViewSelector, popupData, imageData);
 popupView.setEventListeners();
 
 // Добавление карточки с фотографией в список
 const addListItem = function(item) {
   const card = new Card(
-    { 
-      data: item, 
-      handleCardClick: (item) => { popupView.open(item); } 
-    }, 
+    { data: item, handleCardClick: (item) => { popupView.open(item); }}, 
     cardTemplateSelector, 
     cardSelector
   );
@@ -58,18 +56,15 @@ const cardsList = new Section({
 // Форма добавления карточки
 //--------------------------------------------------------------------------------------
 
-const formNewCardSelector = popupNewCardSelector + ' ' + popupData.formSelector;
+const formNewCardSelector = `${popupNewCardSelector} ${popupForm.formSelector}`;
 
 const buttonNewCard = document.querySelector(buttonNewCardSelector);
 const formNewCard = document.querySelector(formNewCardSelector);
-const formNewCardValidation = new FormValidator(popupData, formNewCard);
+const formNewCardValidation = new FormValidator(popupForm, formNewCard);
 
-const popupNewCard = new PopupWithForm(
-  {
-    popupSelector: popupNewCardSelector,
-    formSelector: popupData.formSelector,
-    inputSelector: popupData.inputSelector
-  }, 
+const popupNewCard = new PopupWithForm( 
+  popupNewCardSelector, popupData,
+  { form: popupForm.formSelector, input: popupForm.inputSelector }, 
   (item) => {
     addListItem(item);
     popupNewCard.close();  
@@ -79,16 +74,13 @@ const popupNewCard = new PopupWithForm(
 //--------------------------------------------------------------------------------------
 // Форма редактирования профиля
 //--------------------------------------------------------------------------------------
-const formEditProfileSelector = popupEditProfileSelector + ' ' + popupData.formSelector;
+const formEditProfileSelector = `${popupEditProfileSelector} ${popupForm.formSelector}`;
 
 const userProfile = new UserInfo(profileData);
 
 const popupEditProfile = new PopupWithForm(
-  {
-    popupSelector: popupEditProfileSelector,
-    formSelector: popupData.formSelector,
-    inputSelector: popupData.inputSelector
-  },
+  popupEditProfileSelector, popupData,
+  { form: popupForm.formSelector, input: popupForm.inputSelector },
   (userData) => {
     userProfile.setUserInfo(userData);
     popupEditProfile.close();  
@@ -97,7 +89,7 @@ const popupEditProfile = new PopupWithForm(
 
 const buttonEditProfile = document.querySelector(buttonEditProfileSelector);
 const formEditProfile = document.querySelector(formEditProfileSelector);
-const formEditProfileValidation = new FormValidator(popupData, formEditProfile);
+const formEditProfileValidation = new FormValidator(popupForm, formEditProfile);
 
 //--------------------------------------------------------------------------------------
 // Отображение начального набора карточек
