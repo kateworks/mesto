@@ -9,7 +9,8 @@ export default class Card {
     this._className = cardSelector;
     this._title = data.title;
     this._link = data.link;
-    this._isLiked = false;
+    this._likes = data.likes;
+    //this._isLiked = false;
     this._handleViewEvent = handleCardClick;
   }
 
@@ -23,7 +24,7 @@ export default class Card {
   }
 
   _handleLikeEvent() {
-    this._isLiked = !this._isLiked;
+    //this._isLiked = !this._isLiked;
     this._likeBtn.classList.toggle('card__btn_clicked');
   }
 

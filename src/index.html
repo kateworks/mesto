@@ -107,9 +107,9 @@
               <span class="popup__error" id="link-error">Ошибка</span>
           </label>
           
-          <button tabindex="3" type="submit" value="Сохранить" 
+          <button tabindex="3" type="submit" value="Создать" 
             class="popup__btn popup__btn_action_submit">
-              Сохранить  
+              Создать
           </button>
         </form>
       </div>
@@ -134,17 +134,19 @@
   </div>
 
   <!-- ***************************************************************
-    Подключаем шаблон и файлы JavaScript
+    Подключаем шаблон
   -->      
   <template id="card-template">
     <li class="card">
       <img src="#" alt="_" class="card__image">
       <div class="card__description">
-          <h2 class="card__title"></h2>
-          <button 
-            class="card__btn card__btn_action_like shaded" 
+        <h2 class="card__title"></h2>
+        <div class="card__like-group">
+          <button class="card__btn card__btn_action_like shaded" 
             title="Нравится">
           </button>
+          <span class="card__like-num">0</span>
+        </div>
       </div>
       <button class="card__btn card__btn_action_del shaded"
         title="Удалить">

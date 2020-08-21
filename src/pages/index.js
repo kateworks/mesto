@@ -42,7 +42,6 @@ const api = new Api({
 
 // Просмотр карточки
 const popupView = new PopupWithImage(popupViewSelector, popupData, imageData);
-popupView.setEventListeners();
 
 // Добавление карточки с фотографией в список
 const addListItem = function(item) {
@@ -54,9 +53,6 @@ const addListItem = function(item) {
   const cardElement = card.createCard();
   cardsList.addItem(cardElement);
 };
-
-
-
 
 //--------------------------------------------------------------------------------------
 // Форма добавления карточки
@@ -72,8 +68,16 @@ const popupNewCard = new PopupWithForm(
   popupNewCardSelector, popupData,
   { form: popupForm.formSelector, input: popupForm.inputSelector }, 
   (item) => {
-    addListItem(item);
-    popupNewCard.close();  
+    api.postNewCard({name: item.title, link: item.link})
+      .then((res) => {
+        addListItem({title: res.name, link: res.link});
+      })
+      .catch((err) => {
+        console.log(`Невозможно сохранить карточку на сервере. Ошибка ${err}.`);
+      })
+      .finally(() => {
+        popupNewCard.close();  
+      });
   }
 );
 
@@ -102,6 +106,7 @@ const formEditProfileValidation = new FormValidator(popupForm, formEditProfile);
 // Обработка событий
 popupNewCard.setEventListeners();
 popupEditProfile.setEventListeners();
+popupView.setEventListeners();
 
 // Включаем валидацию форм
 formNewCardValidation.enableValidation();
@@ -132,7 +137,7 @@ api.getInitialCards()
     cardsArray = res.map(serverItem => {
       return {title: serverItem.name, link: serverItem.link};
     });
-
+    console.log(res);
   })
   .catch((err) => {
     console.log(`Невозможно прочитать данные. Ошибка ${err}.`);

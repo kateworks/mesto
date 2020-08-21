@@ -9,11 +9,11 @@ import alexandriaImage from '../images/photo-grid-aleksandria.jpg';
 import peterhofImage from '../images/photo-grid-peterhof.jpg';
 
 export const initialCards = [
-  { title: 'Петергоф', link: peterhofImage4 },
-  { title: 'Петергоф', link: peterhofImage3 },
-  { title: 'Петергоф', link: peterhofImage1 },
-  { title: 'Ораниенбаум', link: oranienbaumImage },
-  { title: 'Парк Александрия', link: alexandriaImage },
-  { title: 'Петергоф', link: peterhofImage }
+  { title: 'Петергоф', link: peterhofImage4, likes: [] },
+  { title: 'Петергоф', link: peterhofImage3, likes: [] },
+  { title: 'Петергоф', link: peterhofImage1, likes: [] },
+  { title: 'Ораниенбаум', link: oranienbaumImage, likes: [] },
+  { title: 'Парк Александрия', link: alexandriaImage, likes: [] },
+  { title: 'Петергоф', link: peterhofImage, likes: [] }
 ];
 
