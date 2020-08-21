@@ -1,3 +1,5 @@
+// Начальные значения карточек
+// Массив используется, если данные не загрузились с сервера
 
 import peterhofImage4 from '../images/photo-grid-peterhof-4.jpg';
 import peterhofImage3 from '../images/photo-grid-peterhof-3.jpg';
