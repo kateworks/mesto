@@ -6,17 +6,10 @@ import './index.css';
 
 import {
   listSelector, 
-  cardTemplateSelector,
-  cardSelector,
-  popupData,
-  popupForm,
-  imageData,
-  profileData,
-  popupViewSelector,
-  popupNewCardSelector,
-  popupEditProfileSelector,
-  buttonNewCardSelector,
-  buttonEditProfileSelector
+  cardTemplateSelector, cardSelector, imageData,
+  popupData, popupForm, popupListSelectors, 
+  profileData, buttonEditProfileSelector,
+  buttonNewCardSelector
 } from '../utils/constants.js';
 
 import {initialCards} from '../utils/cards-init.js';
@@ -41,7 +34,7 @@ const api = new Api({
 //--------------------------------------------------------------------------------------
 
 // Просмотр карточки
-const popupView = new PopupWithImage(popupViewSelector, popupData, imageData);
+const popupView = new PopupWithImage(popupListSelectors.viewCard, popupData, imageData);
 
 // Добавление карточки с фотографией в список
 const addListItem = function(item) {
@@ -58,16 +51,18 @@ const addListItem = function(item) {
 // Форма добавления карточки
 //--------------------------------------------------------------------------------------
 
-const formNewCardSelector = `${popupNewCardSelector} ${popupForm.formSelector}`;
-
-const buttonNewCard = document.querySelector(buttonNewCardSelector);
+const formNewCardSelector = `${popupListSelectors.createCard} ${popupForm.formSelector}`;
 const formNewCard = document.querySelector(formNewCardSelector);
 const formNewCardValidation = new FormValidator(popupForm, formNewCard);
 
+const buttonNewCard = document.querySelector(buttonNewCardSelector);
+const buttonSubmitCard = formNewCard.querySelector(popupForm.submitButtonSelector);
+
 const popupNewCard = new PopupWithForm( 
-  popupNewCardSelector, popupData,
+  popupListSelectors.createCard, popupData,
   { form: popupForm.formSelector, input: popupForm.inputSelector }, 
   (item) => {
+    buttonSubmitCard.textContent = 'Сохранение...';
     api.postNewCard({name: item.title, link: item.link})
       .then((res) => {
         addListItem({title: res.name, link: res.link});
@@ -76,28 +71,67 @@ const popupNewCard = new PopupWithForm(
         console.log(`Невозможно сохранить карточку на сервере. Ошибка ${err}.`);
       })
       .finally(() => {
-        popupNewCard.close();  
+        popupNewCard.close(); 
+        buttonSubmitCard.textContent = 'Создать';
       });
   }
 );
 
 //--------------------------------------------------------------------------------------
-// Форма редактирования профиля
+// Редактирование профиля
 //--------------------------------------------------------------------------------------
-const formEditProfileSelector = `${popupEditProfileSelector} ${popupForm.formSelector}`;
 
-const buttonEditProfile = document.querySelector(buttonEditProfileSelector);
+const formEditProfileSelector = `${popupListSelectors.editProfile} ${popupForm.formSelector}`;
+const formChangeAvatarSelector = `${popupListSelectors.changeAvatar} ${popupForm.formSelector}`;
+
 const formEditProfile = document.querySelector(formEditProfileSelector);
 const formEditProfileValidation = new FormValidator(popupForm, formEditProfile);
+const buttonEditProfile = document.querySelector(buttonEditProfileSelector);
+const buttonSubmitProfile = formEditProfile.querySelector(popupForm.submitButtonSelector);
+
+const formChangeAvatar = document.querySelector(formChangeAvatarSelector);
+const formChangeAvatarValidation = new FormValidator(popupForm, formChangeAvatar);
+const buttonChangeAvatar = document.querySelector(profileData.avatarSelector);
+const buttonSubmitAvatar = formChangeAvatar.querySelector(popupForm.submitButtonSelector);
 
 const userProfile = new UserInfo(profileData);
 
+const popupChangeAvatar = new PopupWithForm(
+  popupListSelectors.changeAvatar, popupData,
+  { form: popupForm.formSelector, input: popupForm.inputSelector },
+  (data) => {
+    buttonSubmitAvatar.textContent = 'Сохранение...';
+    api.patchNewAvatar(data)
+      .then((res) => {
+        userProfile.setUserAvatar(data.avatar);
+      })
+      .catch((err) => {
+        console.log(`Невозможно обновить аватар на сервере. ${err}.`);
+      })
+      .finally(() => {
+        popupChangeAvatar.close();
+        buttonSubmitAvatar.textContent = 'Сохранить';
+      });
+  }
+);
+
 const popupEditProfile = new PopupWithForm(
-  popupEditProfileSelector, popupData,
+  popupListSelectors.editProfile, popupData,
   { form: popupForm.formSelector, input: popupForm.inputSelector },
   (userData) => {
-    userProfile.setUserInfo(userData);
-    popupEditProfile.close();  
+    buttonSubmitProfile.textContent = 'Сохранение...';
+    api.patchUserProfile(userData)
+      .then((res) => {
+        userProfile.setUserInfo(userData);
+      })
+      .catch((err) => {
+        console.log(`Невозможно обновить профиль пользователя. ${err}.`);
+      })
+      .finally(() => { 
+        popupEditProfile.close();
+        buttonSubmitProfile.textContent = 'Сохранить';
+      });
+
   }
 );
 
@@ -109,10 +143,7 @@ api.getUserInfo()
     userProfile.setUserId(res._id);
   })
   .catch((err) => {
-    console.log(`Невозможно прочитать данные. Ошибка ${err}.`);
-  })
-  .finally(() => {
-    console.log('User info');
+    console.log(`Невозможно прочитать профиль пользователя. ${err}.`);
   });
 
 //--------------------------------------------------------------------------------------
@@ -121,10 +152,12 @@ api.getUserInfo()
 popupNewCard.setEventListeners();
 popupEditProfile.setEventListeners();
 popupView.setEventListeners();
+popupChangeAvatar.setEventListeners();
 
 // Включаем валидацию форм
 formNewCardValidation.enableValidation();
 formEditProfileValidation.enableValidation();
+formChangeAvatarValidation.enableValidation();
 
 // Нажатие на кнопку "Добавить карточку"
 buttonNewCard.addEventListener('click', () => {
@@ -136,6 +169,12 @@ buttonNewCard.addEventListener('click', () => {
 buttonEditProfile.addEventListener('click', () => {
   popupEditProfile.open(userProfile.getUserInfo());
   formEditProfileValidation.setInitialState();
+});
+
+buttonChangeAvatar.addEventListener('click', () => {
+  const avatar = userProfile.getUserAvatar()
+  popupChangeAvatar.open({avatar});
+  formChangeAvatarValidation.setInitialState();
 });
 
 //--------------------------------------------------------------------------------------
@@ -154,7 +193,7 @@ api.getInitialCards()
     console.log(res);
   })
   .catch((err) => {
-    console.log(`Невозможно прочитать данные. Ошибка ${err}.`);
+    console.log(`Невозможно получить карточки с сервера. ${err}.`);
     // создадим массив карточек из резервного массива
     cardsArray = initialCards;
   })

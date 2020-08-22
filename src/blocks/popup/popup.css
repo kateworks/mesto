@@ -1,6 +1,9 @@
 
 @import url(./__container/popup__container.css);
 @import url(./__form/popup__form.css);
+@import url(./__form/_size/popup__form_size_l.css);
+@import url(./__form/_size/popup__form_size_m.css);
+
 @import url(./__heading/popup__heading.css);
 @import url(./__item/popup__item.css);
 @import url(./__item/_type/popup__item_type_error.css);

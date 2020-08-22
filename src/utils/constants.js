@@ -17,9 +17,12 @@ export const imageData = {
   captionSelector:'.popup__image-caption'  
 };
 
-export const popupViewSelector = '.popup_content_image';
-export const popupNewCardSelector = '.popup_content_card';
-export const popupEditProfileSelector = '.popup_content_profile';
+export const popupListSelectors = {
+  viewCard: '.popup_content_image',
+  createCard: '.popup_content_card',
+  editProfile: '.popup_content_profile',
+  changeAvatar: '.popup_content_avatar'
+}
 
 export const popupData = {
   buttonClose: '.popup__btn_action_close',
@@ -32,7 +35,7 @@ export const buttonNewCardSelector = '.profile__btn_action_add';
 export const profileData = {
   nameSelector: '.profile__name',
   infoSelector: '.profile__work',
-  avatarSelector: '.profile__avatar'
+  avatarSelector: '.profile__image'
 };
 
 

@@ -13,10 +13,8 @@
       Шапка сайта 
     -->      
     <header class="header">
-      <img class="header__logo" 
-        src="images/header-logo.svg" 
-        alt="Логотип сервиса Mesto-Russia" 
-        title="Логотип сервиса Mesto-Russia">
+      <img class="header__logo" src="images/header-logo.svg" 
+        alt="Логотип сервиса Mesto-Russia">
     </header>
 
     <!-- ************************************************************
@@ -25,8 +23,11 @@
     <main class="content">
 
       <section class="profile">
-        <img src="./images/profile-avatar.jpg" 
-          alt="Аватар профиля" title="Аватар профиля" class="profile__avatar">
+
+        <div class="profile__avatar">
+          <img src="./images/profile-avatar.jpg" alt="Аватар профиля" 
+            title="Изменить аватар профиля" class="profile__image">
+        </div>
         
         <div class="profile__description">
           <h1 class="profile__name">Екатерина Пожидаева</h1>
@@ -61,7 +62,7 @@
         <button tabindex="4" type="button" class="popup__btn popup__btn_action_close shaded"
           title="Закрыть форму без сохранения данных">
         </button>
-        <form class="popup__form" name="edit-profile">
+        <form class="popup__form popup__form_size_l" name="edit-profile">
           <h3 class="popup__heading">Редактировать профиль</h3>
 
           <label class="popup__field">
@@ -85,6 +86,31 @@
     </div>
 
     <!-- ***************************************************************
+      Всплывающее окно изменения аватара
+    -->      
+    <div class="popup popup_content_avatar">
+      <div class="popup__container">
+        <button type="button" class="popup__btn popup__btn_action_close shaded"
+          title="Закрыть форму без сохранения данных">
+        </button>
+        <form class="popup__form popup__form_size_m" name="edit-profile">
+          <h3 class="popup__heading">Обновить аватар</h3>
+
+          <label class="popup__field">
+            <input type="url" id="avatar" name="avatar" pattern="https?://.+" 
+              class="popup__item popup__item_type_info" placeholder="Ссылка на картинку" required>
+              <span class="popup__error" id="avatar-error">Ошибка</span>
+          </label>
+
+          <button type="submit" value="Сохранить" 
+            class="popup__btn popup__btn_action_submit">
+              Сохранить  
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- ***************************************************************
       Всплывающее окно добавления фотографии
     -->      
     <div tabindex="0" class="popup popup_content_card">
@@ -92,7 +118,7 @@
         <button tabindex="4" type="button" class="popup__btn popup__btn_action_close shaded"
           title="Закрыть форму без сохранения данных">
         </button>
-        <form class="popup__form" name="add-place">
+        <form class="popup__form popup__form_size_l" name="add-place">
           <h3 class="popup__heading">Новое место</h3>
 
           <label class="popup__field">
