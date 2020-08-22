@@ -31,7 +31,8 @@ export const buttonNewCardSelector = '.profile__btn_action_add';
 
 export const profileData = {
   nameSelector: '.profile__name',
-  infoSelector: '.profile__work'
+  infoSelector: '.profile__work',
+  avatarSelector: '.profile__avatar'
 };
 
 

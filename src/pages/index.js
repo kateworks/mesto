@@ -86,6 +86,10 @@ const popupNewCard = new PopupWithForm(
 //--------------------------------------------------------------------------------------
 const formEditProfileSelector = `${popupEditProfileSelector} ${popupForm.formSelector}`;
 
+const buttonEditProfile = document.querySelector(buttonEditProfileSelector);
+const formEditProfile = document.querySelector(formEditProfileSelector);
+const formEditProfileValidation = new FormValidator(popupForm, formEditProfile);
+
 const userProfile = new UserInfo(profileData);
 
 const popupEditProfile = new PopupWithForm(
@@ -97,9 +101,19 @@ const popupEditProfile = new PopupWithForm(
   }
 );
 
-const buttonEditProfile = document.querySelector(buttonEditProfileSelector);
-const formEditProfile = document.querySelector(formEditProfileSelector);
-const formEditProfileValidation = new FormValidator(popupForm, formEditProfile);
+api.getUserInfo()
+  .then((res) => {
+    console.log(`Информация о пользователе получена с сервера.`);
+    userProfile.setUserInfo({name: res.name, info: res.about});
+    userProfile.setUserAvatar(res.avatar);
+    userProfile.setUserId(res._id);
+  })
+  .catch((err) => {
+    console.log(`Невозможно прочитать данные. Ошибка ${err}.`);
+  })
+  .finally(() => {
+    console.log('User info');
+  });
 
 //--------------------------------------------------------------------------------------
 
