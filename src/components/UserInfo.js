@@ -24,7 +24,7 @@ export default class UserInfo {
     return this._avatar.src; 
   }
 
-  setUserInfo( { name, info, id }) {
+  setUserInfo( { name, info }) {
     this._name.textContent = name;
     this._info.textContent = info;
   }
