@@ -12,22 +12,27 @@ export const popupForm = {
   errorClass: 'popup__error_visible',
 };
 
-export const imageData = {
-  imageSelector: '.popup__image',
-  captionSelector:'.popup__image-caption'  
-};
-
-export const popupListSelectors = {
+export const popupSelectors = {
   viewCard: '.popup_content_image',
   createCard: '.popup_content_card',
   editProfile: '.popup_content_profile',
   changeAvatar: '.popup_content_avatar'
 }
 
+export const imageData = {
+  imageSelector: '.popup__image',
+  captionSelector:'.popup__image-caption'  
+};
+
 export const popupData = {
   buttonClose: '.popup__btn_action_close',
   openedClass: 'popup_opened'
 }
+
+export const formData = { 
+  form: popupForm.formSelector, 
+  input: popupForm.inputSelector
+};
 
 export const buttonEditProfileSelector = '.profile__btn_action_edit';
 export const buttonNewCardSelector = '.profile__btn_action_add';

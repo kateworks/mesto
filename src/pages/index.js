@@ -5,7 +5,7 @@ import './index.css';
 
 import {
   listSelector, cardTemplateSelector, cardSelector, imageData,
-  popupData, popupForm, popupListSelectors, profileData, 
+  popupData, popupForm, popupSelectors, profileData, formData,
   buttonEditProfileSelector, buttonNewCardSelector
 } from '../utils/constants.js';
 
@@ -33,15 +33,33 @@ const userProfile = new UserInfo(profileData);
 //--------------------------------------------------------------------------------------
 
 // Просмотр карточки
-const popupView = new PopupWithImage(popupListSelectors.viewCard, popupData, imageData);
+const popupView = new PopupWithImage(popupSelectors.viewCard, popupData, imageData);
 
 // Добавление карточки с фотографией в список
 const addListItem = function(item) {
   const card = new Card(
     { data: item, 
       handleClick: (item) => { popupView.open(item); },
-      handleLike: () => { console.log('Like'); },
-      handleDelete: () => { console.log('Delete'); }
+      handleLike: (id, isLiked) => { 
+        console.log('Like ' + id); 
+        if (isLiked) {
+          api.likeCard(id)
+          .then((res) => {})
+          .catch((err) => {
+            console.log(`Невозможно сохранить лайк карточки. Ошибка ${err}.`);
+          })
+          .finally(() => {});
+    
+        } else {
+          api.unlikeCard(id)
+          .then((res) => {})
+          .catch((err) => {
+            console.log(`Невозможно удалить лайк карточки. Ошибка ${err}.`);
+          })
+          .finally(() => {});
+        }
+      },
+      handleDelete: (id) => { console.log('Delete'); }
     }, 
     cardTemplateSelector, 
     cardSelector
@@ -54,7 +72,7 @@ const addListItem = function(item) {
 // Форма добавления карточки
 //--------------------------------------------------------------------------------------
 
-const formNewCardSelector = `${popupListSelectors.createCard} ${popupForm.formSelector}`;
+const formNewCardSelector = `${popupSelectors.createCard} ${popupForm.formSelector}`;
 const formNewCard = document.querySelector(formNewCardSelector);
 const formNewCardValidation = new FormValidator(popupForm, formNewCard);
 
@@ -62,36 +80,37 @@ const buttonNewCard = document.querySelector(buttonNewCardSelector);
 const buttonSubmitCard = formNewCard.querySelector(popupForm.submitButtonSelector);
 
 const popupNewCard = new PopupWithForm( 
-  popupListSelectors.createCard, popupData,
-  { form: popupForm.formSelector, input: popupForm.inputSelector }, 
-  (item) => {
-    buttonSubmitCard.textContent = 'Сохранение...';
-    api.postNewCard({name: item.title, link: item.link})
-      .then((res) => {
-        addListItem({
-          title: res.name, 
-          link: res.link, 
-          likes: res.likes, 
-          owner: res.owner._id,
-          id: res._id
-        });
-      })
-      .catch((err) => {
-        console.log(`Невозможно сохранить карточку на сервере. Ошибка ${err}.`);
-      })
-      .finally(() => {
-        popupNewCard.close(); 
-        buttonSubmitCard.textContent = 'Создать';
-      });
-  }
+  popupSelectors.createCard, popupData, formData, 
+  (item) => { saveNewCard(item); }
 );
+
+const saveNewCard = function(item) {
+  buttonSubmitCard.textContent = 'Сохранение...';
+  api.postNewCard({name: item.title, link: item.link})
+    .then((res) => {
+      addListItem({
+        title: res.name, 
+        link: res.link, 
+        likes: res.likes, 
+        owner: res.owner._id,
+        id: res._id
+      });
+    })
+    .catch((err) => {
+      console.log(`Невозможно сохранить карточку на сервере. Ошибка ${err}.`);
+    })
+    .finally(() => {
+      popupNewCard.close(); 
+      buttonSubmitCard.textContent = 'Создать';
+    });
+}
 
 //--------------------------------------------------------------------------------------
 // Редактирование профиля
 //--------------------------------------------------------------------------------------
 
-const formEditProfileSelector = `${popupListSelectors.editProfile} ${popupForm.formSelector}`;
-const formChangeAvatarSelector = `${popupListSelectors.changeAvatar} ${popupForm.formSelector}`;
+const formEditProfileSelector = `${popupSelectors.editProfile} ${popupForm.formSelector}`;
+const formChangeAvatarSelector = `${popupSelectors.changeAvatar} ${popupForm.formSelector}`;
 
 const formEditProfile = document.querySelector(formEditProfileSelector);
 const formEditProfileValidation = new FormValidator(popupForm, formEditProfile);
@@ -103,46 +122,51 @@ const formChangeAvatarValidation = new FormValidator(popupForm, formChangeAvatar
 const buttonChangeAvatar = document.querySelector(profileData.avatarSelector);
 const buttonSubmitAvatar = formChangeAvatar.querySelector(popupForm.submitButtonSelector);
 
+// Окно редактирования аватара пользователя
 const popupChangeAvatar = new PopupWithForm(
-  popupListSelectors.changeAvatar, popupData,
-  { form: popupForm.formSelector, input: popupForm.inputSelector },
-  (data) => {
-    buttonSubmitAvatar.textContent = 'Сохранение...';
-    api.patchNewAvatar(data)
-      .then((res) => {
-        userProfile.setUserAvatar(res.avatar);
-        userProfile.setUserId(res._id);
-      })
-      .catch((err) => {
-        console.log(`Невозможно обновить аватар на сервере. ${err}.`);
-      })
-      .finally(() => {
-        popupChangeAvatar.close();
-        buttonSubmitAvatar.textContent = 'Сохранить';
-      });
-  }
+  popupSelectors.changeAvatar, popupData, formData,
+  (data) => { saveUserAvatar(data); }
 );
 
+// Сохранение аватара на сервере
+const saveUserAvatar = function(data) {
+  buttonSubmitAvatar.textContent = 'Сохранение...';
+  api.patchNewAvatar(data)
+    .then((res) => {
+      userProfile.setUserAvatar(res.avatar);
+      userProfile.setUserId(res._id);
+    })
+    .catch((err) => {
+      console.log(`Невозможно обновить аватар на сервере. ${err}.`);
+    })
+    .finally(() => {
+      popupChangeAvatar.close();
+      buttonSubmitAvatar.textContent = 'Сохранить';
+    });
+}
+
+// Окно редактирования профиля пользователя
 const popupEditProfile = new PopupWithForm(
-  popupListSelectors.editProfile, popupData,
-  { form: popupForm.formSelector, input: popupForm.inputSelector },
-  (userData) => {
-    buttonSubmitProfile.textContent = 'Сохранение...';
-    api.patchUserProfile(userData)
-      .then((res) => {
-        userProfile.setUserInfo({ name: res.name, info: res.about });
-        userProfile.setUserId(res._id);
-      })
-      .catch((err) => {
-        console.log(`Невозможно обновить профиль пользователя. ${err}.`);
-      })
-      .finally(() => { 
-        popupEditProfile.close();
-        buttonSubmitProfile.textContent = 'Сохранить';
-      });
-
-  }
+  popupSelectors.editProfile, popupData, formData,
+  (userData) => { saveUserProfile(userData); }
 );
+
+// Сохранение профиля на сервере
+const saveUserProfile = function(userData) {
+  buttonSubmitProfile.textContent = 'Сохранение...';
+  api.patchUserProfile(userData)
+    .then((res) => {
+      userProfile.setUserInfo({ name: res.name, info: res.about });
+      userProfile.setUserId(res._id);
+    })
+    .catch((err) => {
+      console.log(`Невозможно обновить профиль пользователя. ${err}.`);
+    })
+    .finally(() => { 
+      popupEditProfile.close();
+      buttonSubmitProfile.textContent = 'Сохранить';
+    });
+}
 
 //--------------------------------------------------------------------------------------
 // Обработка событий

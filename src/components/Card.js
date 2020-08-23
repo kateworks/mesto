@@ -11,6 +11,7 @@ export default class Card {
     this._title = data.title;
     this._link = data.link;
     this._likes = data.likes;
+    this._isLiked = false;
     this._owner = data.owner;
     this._id = data.id;
     this._handleViewEvent = handleClick;
@@ -36,9 +37,18 @@ export default class Card {
   //   this._element = null;
   // }
 
+  _like() {
+    this._isLiked = !this._isLiked;
+  }
+
   _setEventListeners() {
-    this._likeBtn.addEventListener('click', () => this._handleLikeEvent());
-    this._delBtn.addEventListener('click', () => this._handleDeleteEvent());
+    this._likeBtn.addEventListener('click', 
+      () => {
+        this._like();
+        this._handleLikeEvent(this._id, this._isLiked);
+      });
+    this._delBtn.addEventListener('click', 
+      () => this._handleDeleteEvent( this._id ));
     this._image.addEventListener( 'click', 
       () => this._handleViewEvent({ title: this._title, link: this._link })
     );
@@ -67,6 +77,5 @@ export default class Card {
     this._image.alt = this._title;
     return this._element;
   }
-
 }
 
