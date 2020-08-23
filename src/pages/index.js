@@ -40,26 +40,8 @@ const addListItem = function(item) {
   const card = new Card(
     { data: item, 
       handleClick: (item) => { popupView.open(item); },
-      handleLike: (id, isLiked) => { 
-        console.log('Like ' + id); 
-        if (isLiked) {
-          api.likeCard(id)
-          .then((res) => {})
-          .catch((err) => {
-            console.log(`Невозможно сохранить лайк карточки. Ошибка ${err}.`);
-          })
-          .finally(() => {});
-    
-        } else {
-          api.unlikeCard(id)
-          .then((res) => {})
-          .catch((err) => {
-            console.log(`Невозможно удалить лайк карточки. Ошибка ${err}.`);
-          })
-          .finally(() => {});
-        }
-      },
-      handleDelete: (id) => { console.log('Delete'); }
+      handleLike: (card) => { console.log('Like', {card}); },
+      handleDelete: (card) => { deleteCard(card); }
     }, 
     cardTemplateSelector, 
     cardSelector
@@ -67,6 +49,21 @@ const addListItem = function(item) {
   const cardElement = card.createCard(userProfile.getUserID());
   cardsList.addItem(cardElement);
 };
+
+const deleteCard = (card) => {
+  console.log('Delete: ' + card.getCardId());
+  api.deleteCard(card.getCardId())
+    .then((res) => {
+      card.delete();
+    })
+    .catch((err) => {
+      console.log(`Невозможно удалить карточку. Ошибка ${err}.`);
+    })
+    .finally(() => {
+      // popupNewCard.close(); 
+      // buttonSubmitCard.textContent = 'Создать';
+    });
+}
 
 //--------------------------------------------------------------------------------------
 // Форма добавления карточки
@@ -88,11 +85,11 @@ const saveNewCard = function(item) {
   buttonSubmitCard.textContent = 'Сохранение...';
   api.postNewCard({name: item.title, link: item.link})
     .then((res) => {
-      addListItem({
+      addListItem({ 
         title: res.name, 
         link: res.link, 
         likes: res.likes, 
-        owner: res.owner._id,
+        owner: res.owner._id, 
         id: res._id
       });
     })
@@ -128,6 +125,12 @@ const popupChangeAvatar = new PopupWithForm(
   (data) => { saveUserAvatar(data); }
 );
 
+// Окно редактирования профиля пользователя
+const popupEditProfile = new PopupWithForm(
+  popupSelectors.editProfile, popupData, formData,
+  (data) => { saveUserProfile(data); }
+);
+
 // Сохранение аватара на сервере
 const saveUserAvatar = function(data) {
   buttonSubmitAvatar.textContent = 'Сохранение...';
@@ -144,12 +147,6 @@ const saveUserAvatar = function(data) {
       buttonSubmitAvatar.textContent = 'Сохранить';
     });
 }
-
-// Окно редактирования профиля пользователя
-const popupEditProfile = new PopupWithForm(
-  popupSelectors.editProfile, popupData, formData,
-  (userData) => { saveUserProfile(userData); }
-);
 
 // Сохранение профиля на сервере
 const saveUserProfile = function(userData) {
@@ -217,14 +214,14 @@ api.getUserInfo()
   .finally(() => {
       api.getInitialCards()
       .then((res) => {
-        console.log(`Информация о карточках получена с сервера.`, res);
+        console.log(`Информация о карточках получена с сервера.`);
         cardsArray = res.map(item => {
           return {
             title: item.name, 
             link: item.link, 
             likes: item.likes, 
             owner: item.owner._id,
-            id: item.id
+            id: item._id
           };
         });
       })
@@ -234,10 +231,10 @@ api.getUserInfo()
       })
       .finally(() => {
           // Создание контейнера
-          cardsList = new Section({
-            items: cardsArray, 
-            renderer: (item) => addListItem(item)
-          }, listSelector);
+          cardsList = new Section(
+            { items: cardsArray, renderer: (item) => addListItem(item) }, 
+            listSelector
+          );
           // Отображение карточек
           cardsList.renderItems();
       });
