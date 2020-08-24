@@ -51,7 +51,7 @@ const addListItem = function(item) {
   const card = new Card(
     { data: item, 
       handleClick: (item) => { popupView.open(item); },
-      handleLike: (card) => { console.log('Like', {card}); },
+      handleLike: (card) => { likeCard(card); },
       handleDelete: (card) => { popupConfirm.open(card); }
     }, 
     cardTemplateSelector, 
@@ -60,6 +60,27 @@ const addListItem = function(item) {
   const cardElement = card.createCard(userProfile.getUserID());
   cardsList.addItem(cardElement);
 };
+
+// Постановка/снятие лайка
+const likeCard = (card) => {
+  const id = card.getCardId();
+  const user = userProfile.getUserID();
+  const likeState = card.isLiked();
+  const action = likeState ? 'удалить' : 'поставить';
+  const likeFunc = likeState ? id => api.unlikeCard(id) : id => api.likeCard(id);
+
+  likeFunc(id)
+    .then((res) => {
+      card.setLikes(res.likes);
+    })
+    .catch((err) => {
+      console.log(`Невозможно ${action} лайк. Ошибка ${err}.`);
+      card.setLikes(!likeState ? [{ _id: user }] : []);
+    })
+    .finally(() => {
+      card.setLikeGroup(user);
+    });
+}
 
 // Удаление карточки
 const deleteCard = (card) => {

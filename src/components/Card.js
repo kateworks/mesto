@@ -28,10 +28,6 @@ export default class Card {
     return cardElement;
   }
 
-  _like() {
-    this._isLiked = !this._isLiked;
-  }
-
   _setEventListeners() {
     const data = { title: this._title, link: this._link };
     this._likeBtn.addEventListener('click', () => this._handleLikeEvent(this));
@@ -52,18 +48,32 @@ export default class Card {
     this._element = null;
   }
 
+  setLikes(likes) { this._likes = likes; }
+
   getCardId() { return this._id; }
+
+  isLiked() { return this._isLiked; }
+
+  setLikeGroup(userId) {
+    this._isLiked = this._likes.some( user => user._id === userId );
+    this._numLikes.textContent = String(this._likes.length);
+    if (this._likes.length) this._setLikeButton();
+      else this._unsetLikeButton();
+  }
 
   createCard(userId) {
     this._element = this._getTemplate();
     this._likeBtn = this._element.querySelector('.card__btn_action_like');
     this._delBtn = this._element.querySelector('.card__btn_action_del');
     this._image = this._element.querySelector('.card__image');
+    this._numLikes = this._element.querySelector('.card__like-num');
     this._setEventListeners();
 
     this._element.querySelector('.card__title').textContent = this._title;
-    this._element.querySelector('.card__like-num').textContent = String(this._likes.length);
-    if (this._likes.length) this._setLikeButton();
+    this._numLikes.textContent = String(this._likes.length);
+
+    // Разбираемся с лайками
+    this.setLikeGroup(userId);
 
     const isMine = (this._owner === userId);
     this._delBtn.disabled = !isMine;
