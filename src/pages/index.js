@@ -6,7 +6,7 @@ import './index.css';
 import {
   listSelector, cardTemplateSelector, cardSelector, imageData,
   popupData, popupForm, popupSelectors, profileData, formData,
-  buttonEditProfileSelector, buttonNewCardSelector
+  btnEditProfileSelector, btnNewCardSelector
 } from '../utils/constants.js';
 
 import {initialCards} from '../utils/cards-init.js';
@@ -16,7 +16,9 @@ import Section from '../components/Section.js';
 import Card from '../components/Card.js';
 import PopupWithImage from '../components/PopupWithImage.js';
 import PopupWithForm from '../components/PopupWithForm.js';
+import PopupWithSubmit from '../components/PopupWithSubmit.js';
 import FormValidator from '../components/FormValidator.js';
+import Popup from '../components/Popup';
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
@@ -35,13 +37,22 @@ const userProfile = new UserInfo(profileData);
 // Просмотр карточки
 const popupView = new PopupWithImage(popupSelectors.viewCard, popupData, imageData);
 
+// Подтверждение удаления
+const popupConfirm = new PopupWithSubmit(
+  popupSelectors.confirm, popupData,
+  (card) => { deleteCard(card); }
+);
+
+const btnSubmitDelSelector = `${popupSelectors.confirm} ${popupForm.submitBtnSelector}`;
+const btnSubmitDel = document.querySelector(btnSubmitDelSelector);
+
 // Добавление карточки с фотографией в список
 const addListItem = function(item) {
   const card = new Card(
     { data: item, 
       handleClick: (item) => { popupView.open(item); },
       handleLike: (card) => { console.log('Like', {card}); },
-      handleDelete: (card) => { deleteCard(card); }
+      handleDelete: (card) => { popupConfirm.open(card); }
     }, 
     cardTemplateSelector, 
     cardSelector
@@ -50,8 +61,9 @@ const addListItem = function(item) {
   cardsList.addItem(cardElement);
 };
 
+// Удаление карточки
 const deleteCard = (card) => {
-  console.log('Delete: ' + card.getCardId());
+  btnSubmitDel.textContent = 'Удаление...';
   api.deleteCard(card.getCardId())
     .then((res) => {
       card.delete();
@@ -60,8 +72,8 @@ const deleteCard = (card) => {
       console.log(`Невозможно удалить карточку. Ошибка ${err}.`);
     })
     .finally(() => {
-      // popupNewCard.close(); 
-      // buttonSubmitCard.textContent = 'Создать';
+      popupConfirm.close(); 
+      btnSubmitDel.textContent = 'Да';
     });
 }
 
@@ -73,8 +85,8 @@ const formNewCardSelector = `${popupSelectors.createCard} ${popupForm.formSelect
 const formNewCard = document.querySelector(formNewCardSelector);
 const formNewCardValidation = new FormValidator(popupForm, formNewCard);
 
-const buttonNewCard = document.querySelector(buttonNewCardSelector);
-const buttonSubmitCard = formNewCard.querySelector(popupForm.submitButtonSelector);
+const btnNewCard = document.querySelector(btnNewCardSelector);
+const btnSubmitCard = formNewCard.querySelector(popupForm.submitBtnSelector);
 
 const popupNewCard = new PopupWithForm( 
   popupSelectors.createCard, popupData, formData, 
@@ -82,7 +94,7 @@ const popupNewCard = new PopupWithForm(
 );
 
 const saveNewCard = function(item) {
-  buttonSubmitCard.textContent = 'Сохранение...';
+  btnSubmitCard.textContent = 'Сохранение...';
   api.postNewCard({name: item.title, link: item.link})
     .then((res) => {
       addListItem({ 
@@ -98,7 +110,7 @@ const saveNewCard = function(item) {
     })
     .finally(() => {
       popupNewCard.close(); 
-      buttonSubmitCard.textContent = 'Создать';
+      btnSubmitCard.textContent = 'Создать';
     });
 }
 
@@ -111,13 +123,13 @@ const formChangeAvatarSelector = `${popupSelectors.changeAvatar} ${popupForm.for
 
 const formEditProfile = document.querySelector(formEditProfileSelector);
 const formEditProfileValidation = new FormValidator(popupForm, formEditProfile);
-const buttonEditProfile = document.querySelector(buttonEditProfileSelector);
-const buttonSubmitProfile = formEditProfile.querySelector(popupForm.submitButtonSelector);
+const buttonEditProfile = document.querySelector(btnEditProfileSelector);
+const buttonSubmitProfile = formEditProfile.querySelector(popupForm.submitBtnSelector);
 
 const formChangeAvatar = document.querySelector(formChangeAvatarSelector);
 const formChangeAvatarValidation = new FormValidator(popupForm, formChangeAvatar);
 const buttonChangeAvatar = document.querySelector(profileData.avatarSelector);
-const buttonSubmitAvatar = formChangeAvatar.querySelector(popupForm.submitButtonSelector);
+const buttonSubmitAvatar = formChangeAvatar.querySelector(popupForm.submitBtnSelector);
 
 // Окно редактирования аватара пользователя
 const popupChangeAvatar = new PopupWithForm(
@@ -171,6 +183,7 @@ popupNewCard.setEventListeners();
 popupEditProfile.setEventListeners();
 popupView.setEventListeners();
 popupChangeAvatar.setEventListeners();
+popupConfirm.setEventListeners();
 
 // Включаем валидацию форм
 formNewCardValidation.enableValidation();
@@ -178,7 +191,7 @@ formEditProfileValidation.enableValidation();
 formChangeAvatarValidation.enableValidation();
 
 // Нажатие на кнопку "Добавить карточку"
-buttonNewCard.addEventListener('click', () => {
+btnNewCard.addEventListener('click', () => {
   popupNewCard.open();
   formNewCardValidation.setInitialState();
 });

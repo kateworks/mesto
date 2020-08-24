@@ -7,7 +7,7 @@ export const cardSelector = '.card';
 export const popupForm = {
   formSelector: '.popup__form',
   inputSelector: '.popup__item',
-  submitButtonSelector: '.popup__btn_action_submit',
+  submitBtnSelector: '.popup__btn_action_submit',
   inputErrorClass: 'popup__item_type_error',
   errorClass: 'popup__error_visible',
 };
@@ -16,7 +16,8 @@ export const popupSelectors = {
   viewCard: '.popup_content_image',
   createCard: '.popup_content_card',
   editProfile: '.popup_content_profile',
-  changeAvatar: '.popup_content_avatar'
+  changeAvatar: '.popup_content_avatar',
+  confirm: '.popup_content_confirm'
 }
 
 export const imageData = {
@@ -34,8 +35,8 @@ export const formData = {
   input: popupForm.inputSelector
 };
 
-export const buttonEditProfileSelector = '.profile__btn_action_edit';
-export const buttonNewCardSelector = '.profile__btn_action_add';
+export const btnEditProfileSelector = '.profile__btn_action_edit';
+export const btnNewCardSelector = '.profile__btn_action_add';
 
 export const profileData = {
   nameSelector: '.profile__name',
