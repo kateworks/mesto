@@ -1,0 +1,19 @@
+{
+  "name": "mesto",
+  "version": "1.7.0",
+  "description": "Интерактивная страница для размещения фотографий.",
+  "main": "./src/pages/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kateworks/mesto.git"
+  },
+  "author": "Екатерина Пожидаева",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kateworks/mesto/issues"
+  },
+  "homepage": "https://github.com/kateworks/mesto#readme"
+}
