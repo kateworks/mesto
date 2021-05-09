@@ -4,7 +4,7 @@
 //--------------------------------------------------------------------------------------
 
 export default class UserInfo {
-  constructor( { nameSelector, infoSelector, avatarSelector }) {
+  constructor({ nameSelector, infoSelector, avatarSelector }) {
     this._name = document.querySelector(nameSelector);
     this._info = document.querySelector(infoSelector);
     this._avatar = document.querySelector(avatarSelector);
@@ -12,19 +12,19 @@ export default class UserInfo {
   }
 
   getUserInfo() {
-    return { 
-      name: this._name.textContent, 
-      info: this._info.textContent
+    return {
+      name: this._name.textContent,
+      info: this._info.textContent,
     };
   }
 
   getUserID() { return this._userId; }
 
-  getUserAvatar() { 
-    return this._avatar.src; 
+  getUserAvatar() {
+    return this._avatar.src;
   }
 
-  setUserInfo( { name, info }) {
+  setUserInfo({ name, info }) {
     this._name.textContent = name;
     this._info.textContent = info;
   }

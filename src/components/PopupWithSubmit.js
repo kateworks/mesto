@@ -3,10 +3,10 @@
 // Класс PopupWithSubmit
 //--------------------------------------------------------------------------------------
 
-import Popup from "./Popup.js";
+import Popup from './Popup';
 
 export default class PopupWithSubmit extends Popup {
-  constructor (selector, classes, submitHandler) {
+  constructor(selector, classes, submitHandler) {
     super(selector, classes);
     this._submitHandler = submitHandler;
   }
@@ -15,7 +15,7 @@ export default class PopupWithSubmit extends Popup {
     super.setEventListeners();
     this._popup.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this._submitHandler(this._element); 
+      this._submitHandler(this._element);
     });
   }
 

@@ -4,8 +4,9 @@
 //--------------------------------------------------------------------------------------
 
 export default class Card {
-  constructor({ data, handleClick, handleLike, handleDelete }, 
-      templateSelector, cardSelector) {
+  constructor({
+    data, handleClick, handleLike, handleDelete,
+  }, templateSelector, cardSelector) {
     this._templateSelector = templateSelector;
     this._className = cardSelector;
     this._title = data.title;
@@ -32,7 +33,7 @@ export default class Card {
     const data = { title: this._title, link: this._link };
     this._likeBtn.addEventListener('click', () => this._handleLikeEvent(this));
     this._delBtn.addEventListener('click', () => this._handleDeleteEvent(this));
-    this._image.addEventListener( 'click', () => this._handleViewEvent(data));
+    this._image.addEventListener('click', () => this._handleViewEvent(data));
   }
 
   _setLikeButton() {
@@ -55,10 +56,10 @@ export default class Card {
   isLiked() { return this._isLiked; }
 
   setLikeGroup(userId) {
-    this._isLiked = this._likes.some( user => user._id === userId );
+    this._isLiked = this._likes.some((user) => user._id === userId);
     this._numLikes.textContent = String(this._likes.length);
     if (this._likes.length) this._setLikeButton();
-      else this._unsetLikeButton();
+    else this._unsetLikeButton();
   }
 
   createCard(userId) {
@@ -78,10 +79,9 @@ export default class Card {
     const isMine = (this._owner === userId);
     this._delBtn.disabled = !isMine;
     this._delBtn.hidden = !isMine;
-    
+
     this._image.src = this._link;
     this._image.alt = this._title;
     return this._element;
   }
 }
-

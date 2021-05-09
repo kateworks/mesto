@@ -3,11 +3,10 @@
 // Класс PopupWithImage
 //--------------------------------------------------------------------------------------
 
-import Popup from './Popup.js';
+import Popup from './Popup';
 
 export default class PopupWithImage extends Popup {
-
-  constructor (selector, classes, { imageSelector, captionSelector }) {
+  constructor(selector, classes, { imageSelector, captionSelector }) {
     super(selector, classes);
     this._image = this._popup.querySelector(imageSelector);
     this._caption = this._popup.querySelector(captionSelector);

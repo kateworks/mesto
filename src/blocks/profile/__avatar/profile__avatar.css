@@ -1,11 +1,10 @@
-
 .profile__avatar {
   background-color: #000;
   background-image: url(../../../images/profile-btn-edit.svg);
   background-position: center;
   background-size: 25px;
   background-repeat: no-repeat;
-  
+
   width: 120px;
   height: 120px;
   border-radius: 60px;

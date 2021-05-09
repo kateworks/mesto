@@ -6,29 +6,30 @@ import './index.css';
 import {
   listSelector, cardTemplateSelector, cardSelector, imageData,
   popupData, popupForm, popupSelectors, profileData, formData,
-  btnEditProfileSelector, btnNewCardSelector
-} from '../utils/constants.js';
+  btnEditProfileSelector, btnNewCardSelector,
+} from '../utils/constants';
 
-import {initialCards} from '../utils/cards-init.js';
-import Api from '../components/Api.js';
-import UserInfo from '../components/UserInfo.js';
-import Section from '../components/Section.js';
-import Card from '../components/Card.js';
-import PopupWithImage from '../components/PopupWithImage.js';
-import PopupWithForm from '../components/PopupWithForm.js';
-import PopupWithSubmit from '../components/PopupWithSubmit.js';
-import FormValidator from '../components/FormValidator.js';
-import Popup from '../components/Popup';
+import initialCards from '../utils/cards-init';
+import Api from '../components/Api';
+import UserInfo from '../components/UserInfo';
+import Section from '../components/Section';
+import Card from '../components/Card';
+import PopupWithImage from '../components/PopupWithImage';
+import PopupWithForm from '../components/PopupWithForm';
+import PopupWithSubmit from '../components/PopupWithSubmit';
+import FormValidator from '../components/FormValidator';
 
 const api = new Api({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
   headers: {
     authorization: '963ba2cb-ffe5-4800-9828-03d0e9a57e68',
-    'Content-Type': 'application/json'
-  }
+    'Content-Type': 'application/json',
+  },
 });
 
 const userProfile = new UserInfo(profileData);
+let cardsArray = [];
+let cardsList = null;
 
 //--------------------------------------------------------------------------------------
 // Работа с карточками
@@ -40,34 +41,37 @@ const popupView = new PopupWithImage(popupSelectors.viewCard, popupData, imageDa
 // Подтверждение удаления
 const popupConfirm = new PopupWithSubmit(
   popupSelectors.confirm, popupData,
-  (card) => { deleteCard(card); }
+  (card) => { deleteCard(card); },
 );
 
 const btnSubmitDelSelector = `${popupSelectors.confirm} ${popupForm.submitBtnSelector}`;
 const btnSubmitDel = document.querySelector(btnSubmitDelSelector);
 
 // Добавление карточки с фотографией в список
-const addListItem = function(item) {
+const addListItem = (item) => {
   const card = new Card(
-    { data: item, 
-      handleClick: (item) => { popupView.open(item); },
-      handleLike: (card) => { likeCard(card); },
-      handleDelete: (card) => { popupConfirm.open(card); }
-    }, 
-    cardTemplateSelector, 
-    cardSelector
+    {
+      data: item,
+      handleClick: (clickedItem) => { popupView.open(clickedItem); },
+      handleLike: (likedItem) => { likeCard(likedItem); },
+      handleDelete: (deletedItem) => { popupConfirm.open(deletedItem); },
+    },
+    cardTemplateSelector,
+    cardSelector,
   );
   const cardElement = card.createCard(userProfile.getUserID());
   cardsList.addItem(cardElement);
 };
 
 // Постановка/снятие лайка
-const likeCard = (card) => {
+function likeCard(card) {
   const id = card.getCardId();
   const user = userProfile.getUserID();
   const likeState = card.isLiked();
   const action = likeState ? 'удалить' : 'поставить';
-  const likeFunc = likeState ? id => api.unlikeCard(id) : id => api.likeCard(id);
+  const likeFunc = likeState
+    ? (cardId) => api.unlikeCard(cardId)
+    : (cardId) => api.likeCard(cardId);
 
   likeFunc(id)
     .then((res) => {
@@ -83,17 +87,17 @@ const likeCard = (card) => {
 }
 
 // Удаление карточки
-const deleteCard = (card) => {
+function deleteCard(card) {
   btnSubmitDel.textContent = 'Удаление...';
   api.deleteCard(card.getCardId())
-    .then((res) => {
+    .then(() => {
       card.delete();
     })
     .catch((err) => {
       console.log(`Невозможно удалить карточку. Ошибка ${err}.`);
     })
     .finally(() => {
-      popupConfirm.close(); 
+      popupConfirm.close();
       btnSubmitDel.textContent = 'Да';
     });
 }
@@ -109,28 +113,28 @@ const formNewCardValidation = new FormValidator(popupForm, formNewCard);
 const btnNewCard = document.querySelector(btnNewCardSelector);
 const btnSubmitCard = formNewCard.querySelector(popupForm.submitBtnSelector);
 
-const popupNewCard = new PopupWithForm( 
-  popupSelectors.createCard, popupData, formData, 
-  (item) => { saveNewCard(item); }
+const popupNewCard = new PopupWithForm(
+  popupSelectors.createCard, popupData, formData,
+  (item) => { saveNewCard(item); },
 );
 
-const saveNewCard = function(item) {
+function saveNewCard(item) {
   btnSubmitCard.textContent = 'Сохранение...';
-  api.postNewCard({name: item.title, link: item.link})
+  api.postNewCard({ name: item.title, link: item.link })
     .then((res) => {
-      addListItem({ 
-        title: res.name, 
-        link: res.link, 
-        likes: res.likes, 
-        owner: res.owner._id, 
-        id: res._id
+      addListItem({
+        title: res.name,
+        link: res.link,
+        likes: res.likes,
+        owner: res.owner._id,
+        id: res._id,
       });
     })
     .catch((err) => {
       console.log(`Невозможно сохранить карточку на сервере. Ошибка ${err}.`);
     })
     .finally(() => {
-      popupNewCard.close(); 
+      popupNewCard.close();
       btnSubmitCard.textContent = 'Создать';
     });
 }
@@ -155,17 +159,17 @@ const buttonSubmitAvatar = formChangeAvatar.querySelector(popupForm.submitBtnSel
 // Окно редактирования аватара пользователя
 const popupChangeAvatar = new PopupWithForm(
   popupSelectors.changeAvatar, popupData, formData,
-  (data) => { saveUserAvatar(data); }
+  (data) => { saveUserAvatar(data); },
 );
 
 // Окно редактирования профиля пользователя
 const popupEditProfile = new PopupWithForm(
   popupSelectors.editProfile, popupData, formData,
-  (data) => { saveUserProfile(data); }
+  (data) => { saveUserProfile(data); },
 );
 
 // Сохранение аватара на сервере
-const saveUserAvatar = function(data) {
+function saveUserAvatar(data) {
   buttonSubmitAvatar.textContent = 'Сохранение...';
   api.patchNewAvatar(data)
     .then((res) => {
@@ -182,7 +186,7 @@ const saveUserAvatar = function(data) {
 }
 
 // Сохранение профиля на сервере
-const saveUserProfile = function(userData) {
+function saveUserProfile(userData) {
   buttonSubmitProfile.textContent = 'Сохранение...';
   api.patchUserProfile(userData)
     .then((res) => {
@@ -192,7 +196,7 @@ const saveUserProfile = function(userData) {
     .catch((err) => {
       console.log(`Невозможно обновить профиль пользователя. ${err}.`);
     })
-    .finally(() => { 
+    .finally(() => {
       popupEditProfile.close();
       buttonSubmitProfile.textContent = 'Сохранить';
     });
@@ -224,21 +228,18 @@ buttonEditProfile.addEventListener('click', () => {
 });
 
 buttonChangeAvatar.addEventListener('click', () => {
-  const avatar = userProfile.getUserAvatar()
-  popupChangeAvatar.open({avatar});
+  const avatar = userProfile.getUserAvatar();
+  popupChangeAvatar.open({ avatar });
   formChangeAvatarValidation.setInitialState();
 });
 
 //--------------------------------------------------------------------------------------
 // Получаем данные с сервера
 
-let cardsArray = [];
-let cardsList = null;
-
 api.getUserInfo()
   .then((res) => {
-    console.log(`Информация о пользователе получена с сервера.`);
-    userProfile.setUserInfo({name: res.name, info: res.about});
+    console.log('Информация о пользователе получена с сервера.');
+    userProfile.setUserInfo({ name: res.name, info: res.about });
     userProfile.setUserAvatar(res.avatar);
     userProfile.setUserId(res._id);
   })
@@ -246,35 +247,28 @@ api.getUserInfo()
     console.log(`Невозможно прочитать профиль пользователя. ${err}.`);
   })
   .finally(() => {
-      api.getInitialCards()
+    api.getInitialCards()
       .then((res) => {
-        console.log(`Информация о карточках получена с сервера.`);
-        cardsArray = res.map(item => {
-          return {
-            title: item.name, 
-            link: item.link, 
-            likes: item.likes, 
-            owner: item.owner._id,
-            id: item._id
-          };
-        });
+        console.log('Информация о карточках получена с сервера.');
+        cardsArray = res.map((item) => ({
+          title: item.name,
+          link: item.link,
+          likes: item.likes,
+          owner: item.owner._id,
+          id: item._id,
+        }));
       })
       .catch((err) => {
         console.log(`Невозможно получить карточки с сервера. ${err}.`);
         cardsArray = initialCards;
       })
       .finally(() => {
-          // Создание контейнера
-          cardsList = new Section(
-            { items: cardsArray, renderer: (item) => addListItem(item) }, 
-            listSelector
-          );
-          // Отображение карточек
-          cardsList.renderItems();
+        // Создание контейнера
+        cardsList = new Section(
+          { items: cardsArray, renderer: (item) => addListItem(item) },
+          listSelector,
+        );
+        // Отображение карточек
+        cardsList.renderItems();
       });
   });
-
-
-
-
-

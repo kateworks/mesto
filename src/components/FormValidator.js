@@ -5,7 +5,7 @@
 //--------------------------------------------------------------------------------------
 
 export default class FormValidator {
-  constructor (data, formElement) {
+  constructor(data, formElement) {
     this._form = formElement;
     this._submit = formElement.querySelector(data.submitBtnSelector);
     this._inputList = Array.from(formElement.querySelectorAll(data.inputSelector));
@@ -35,18 +35,16 @@ export default class FormValidator {
       this._hideInputError(input);
     }
   }
-  
+
   _hasInvalidInput() {
-    return this._inputList.some((input) => {
-      return !input.validity.valid;
-    });
+    return this._inputList.some((input) => !input.validity.valid);
   }
-  
+
   _toggleSubmitState() {
     this._submit.disabled = this._hasInvalidInput();
   }
-  
-  _setEventListeners() {  
+
+  _setEventListeners() {
     this._inputList.forEach((input) => {
       input.addEventListener('input', () => {
         this._checkInputValidity(input);
@@ -63,10 +61,9 @@ export default class FormValidator {
       this._toggleSubmitState();
     });
   }
-  
+
   // Включаем валидацию формы
   enableValidation() {
     this._setEventListeners();
   }
-
 }
