@@ -35,6 +35,7 @@ https://kateworks.github.io/mesto/
 2. Установить зависимости
 
     `cd mesto`
+    
     `npm install`
 
 3. Для запуска использовать команды
