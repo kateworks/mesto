@@ -17,7 +17,7 @@ export const FORM_CHECK = {
   errorClass: 'popup__error_visible',
 };
 
-export const popupSelectors = {
+export const POPUPS = {
   viewCard: '.popup_content_image',
   createCard: '.popup_content_card',
   editProfile: '.popup_content_profile',
@@ -25,7 +25,7 @@ export const popupSelectors = {
   confirm: '.popup_content_confirm',
 };
 
-export const imageData = {
+export const IMAGE = {
   imageSelector: '.popup__image',
   captionSelector: '.popup__image-caption',
 };

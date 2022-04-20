@@ -5,12 +5,13 @@ import { nanoid } from 'nanoid';
 import './index.css';
 
 import {
-  listSelector, cardTemplateSelector, cardSelector, imageData, popupSelectors,
+  listSelector, cardTemplateSelector, cardSelector, IMAGE, POPUPS,
   PROFILE_SELECTORS, POPUP_DATA, FORM_CHECK, FORM_DATA,
   btnNewCardSelector, buttonEditProfileSelector,
 } from '../utils/selectors';
 
 import initialCards from '../utils/cards-init';
+import * as messages from '../utils/messages';
 import api from '../utils/api';
 import userProfile from '../utils/profile';
 import { popupChangeAvatar, formChangeAvatarValidation } from './edit-avatar';
@@ -31,15 +32,15 @@ let cardsList = null;
 //--------------------------------------------------------------------------------------
 
 // Просмотр карточки
-const popupView = new PopupWithImage(popupSelectors.viewCard, POPUP_DATA, imageData);
+const popupView = new PopupWithImage(POPUPS.viewCard, POPUP_DATA, IMAGE);
 
 // Подтверждение удаления
 const popupConfirm = new PopupWithSubmit(
-  popupSelectors.confirm, POPUP_DATA,
+  POPUPS.confirm, POPUP_DATA,
   (card) => { deleteCard(card); },
 );
 
-const btnSubmitDelSelector = `${popupSelectors.confirm} ${FORM_CHECK.submitBtnSelector}`;
+const btnSubmitDelSelector = `${POPUPS.confirm} ${FORM_CHECK.submitBtnSelector}`;
 const btnSubmitDel = document.querySelector(btnSubmitDelSelector);
 
 // Добавление карточки с фотографией в список
@@ -87,17 +88,17 @@ function likeCard(card) {
 
 // Удаление карточки
 function deleteCard(card) {
-  btnSubmitDel.textContent = 'Удаление...';
+  btnSubmitDel.textContent = messages.DELETION;
   api.deleteCard(card.getCardId())
     .then(() => {
       card.delete();
     })
     .catch((err) => {
-      console.log(`Невозможно удалить карточку. Ошибка ${err}.`);
+      console.log(`${messages.DELETE_ERROR} ${messages.ERROR} ${err}.`);
     })
     .finally(() => {
       popupConfirm.close();
-      btnSubmitDel.textContent = 'Да';
+      btnSubmitDel.textContent = messages.YES;
     });
 }
 
@@ -105,7 +106,7 @@ function deleteCard(card) {
 // Форма добавления карточки
 //--------------------------------------------------------------------------------------
 
-const formNewCardSelector = `${popupSelectors.createCard} ${FORM_CHECK.formSelector}`;
+const formNewCardSelector = `${POPUPS.createCard} ${FORM_CHECK.formSelector}`;
 const formNewCard = document.querySelector(formNewCardSelector);
 const formNewCardValidation = new FormValidator(FORM_CHECK, formNewCard);
 
@@ -113,12 +114,12 @@ const btnNewCard = document.querySelector(btnNewCardSelector);
 const btnSubmitCard = formNewCard.querySelector(FORM_CHECK.submitBtnSelector);
 
 const popupNewCard = new PopupWithForm(
-  popupSelectors.createCard, POPUP_DATA, FORM_DATA,
+  POPUPS.createCard, POPUP_DATA, FORM_DATA,
   (item) => { saveNewCard(item); },
 );
 
 function saveNewCard(item) {
-  btnSubmitCard.textContent = 'Сохранение...';
+  btnSubmitCard.textContent = messages.SAVING;
 
   const newItem = {
     id: nanoid(),
@@ -128,7 +129,6 @@ function saveNewCard(item) {
     ownerId: 0,
   };
 
-  // api.postNewCard({ name: item.title, link: item.link })
   api.postNewCard(newItem)
     .then((res) => {
       addListItem({
@@ -140,11 +140,11 @@ function saveNewCard(item) {
       });
     })
     .catch((err) => {
-      console.log(`Невозможно сохранить карточку на сервере. Ошибка ${err}.`);
+      console.log(`${messages.SAVE_ERROR} ${messages.ERROR} ${err}.`);
     })
     .finally(() => {
       popupNewCard.close();
-      btnSubmitCard.textContent = 'Создать';
+      btnSubmitCard.textContent = messages.CREATE;
     });
 }
 
@@ -187,39 +187,43 @@ buttonChangeAvatar.addEventListener('click', () => {
 //--------------------------------------------------------------------------------------
 // Получаем данные с сервера
 
-api.getUserInfo()
-  .then((res) => {
-    console.log('Информация о пользователе получена с сервера.');
-    userProfile.setUserInfo({ name: res.name, info: res.about });
-    userProfile.setUserAvatar(res.avatar);
-    userProfile.setUserId(res.id);
+Promise.all([api.getUserInfo(), api.getInitialCards()])
+  .then((result) => {
+    const [user, cards] = result;
+    if (user) {
+      const {
+        id, name, about, avatar,
+      } = user;
+      console.log(messages.USER_OK);
+      userProfile.setUserInfo({ name, info: about });
+      userProfile.setUserAvatar(avatar);
+      userProfile.setUserId(id);
+    } else {
+      console.log(messages.USER_NO_DATA);
+    }
+
+    if (cards) {
+      console.log(messages.CARDS_OK);
+      cardsArray = cards.map((item) => ({
+        title: item.name,
+        link: item.link,
+        likes: item.likes,
+        owner: item.ownerId,
+        id: item.id,
+      }));
+    } else {
+      console.log(messages.CARDS_NO_DATA);
+      cardsArray = initialCards;
+    }
   })
   .catch((err) => {
-    console.log(`Невозможно прочитать профиль пользователя. ${err}.`);
+    console.log(`${messages.DATA_ERROR} ${err}.`);
+    cardsArray = initialCards;
   })
   .finally(() => {
-    api.getInitialCards()
-      .then((res) => {
-        console.log('Информация о карточках получена с сервера.');
-        cardsArray = res.map((item) => ({
-          title: item.name,
-          link: item.link,
-          likes: item.likes,
-          owner: item.ownerId,
-          id: item.id,
-        }));
-      })
-      .catch((err) => {
-        console.log(`Невозможно получить карточки с сервера. ${err}.`);
-        cardsArray = initialCards;
-      })
-      .finally(() => {
-        // Создание контейнера
-        cardsList = new Section(
-          { items: cardsArray, renderer: (item) => addListItem(item) },
-          listSelector,
-        );
-        // Отображение карточек
-        cardsList.renderItems();
-      });
+    // Создание контейнера
+    const sectionData = { items: cardsArray, renderer: (item) => addListItem(item) };
+    cardsList = new Section(sectionData, listSelector);
+    // Отображение карточек
+    cardsList.renderItems();
   });
