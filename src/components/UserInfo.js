@@ -4,10 +4,10 @@
 //--------------------------------------------------------------------------------------
 
 export default class UserInfo {
-  constructor({ nameSelector, infoSelector, avatarSelector }) {
-    this._name = document.querySelector(nameSelector);
-    this._info = document.querySelector(infoSelector);
-    this._avatar = document.querySelector(avatarSelector);
+  constructor({ name, info, avatar }) {
+    this._name = document.querySelector(name);
+    this._info = document.querySelector(info);
+    this._avatar = document.querySelector(avatar);
     this._userId = 0;
   }
 

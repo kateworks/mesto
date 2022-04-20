@@ -67,10 +67,11 @@ export default class Api {
       .then((res) => this._handleResponse(res));
   }
 
-  unlikeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: 'DELETE',
+  unlikeCard(cardId, likes) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'PATCH',
       headers: this._headers,
+      body: JSON.stringify(likes),
     })
       .then((res) => this._handleResponse(res));
   }

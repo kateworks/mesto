@@ -2,8 +2,14 @@ export const listSelector = '.photo-grid__list';
 export const cardTemplateSelector = '#card-template';
 export const cardSelector = '.card';
 
+export const PROFILE_SELECTORS = {
+  name: '.profile__name',
+  info: '.profile__work',
+  avatar: '.profile__image',
+};
+
 // Используется при валидации форм
-export const popupForm = {
+export const FORM_CHECK = {
   formSelector: '.popup__form',
   inputSelector: '.popup__item',
   submitBtnSelector: '.popup__btn_action_submit',
@@ -24,21 +30,15 @@ export const imageData = {
   captionSelector: '.popup__image-caption',
 };
 
-export const popupData = {
+export const POPUP_DATA = {
   buttonClose: '.popup__btn_action_close',
   openedClass: 'popup_opened',
 };
 
-export const formData = {
-  form: popupForm.formSelector,
-  input: popupForm.inputSelector,
+export const FORM_DATA = {
+  form: FORM_CHECK.formSelector,
+  input: FORM_CHECK.inputSelector,
 };
 
-export const btnEditProfileSelector = '.profile__btn_action_edit';
 export const btnNewCardSelector = '.profile__btn_action_add';
-
-export const profileData = {
-  nameSelector: '.profile__name',
-  infoSelector: '.profile__work',
-  avatarSelector: '.profile__image',
-};
+export const buttonEditProfileSelector = '.profile__btn_action_edit';

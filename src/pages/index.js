@@ -5,14 +5,17 @@ import { nanoid } from 'nanoid';
 import './index.css';
 
 import {
-  listSelector, cardTemplateSelector, cardSelector, imageData,
-  popupData, popupForm, popupSelectors, profileData, formData,
-  btnEditProfileSelector, btnNewCardSelector,
-} from '../utils/constants';
+  listSelector, cardTemplateSelector, cardSelector, imageData, popupSelectors,
+  PROFILE_SELECTORS, POPUP_DATA, FORM_CHECK, FORM_DATA,
+  btnNewCardSelector, buttonEditProfileSelector,
+} from '../utils/selectors';
 
 import initialCards from '../utils/cards-init';
-import Api from '../components/Api';
-import UserInfo from '../components/UserInfo';
+import api from '../utils/api';
+import userProfile from '../utils/profile';
+import { popupChangeAvatar, formChangeAvatarValidation } from './edit-avatar';
+import { popupEditProfile, formEditProfileValidation } from './edit-profile';
+
 import Section from '../components/Section';
 import Card from '../components/Card';
 import PopupWithImage from '../components/PopupWithImage';
@@ -20,16 +23,6 @@ import PopupWithForm from '../components/PopupWithForm';
 import PopupWithSubmit from '../components/PopupWithSubmit';
 import FormValidator from '../components/FormValidator';
 
-const api = new Api({
-  // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
-  baseUrl: 'https://my-json-server.typicode.com/kateworks/data',
-  headers: {
-    // authorization: '963ba2cb-ffe5-4800-9828-03d0e9a57e68',
-    'Content-Type': 'application/json',
-  },
-});
-
-const userProfile = new UserInfo(profileData);
 let cardsArray = [];
 let cardsList = null;
 
@@ -38,15 +31,15 @@ let cardsList = null;
 //--------------------------------------------------------------------------------------
 
 // Просмотр карточки
-const popupView = new PopupWithImage(popupSelectors.viewCard, popupData, imageData);
+const popupView = new PopupWithImage(popupSelectors.viewCard, POPUP_DATA, imageData);
 
 // Подтверждение удаления
 const popupConfirm = new PopupWithSubmit(
-  popupSelectors.confirm, popupData,
+  popupSelectors.confirm, POPUP_DATA,
   (card) => { deleteCard(card); },
 );
 
-const btnSubmitDelSelector = `${popupSelectors.confirm} ${popupForm.submitBtnSelector}`;
+const btnSubmitDelSelector = `${popupSelectors.confirm} ${FORM_CHECK.submitBtnSelector}`;
 const btnSubmitDel = document.querySelector(btnSubmitDelSelector);
 
 // Добавление карточки с фотографией в список
@@ -68,24 +61,18 @@ const addListItem = (item) => {
 // Постановка/снятие лайка
 function likeCard(card) {
   const id = card.getCardId();
-  const user = userProfile.getUserID();
-  const { name, info } = userProfile.getUserInfo();
   const likeState = card.isLiked();
-  // const likes = card.getLikes();
-
-  const userData = {
-    id: user,
-    name,
-    about: info,
-    avatar: userProfile.getUserAvatar(),
-  };
+  const likes = card.getLikes();
+  const user = userProfile.getUserID();
 
   const action = likeState ? 'удалить' : 'поставить';
   const likeFunc = likeState
-    ? (cardId) => api.unlikeCard(cardId)
-    : (cardId, userInfo) => api.likeCard(cardId, userInfo);
+    ? (cardId, cardLikes) => api.unlikeCard(cardId, cardLikes)
+    : (cardId, cardLikes) => api.likeCard(cardId, cardLikes);
 
-  likeFunc(id, userData)
+  // const newLikes = likes
+
+  likeFunc(id, likes)
     .then((res) => {
       card.setLikes(res.likes);
     })
@@ -118,15 +105,15 @@ function deleteCard(card) {
 // Форма добавления карточки
 //--------------------------------------------------------------------------------------
 
-const formNewCardSelector = `${popupSelectors.createCard} ${popupForm.formSelector}`;
+const formNewCardSelector = `${popupSelectors.createCard} ${FORM_CHECK.formSelector}`;
 const formNewCard = document.querySelector(formNewCardSelector);
-const formNewCardValidation = new FormValidator(popupForm, formNewCard);
+const formNewCardValidation = new FormValidator(FORM_CHECK, formNewCard);
 
 const btnNewCard = document.querySelector(btnNewCardSelector);
-const btnSubmitCard = formNewCard.querySelector(popupForm.submitBtnSelector);
+const btnSubmitCard = formNewCard.querySelector(FORM_CHECK.submitBtnSelector);
 
 const popupNewCard = new PopupWithForm(
-  popupSelectors.createCard, popupData, formData,
+  popupSelectors.createCard, POPUP_DATA, FORM_DATA,
   (item) => { saveNewCard(item); },
 );
 
@@ -162,70 +149,9 @@ function saveNewCard(item) {
 }
 
 //--------------------------------------------------------------------------------------
-// Редактирование профиля
-//--------------------------------------------------------------------------------------
-
-const formEditProfileSelector = `${popupSelectors.editProfile} ${popupForm.formSelector}`;
-const formChangeAvatarSelector = `${popupSelectors.changeAvatar} ${popupForm.formSelector}`;
-
-const formEditProfile = document.querySelector(formEditProfileSelector);
-const formEditProfileValidation = new FormValidator(popupForm, formEditProfile);
-const buttonEditProfile = document.querySelector(btnEditProfileSelector);
-const buttonSubmitProfile = formEditProfile.querySelector(popupForm.submitBtnSelector);
-
-const formChangeAvatar = document.querySelector(formChangeAvatarSelector);
-const formChangeAvatarValidation = new FormValidator(popupForm, formChangeAvatar);
-const buttonChangeAvatar = document.querySelector(profileData.avatarSelector);
-const buttonSubmitAvatar = formChangeAvatar.querySelector(popupForm.submitBtnSelector);
-
-// Окно редактирования аватара пользователя
-const popupChangeAvatar = new PopupWithForm(
-  popupSelectors.changeAvatar, popupData, formData,
-  (data) => { saveUserAvatar(data); },
-);
-
-// Окно редактирования профиля пользователя
-const popupEditProfile = new PopupWithForm(
-  popupSelectors.editProfile, popupData, formData,
-  (data) => { saveUserProfile(data); },
-);
-
-// Сохранение аватара на сервере
-function saveUserAvatar(data) {
-  buttonSubmitAvatar.textContent = 'Сохранение...';
-  api.patchNewAvatar(data)
-    .then((res) => {
-      userProfile.setUserAvatar(res.avatar);
-      userProfile.setUserId(res.id);
-    })
-    .catch((err) => {
-      console.log(`Невозможно обновить аватар на сервере. ${err}.`);
-    })
-    .finally(() => {
-      popupChangeAvatar.close();
-      buttonSubmitAvatar.textContent = 'Сохранить';
-    });
-}
-
-// Сохранение профиля на сервере
-function saveUserProfile(userData) {
-  buttonSubmitProfile.textContent = 'Сохранение...';
-  api.patchUserProfile(userData)
-    .then((res) => {
-      userProfile.setUserInfo({ name: res.name, info: res.about });
-      userProfile.setUserId(res.id);
-    })
-    .catch((err) => {
-      console.log(`Невозможно обновить профиль пользователя. ${err}.`);
-    })
-    .finally(() => {
-      popupEditProfile.close();
-      buttonSubmitProfile.textContent = 'Сохранить';
-    });
-}
-
-//--------------------------------------------------------------------------------------
 // Обработка событий
+//--------------------------------------------------------------------------------------
+
 popupNewCard.setEventListeners();
 popupEditProfile.setEventListeners();
 popupView.setEventListeners();
@@ -243,11 +169,14 @@ btnNewCard.addEventListener('click', () => {
   formNewCardValidation.setInitialState();
 });
 
-// Нажатие на кнопку "Редактировать профиль"
+const buttonEditProfile = document.querySelector(buttonEditProfileSelector);
+
 buttonEditProfile.addEventListener('click', () => {
   popupEditProfile.open(userProfile.getUserInfo());
   formEditProfileValidation.setInitialState();
 });
+
+const buttonChangeAvatar = document.querySelector(PROFILE_SELECTORS.avatar);
 
 buttonChangeAvatar.addEventListener('click', () => {
   const avatar = userProfile.getUserAvatar();
