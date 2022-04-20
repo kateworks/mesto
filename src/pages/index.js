@@ -1,6 +1,7 @@
 //--------------------------------------------------------------------------------------
 // Модуль index.js
 //--------------------------------------------------------------------------------------
+import { nanoid } from 'nanoid';
 import './index.css';
 
 import {
@@ -20,9 +21,10 @@ import PopupWithSubmit from '../components/PopupWithSubmit';
 import FormValidator from '../components/FormValidator';
 
 const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
+  // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-14',
+  baseUrl: 'https://my-json-server.typicode.com/kateworks/data',
   headers: {
-    authorization: '963ba2cb-ffe5-4800-9828-03d0e9a57e68',
+    // authorization: '963ba2cb-ffe5-4800-9828-03d0e9a57e68',
     'Content-Type': 'application/json',
   },
 });
@@ -67,19 +69,29 @@ const addListItem = (item) => {
 function likeCard(card) {
   const id = card.getCardId();
   const user = userProfile.getUserID();
+  const { name, info } = userProfile.getUserInfo();
   const likeState = card.isLiked();
+  // const likes = card.getLikes();
+
+  const userData = {
+    id: user,
+    name,
+    about: info,
+    avatar: userProfile.getUserAvatar(),
+  };
+
   const action = likeState ? 'удалить' : 'поставить';
   const likeFunc = likeState
     ? (cardId) => api.unlikeCard(cardId)
-    : (cardId) => api.likeCard(cardId);
+    : (cardId, userInfo) => api.likeCard(cardId, userInfo);
 
-  likeFunc(id)
+  likeFunc(id, userData)
     .then((res) => {
       card.setLikes(res.likes);
     })
     .catch((err) => {
       console.log(`Невозможно ${action} лайк. Ошибка ${err}.`);
-      card.setLikes(!likeState ? [{ _id: user }] : []);
+      card.setLikes(!likeState ? [{ id: user }] : []);
     })
     .finally(() => {
       card.setLikeGroup(user);
@@ -120,14 +132,24 @@ const popupNewCard = new PopupWithForm(
 
 function saveNewCard(item) {
   btnSubmitCard.textContent = 'Сохранение...';
-  api.postNewCard({ name: item.title, link: item.link })
+
+  const newItem = {
+    id: nanoid(),
+    name: item.title,
+    link: item.link,
+    likes: [],
+    ownerId: 0,
+  };
+
+  // api.postNewCard({ name: item.title, link: item.link })
+  api.postNewCard(newItem)
     .then((res) => {
       addListItem({
         title: res.name,
         link: res.link,
         likes: res.likes,
-        owner: res.owner._id,
-        id: res._id,
+        owner: res.ownerId,
+        id: res.id,
       });
     })
     .catch((err) => {
@@ -174,7 +196,7 @@ function saveUserAvatar(data) {
   api.patchNewAvatar(data)
     .then((res) => {
       userProfile.setUserAvatar(res.avatar);
-      userProfile.setUserId(res._id);
+      userProfile.setUserId(res.id);
     })
     .catch((err) => {
       console.log(`Невозможно обновить аватар на сервере. ${err}.`);
@@ -191,7 +213,7 @@ function saveUserProfile(userData) {
   api.patchUserProfile(userData)
     .then((res) => {
       userProfile.setUserInfo({ name: res.name, info: res.about });
-      userProfile.setUserId(res._id);
+      userProfile.setUserId(res.id);
     })
     .catch((err) => {
       console.log(`Невозможно обновить профиль пользователя. ${err}.`);
@@ -241,7 +263,7 @@ api.getUserInfo()
     console.log('Информация о пользователе получена с сервера.');
     userProfile.setUserInfo({ name: res.name, info: res.about });
     userProfile.setUserAvatar(res.avatar);
-    userProfile.setUserId(res._id);
+    userProfile.setUserId(res.id);
   })
   .catch((err) => {
     console.log(`Невозможно прочитать профиль пользователя. ${err}.`);
@@ -254,8 +276,8 @@ api.getUserInfo()
           title: item.name,
           link: item.link,
           likes: item.likes,
-          owner: item.owner._id,
-          id: item._id,
+          owner: item.ownerId,
+          id: item.id,
         }));
       })
       .catch((err) => {

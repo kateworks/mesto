@@ -51,6 +51,8 @@ export default class Card {
 
   setLikes(likes) { this._likes = likes; }
 
+  getLikes() { return this._likes; }
+
   getCardId() { return this._id; }
 
   isLiked() { return this._isLiked; }
