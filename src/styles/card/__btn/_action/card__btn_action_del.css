@@ -1,9 +1,8 @@
-
 .card__btn_action_del {
   width: 18px;
   height: 19px;
 
-  background-image: url(../../../../images/card-btn-delete.svg);
+  background-image: url(../../../../icons/card-btn-delete.svg);
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100%;
