@@ -8,6 +8,11 @@ export const PROFILE_SELECTORS = {
   avatar: '.profile__image',
 };
 
+export const PROFILE_BUTTONS = {
+  add: '.profile__btn_action_add',
+  edit: '.profile__btn_action_edit',
+};
+
 // Используется при валидации форм
 export const FORM_CHECK = {
   formSelector: '.popup__form',
@@ -39,6 +44,3 @@ export const FORM_DATA = {
   form: FORM_CHECK.formSelector,
   input: FORM_CHECK.inputSelector,
 };
-
-export const btnNewCardSelector = '.profile__btn_action_add';
-export const buttonEditProfileSelector = '.profile__btn_action_edit';

@@ -6,14 +6,14 @@ import './index.css';
 
 import {
   listSelector, cardTemplateSelector, cardSelector, IMAGE, POPUPS,
-  PROFILE_SELECTORS, POPUP_DATA, FORM_CHECK, FORM_DATA,
-  btnNewCardSelector, buttonEditProfileSelector,
+  PROFILE_SELECTORS, POPUP_DATA, FORM_CHECK, FORM_DATA, PROFILE_BUTTONS,
 } from '../utils/selectors';
 
 import initialCards from '../utils/cards-init';
 import * as messages from '../utils/messages';
 import api from '../utils/api';
 import userProfile from '../utils/profile';
+import popupConfirm from './delete-card';
 import { popupChangeAvatar, formChangeAvatarValidation } from './edit-avatar';
 import { popupEditProfile, formEditProfileValidation } from './edit-profile';
 
@@ -21,7 +21,6 @@ import Section from '../components/Section';
 import Card from '../components/Card';
 import PopupWithImage from '../components/PopupWithImage';
 import PopupWithForm from '../components/PopupWithForm';
-import PopupWithSubmit from '../components/PopupWithSubmit';
 import FormValidator from '../components/FormValidator';
 
 let cardsArray = [];
@@ -33,15 +32,6 @@ let cardsList = null;
 
 // Просмотр карточки
 const popupView = new PopupWithImage(POPUPS.viewCard, POPUP_DATA, IMAGE);
-
-// Подтверждение удаления
-const popupConfirm = new PopupWithSubmit(
-  POPUPS.confirm, POPUP_DATA,
-  (card) => { deleteCard(card); },
-);
-
-const btnSubmitDelSelector = `${POPUPS.confirm} ${FORM_CHECK.submitBtnSelector}`;
-const btnSubmitDel = document.querySelector(btnSubmitDelSelector);
 
 // Добавление карточки с фотографией в список
 const addListItem = (item) => {
@@ -86,22 +76,6 @@ function likeCard(card) {
     });
 }
 
-// Удаление карточки
-function deleteCard(card) {
-  btnSubmitDel.textContent = messages.DELETION;
-  api.deleteCard(card.getCardId())
-    .then(() => {
-      card.delete();
-    })
-    .catch((err) => {
-      console.log(`${messages.DELETE_ERROR} ${messages.ERROR} ${err}.`);
-    })
-    .finally(() => {
-      popupConfirm.close();
-      btnSubmitDel.textContent = messages.YES;
-    });
-}
-
 //--------------------------------------------------------------------------------------
 // Форма добавления карточки
 //--------------------------------------------------------------------------------------
@@ -110,7 +84,7 @@ const formNewCardSelector = `${POPUPS.createCard} ${FORM_CHECK.formSelector}`;
 const formNewCard = document.querySelector(formNewCardSelector);
 const formNewCardValidation = new FormValidator(FORM_CHECK, formNewCard);
 
-const btnNewCard = document.querySelector(btnNewCardSelector);
+const btnNewCard = document.querySelector(PROFILE_BUTTONS.add);
 const btnSubmitCard = formNewCard.querySelector(FORM_CHECK.submitBtnSelector);
 
 const popupNewCard = new PopupWithForm(
@@ -169,7 +143,7 @@ btnNewCard.addEventListener('click', () => {
   formNewCardValidation.setInitialState();
 });
 
-const buttonEditProfile = document.querySelector(buttonEditProfileSelector);
+const buttonEditProfile = document.querySelector(PROFILE_BUTTONS.edit);
 
 buttonEditProfile.addEventListener('click', () => {
   popupEditProfile.open(userProfile.getUserInfo());

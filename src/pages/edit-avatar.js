@@ -16,7 +16,9 @@ const buttonSubmitAvatar = formChangeAvatar.querySelector(FORM_CHECK.submitBtnSe
 
 // Окно редактирования аватара пользователя
 const popupChangeAvatar = new PopupWithForm(
-  POPUPS.changeAvatar, POPUP_DATA, FORM_DATA,
+  POPUPS.changeAvatar,
+  POPUP_DATA,
+  FORM_DATA,
   (data) => { saveUserAvatar(data); },
 );
 

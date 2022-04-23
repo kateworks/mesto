@@ -50,3 +50,21 @@ https://kateworks.github.io/mesto/
 
     Создает финальную сборку проекта, готовую для развертывания, в папке `dist`
 
+
+-----------------------
+deletion module
+likes
+readme - json placeholder link
+footer: mail, wikiway and jsonplaceholder links
+message about not saving
+
+
+main:
+- add tag
+- push tag
+- merge dev
+- push
+- publish
+
+final: delete package-log and push
+

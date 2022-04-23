@@ -1,6 +1,3 @@
-//--------------------------------------------------------------------------------------
-// Редактирование профиля
-//--------------------------------------------------------------------------------------
 import PopupWithForm from '../components/PopupWithForm';
 import FormValidator from '../components/FormValidator';
 import * as messages from '../utils/messages';
@@ -19,7 +16,9 @@ const buttonSubmitProfile = formEditProfile.querySelector(FORM_CHECK.submitBtnSe
 
 // Окно редактирования профиля пользователя
 const popupEditProfile = new PopupWithForm(
-  POPUPS.editProfile, POPUP_DATA, FORM_DATA,
+  POPUPS.editProfile,
+  POPUP_DATA,
+  FORM_DATA,
   (data) => { saveUserProfile(data); },
 );
 
@@ -28,7 +27,8 @@ function saveUserProfile(userData) {
   buttonSubmitProfile.textContent = messages.SAVING;
   api.patchUserProfile(userData)
     .then((res) => {
-      userProfile.setUserInfo({ name: res.name, info: res.about });
+      const { name, about } = res;
+      userProfile.setUserInfo({ name, info: about });
       userProfile.setUserId(res.id);
     })
     .catch((err) => {
