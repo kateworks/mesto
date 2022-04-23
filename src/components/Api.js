@@ -62,7 +62,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify(likes),
+      body: JSON.stringify({ likes }),
     })
       .then((res) => this._handleResponse(res));
   }
@@ -71,7 +71,7 @@ export default class Api {
     return fetch(`${this._baseUrl}/cards/${cardId}`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify(likes),
+      body: JSON.stringify({ likes }),
     })
       .then((res) => this._handleResponse(res));
   }

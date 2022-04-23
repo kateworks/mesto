@@ -14,7 +14,7 @@ import initialCards from '../utils/cards-init';
 import * as messages from '../utils/messages';
 import api from '../utils/api';
 import userProfile from '../utils/profile';
-import likeCard from './like-card';
+import like from './like-card';
 import popupConfirm from './delete-card';
 import { popupChangeAvatar, formChangeAvatarValidation } from './edit-avatar';
 import { popupEditProfile, formEditProfileValidation } from './edit-profile';
@@ -41,7 +41,7 @@ const addListItem = (item) => {
     {
       data: item,
       handleClick: (clickedItem) => { popupView.open(clickedItem); },
-      handleLike: (likedItem) => { likeCard(likedItem); },
+      handleLike: (likedItem) => { like(likedItem); },
       handleDelete: (deletedItem) => { popupConfirm.open(deletedItem); },
     },
     cardTemplateSelector,
@@ -99,7 +99,6 @@ function saveNewCard(item) {
 
 //--------------------------------------------------------------------------------------
 // Обработка событий
-//--------------------------------------------------------------------------------------
 
 popupNewCard.setEventListeners();
 popupEditProfile.setEventListeners();

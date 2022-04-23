@@ -58,10 +58,13 @@ export default class Card {
   isLiked() { return this._isLiked; }
 
   setLikeGroup(userId) {
-    this._isLiked = this._likes.some((user) => user._id === userId);
+    this._isLiked = this._likes.some((item) => item === userId);
     this._numLikes.textContent = String(this._likes.length);
-    if (this._likes.length) this._setLikeButton();
-    else this._unsetLikeButton();
+    if (this._likes.length) {
+      this._setLikeButton();
+    } else {
+      this._unsetLikeButton();
+    }
   }
 
   createCard(userId) {

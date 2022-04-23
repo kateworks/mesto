@@ -1,31 +1,33 @@
 import api from '../utils/api';
 import userProfile from '../utils/profile';
 
-// Постановка/снятие лайка
-function likeCard(card) {
-  const id = card.getCardId();
-  const likeState = card.isLiked();
-  const likes = card.getLikes();
-  const user = userProfile.getUserID();
+function like(card) {
+  const userId = userProfile.getUserID();
+  const cardId = card.getCardId();
+  const isLiked = card.isLiked();
+  const cardLikes = card.getLikes();
 
-  const action = likeState ? 'удалить' : 'поставить';
-  const likeFunc = likeState
-    ? (cardId, cardLikes) => api.unlikeCard(cardId, cardLikes)
-    : (cardId, cardLikes) => api.likeCard(cardId, cardLikes);
+  const action = isLiked ? 'удалить' : 'поставить';
 
-  // const newLikes = likes
+  const likeFunction = isLiked
+    ? (id, likes) => api.unlikeCard(id, likes)
+    : (id, likes) => api.likeCard(id, likes);
 
-  likeFunc(id, likes)
+  const newLikes = isLiked
+    ? cardLikes.filter((item) => item !== userId)
+    : [...cardLikes, userId];
+
+  likeFunction(cardId, newLikes)
     .then((res) => {
       card.setLikes(res.likes);
     })
     .catch((err) => {
       console.log(`Невозможно ${action} лайк. Ошибка ${err}.`);
-      card.setLikes(!likeState ? [{ id: user }] : []);
+      card.setLikes(newLikes);
     })
     .finally(() => {
-      card.setLikeGroup(user);
+      card.setLikeGroup(userId);
     });
 }
 
-export default likeCard;
+export default like;
