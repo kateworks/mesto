@@ -52,11 +52,11 @@ https://kateworks.github.io/mesto/
 
 
 -----------------------
-deletion module
 likes
 readme - json placeholder link
 footer: mail, wikiway and jsonplaceholder links
 message about not saving
+верстка (профиль)
 
 
 main:

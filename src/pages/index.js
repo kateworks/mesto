@@ -2,17 +2,19 @@
 // Модуль index.js
 //--------------------------------------------------------------------------------------
 import { nanoid } from 'nanoid';
-import './index.css';
+import '../styles/index.css';
 
 import {
-  listSelector, cardTemplateSelector, cardSelector, IMAGE, POPUPS,
-  PROFILE_SELECTORS, POPUP_DATA, FORM_CHECK, FORM_DATA, PROFILE_BUTTONS,
+  listSelector, cardTemplateSelector, cardSelector,
+  IMAGE, POPUPS, POPUP_DATA, FORM_CHECK, FORM_DATA,
+  PROFILE_SELECTORS, PROFILE_BUTTONS,
 } from '../utils/selectors';
 
 import initialCards from '../utils/cards-init';
 import * as messages from '../utils/messages';
 import api from '../utils/api';
 import userProfile from '../utils/profile';
+import likeCard from './like-card';
 import popupConfirm from './delete-card';
 import { popupChangeAvatar, formChangeAvatarValidation } from './edit-avatar';
 import { popupEditProfile, formEditProfileValidation } from './edit-profile';
@@ -48,33 +50,6 @@ const addListItem = (item) => {
   const cardElement = card.createCard(userProfile.getUserID());
   cardsList.addItem(cardElement);
 };
-
-// Постановка/снятие лайка
-function likeCard(card) {
-  const id = card.getCardId();
-  const likeState = card.isLiked();
-  const likes = card.getLikes();
-  const user = userProfile.getUserID();
-
-  const action = likeState ? 'удалить' : 'поставить';
-  const likeFunc = likeState
-    ? (cardId, cardLikes) => api.unlikeCard(cardId, cardLikes)
-    : (cardId, cardLikes) => api.likeCard(cardId, cardLikes);
-
-  // const newLikes = likes
-
-  likeFunc(id, likes)
-    .then((res) => {
-      card.setLikes(res.likes);
-    })
-    .catch((err) => {
-      console.log(`Невозможно ${action} лайк. Ошибка ${err}.`);
-      card.setLikes(!likeState ? [{ id: user }] : []);
-    })
-    .finally(() => {
-      card.setLikeGroup(user);
-    });
-}
 
 //--------------------------------------------------------------------------------------
 // Форма добавления карточки
