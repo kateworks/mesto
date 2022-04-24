@@ -79,17 +79,19 @@ function saveNewCard(item) {
   };
 
   api.postNewCard(newItem)
-    .then((res) => {
-      addListItem({
-        title: res.name,
-        link: res.link,
-        likes: res.likes,
-        owner: res.ownerId,
-        id: res.id,
-      });
+    .then((result) => {
+      const {
+        name, link, likes, ownerId, id,
+      } = result;
+
+      const savedItem = {
+        title: name, link, likes, owner: ownerId, id,
+      };
+
+      addListItem(savedItem);
     })
-    .catch((err) => {
-      console.log(`${messages.SAVE_ERROR} ${messages.ERROR} ${err}.`);
+    .catch((error) => {
+      console.log(`${messages.SAVE_ERROR} ${messages.ERROR} ${error}.`);
     })
     .finally(() => {
       popupNewCard.close();

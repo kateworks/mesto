@@ -1,5 +1,5 @@
-import PopupWithSubmit from '../components/PopupWithSubmit';
 import { FORM_CHECK, POPUPS, POPUP_DATA } from '../utils/selectors';
+import PopupWithSubmit from '../components/PopupWithSubmit';
 import * as messages from '../utils/messages';
 import api from '../utils/api';
 
@@ -10,12 +10,12 @@ const popupConfirm = new PopupWithSubmit(
   (card) => { deleteCard(card); },
 );
 
-const btnSubmitDelSelector = `${POPUPS.confirm} ${FORM_CHECK.submitBtnSelector}`;
-const btnSubmitDel = document.querySelector(btnSubmitDelSelector);
+const selector = `${POPUPS.confirm} ${FORM_CHECK.submitBtnSelector}`;
+const buttonConfirm = document.querySelector(selector);
 
 // Удаление карточки
 function deleteCard(card) {
-  btnSubmitDel.textContent = messages.DELETION;
+  buttonConfirm.textContent = messages.DELETION;
   api.deleteCard(card.getCardId())
     .then(() => {
       card.delete();
@@ -25,7 +25,7 @@ function deleteCard(card) {
     })
     .finally(() => {
       popupConfirm.close();
-      btnSubmitDel.textContent = messages.YES;
+      buttonConfirm.textContent = messages.YES;
     });
 }
 
