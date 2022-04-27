@@ -6,7 +6,7 @@ import '../styles/index.css';
 
 import {
   listSelector, cardTemplateSelector, cardSelector,
-  IMAGE, POPUPS, POPUP_DATA, FORM_CHECK, FORM_DATA,
+  IMAGE, POPUPS, POPUP_DATA, FORM_CHECK, FORM_DATA, ERROR_DATA,
   PROFILE_SELECTORS, PROFILE_BUTTONS,
 } from '../utils/selectors';
 
@@ -24,6 +24,7 @@ import Card from '../components/Card';
 import PopupWithImage from '../components/PopupWithImage';
 import PopupWithForm from '../components/PopupWithForm';
 import FormValidator from '../components/FormValidator';
+import ErrorMessage from '../components/ErrorMessage';
 
 let cardsArray = [];
 let cardsList = null;
@@ -58,6 +59,7 @@ const addListItem = (item) => {
 const formNewCardSelector = `${POPUPS.createCard} ${FORM_CHECK.formSelector}`;
 const formNewCard = document.querySelector(formNewCardSelector);
 const formNewCardValidation = new FormValidator(FORM_CHECK, formNewCard);
+const errorMessage = new ErrorMessage(formNewCard, ERROR_DATA);
 
 const btnNewCard = document.querySelector(PROFILE_BUTTONS.add);
 const btnSubmitCard = formNewCard.querySelector(FORM_CHECK.submitBtnSelector);
@@ -89,12 +91,15 @@ function saveNewCard(item) {
       };
 
       addListItem(savedItem);
+      errorMessage.toggle();
+      popupNewCard.close();
     })
     .catch((error) => {
-      console.log(`${messages.SAVE_ERROR} ${messages.ERROR} ${error}.`);
+      const message = `${messages.SAVE_ERROR} ${messages.ERROR} ${error}.`;
+      console.log(message);
+      errorMessage.toggle(message);
     })
     .finally(() => {
-      popupNewCard.close();
       btnSubmitCard.textContent = messages.CREATE;
     });
 }
@@ -144,6 +149,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
       const {
         id, name, about, avatar,
       } = user;
+
       console.log(messages.USER_OK);
       userProfile.setUserInfo({ name, info: about });
       userProfile.setUserAvatar(avatar);
@@ -154,13 +160,16 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
 
     if (cards) {
       console.log(messages.CARDS_OK);
-      cardsArray = cards.map((item) => ({
-        title: item.name,
-        link: item.link,
-        likes: item.likes,
-        owner: item.ownerId,
-        id: item.id,
-      }));
+
+      cardsArray = cards.map((item) => {
+        const {
+          name, link, likes, ownerId, id,
+        } = item;
+
+        return {
+          title: name, link, likes, owner: ownerId, id,
+        };
+      });
     } else {
       console.log(messages.CARDS_NO_DATA);
       cardsArray = initialCards;

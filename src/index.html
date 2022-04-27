@@ -66,6 +66,7 @@
         <button tabindex="4" type="button" class="popup__btn popup__btn_action_close shaded"
           title="Закрыть форму без сохранения данных">
         </button>
+
         <form class="popup__form popup__form_size_l" name="edit-profile">
           <h3 class="popup__heading">Редактировать профиль</h3>
 
@@ -81,9 +82,9 @@
             <span class="popup__error" id="info-error">Ошибка</span>
           </label>
 
-          <button tabindex="3" type="submit" value="Сохранить"
-            class="popup__btn popup__btn_action_submit">
-              Сохранить
+          <span class="popup__error popup__error_submit" id="submit-error">Ошибка</span>
+          <button tabindex="3" type="submit" value="Сохранить" class="popup__btn popup__btn_action_submit">
+            Сохранить
           </button>
         </form>
       </div>
@@ -94,21 +95,21 @@
     -->
     <div class="popup popup_content_avatar">
       <div class="popup__container">
-        <button type="button" class="popup__btn popup__btn_action_close shaded"
-          title="Закрыть форму без сохранения данных">
+        <button type="button" class="popup__btn popup__btn_action_close shaded" title="Закрыть форму без сохранения данных">
         </button>
+
         <form class="popup__form popup__form_size_m" name="edit-profile">
           <h3 class="popup__heading">Обновить аватар</h3>
 
           <label class="popup__field">
             <input type="url" id="avatar" name="avatar" pattern="https?://.+"
               class="popup__item popup__item_type_info" placeholder="Ссылка на картинку" required>
-              <span class="popup__error" id="avatar-error">Ошибка</span>
+            <span class="popup__error" id="avatar-error">Ошибка</span>
           </label>
 
-          <button type="submit" value="Сохранить"
-            class="popup__btn popup__btn_action_submit">
-              Сохранить
+          <span class="popup__error popup__error_submit" id="submit-error">Ошибка</span>
+          <button type="submit" value="Сохранить" class="popup__btn popup__btn_action_submit">
+            Сохранить
           </button>
         </form>
       </div>
@@ -119,8 +120,7 @@
     -->
     <div tabindex="0" class="popup popup_content_card">
       <div tabindex="0" class="popup__container">
-        <button tabindex="4" type="button" class="popup__btn popup__btn_action_close shaded"
-          title="Закрыть форму без сохранения данных">
+        <button tabindex="4" type="button" class="popup__btn popup__btn_action_close shaded" title="Закрыть форму без сохранения данных">
         </button>
         <form class="popup__form popup__form_size_l" name="add-place">
           <h3 class="popup__heading">Новое место</h3>
@@ -137,9 +137,9 @@
               <span class="popup__error" id="link-error">Ошибка</span>
           </label>
 
-          <button tabindex="3" type="submit" value="Создать"
-            class="popup__btn popup__btn_action_submit">
-              Создать
+          <span class="popup__error popup__error_submit" id="submit-error">Ошибка</span>
+          <button tabindex="3" type="submit" value="Создать" class="popup__btn popup__btn_action_submit">
+            Создать
           </button>
         </form>
       </div>

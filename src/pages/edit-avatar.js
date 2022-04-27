@@ -1,8 +1,9 @@
 import PopupWithForm from '../components/PopupWithForm';
 import FormValidator from '../components/FormValidator';
+import ErrorMessage from '../components/ErrorMessage';
 import * as messages from '../utils/messages';
 import {
-  POPUPS, POPUP_DATA, FORM_CHECK, FORM_DATA,
+  POPUPS, POPUP_DATA, FORM_CHECK, FORM_DATA, ERROR_DATA,
 } from '../utils/selectors';
 
 import api from '../utils/api';
@@ -10,6 +11,7 @@ import userProfile from '../utils/profile';
 
 const formChangeAvatarSelector = `${POPUPS.changeAvatar} ${FORM_CHECK.formSelector}`;
 const formChangeAvatar = document.querySelector(formChangeAvatarSelector);
+const errorMessage = new ErrorMessage(formChangeAvatar, ERROR_DATA);
 
 const formChangeAvatarValidation = new FormValidator(FORM_CHECK, formChangeAvatar);
 const buttonSubmitAvatar = formChangeAvatar.querySelector(FORM_CHECK.submitBtnSelector);
@@ -29,12 +31,15 @@ function saveUserAvatar(data) {
     .then((res) => {
       userProfile.setUserAvatar(res.avatar);
       userProfile.setUserId(res.id);
+      errorMessage.toggle();
+      popupChangeAvatar.close();
     })
     .catch((err) => {
-      console.log(`${messages.AVATAR_ERROR} ${messages.ERROR} ${err}.`);
+      const message = `${messages.AVATAR_ERROR} ${messages.ERROR} ${err}.`;
+      console.log(message);
+      errorMessage.toggle(message);
     })
     .finally(() => {
-      popupChangeAvatar.close();
       buttonSubmitAvatar.textContent = messages.SAVE;
     });
 }

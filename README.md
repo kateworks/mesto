@@ -55,7 +55,7 @@ https://kateworks.github.io/mesto/
 readme - json placeholder link
 footer: mail, wikiway and jsonplaceholder links
 message about not saving
-верстка (профиль)
+верстка (профиль, форма редактирования аватара, popups - 320px)
 
 
 main:

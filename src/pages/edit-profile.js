@@ -1,8 +1,9 @@
 import PopupWithForm from '../components/PopupWithForm';
 import FormValidator from '../components/FormValidator';
+import ErrorMessage from '../components/ErrorMessage';
 import * as messages from '../utils/messages';
 import {
-  POPUPS, POPUP_DATA, FORM_CHECK, FORM_DATA,
+  POPUPS, POPUP_DATA, FORM_CHECK, FORM_DATA, ERROR_DATA,
 } from '../utils/selectors';
 
 import api from '../utils/api';
@@ -10,6 +11,7 @@ import userProfile from '../utils/profile';
 
 const formEditProfileSelector = `${POPUPS.editProfile} ${FORM_CHECK.formSelector}`;
 const formEditProfile = document.querySelector(formEditProfileSelector);
+const errorMessage = new ErrorMessage(formEditProfile, ERROR_DATA);
 
 const formEditProfileValidation = new FormValidator(FORM_CHECK, formEditProfile);
 const buttonSubmitProfile = formEditProfile.querySelector(FORM_CHECK.submitBtnSelector);
@@ -26,16 +28,20 @@ const popupEditProfile = new PopupWithForm(
 function saveUserProfile(userData) {
   buttonSubmitProfile.textContent = messages.SAVING;
   api.patchUserProfile(userData)
-    .then((res) => {
-      const { name, about } = res;
+    .then((result) => {
+      const { name, about, id } = result;
       userProfile.setUserInfo({ name, info: about });
-      userProfile.setUserId(res.id);
+      userProfile.setUserId(id);
+
+      errorMessage.toggle();
+      popupEditProfile.close();
     })
     .catch((err) => {
-      console.log(`${messages.PROFILE_ERROR} ${messages.ERROR} ${err}.`);
+      const message = `${messages.PROFILE_ERROR} ${messages.ERROR} ${err}.`;
+      console.log(message);
+      errorMessage.toggle(message);
     })
     .finally(() => {
-      popupEditProfile.close();
       buttonSubmitProfile.textContent = messages.SAVE;
     });
 }

@@ -18,8 +18,9 @@ export const FORM_CHECK = {
   formSelector: '.popup__form',
   inputSelector: '.popup__item',
   submitBtnSelector: '.popup__btn_action_submit',
+  submitErrorSelector: '.popup__error_submit',
   inputErrorClass: 'popup__item_type_error',
-  errorClass: 'popup__error_visible',
+  errorVisibleClass: 'popup__error_visible',
 };
 
 export const POPUPS = {
@@ -43,4 +44,10 @@ export const POPUP_DATA = {
 export const FORM_DATA = {
   form: FORM_CHECK.formSelector,
   input: FORM_CHECK.inputSelector,
+  error: FORM_CHECK.submitErrorSelector,
+};
+
+export const ERROR_DATA = {
+  selector: FORM_CHECK.submitErrorSelector,
+  visibleClass: FORM_CHECK.errorVisibleClass,
 };
