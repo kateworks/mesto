@@ -1,5 +1,5 @@
+import { PopupWithSubmit } from '../components';
 import { FORM_CHECK, POPUPS, POPUP_DATA } from '../utils/selectors';
-import PopupWithSubmit from '../components/PopupWithSubmit';
 import * as messages from '../utils/messages';
 import api from '../utils/api';
 

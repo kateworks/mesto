@@ -19,12 +19,9 @@ import popupConfirm from './delete-card';
 import { popupChangeAvatar, formChangeAvatarValidation } from './edit-avatar';
 import { popupEditProfile, formEditProfileValidation } from './edit-profile';
 
-import Section from '../components/Section';
-import Card from '../components/Card';
-import PopupWithImage from '../components/PopupWithImage';
-import PopupWithForm from '../components/PopupWithForm';
-import FormValidator from '../components/FormValidator';
-import ErrorMessage from '../components/ErrorMessage';
+import {
+  Card, ErrorMessage, FormValidator, PopupWithImage, PopupWithForm, Section,
+} from '../components';
 
 let cardsArray = [];
 let cardsList = null;

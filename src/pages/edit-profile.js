@@ -1,6 +1,4 @@
-import PopupWithForm from '../components/PopupWithForm';
-import FormValidator from '../components/FormValidator';
-import ErrorMessage from '../components/ErrorMessage';
+import { ErrorMessage, FormValidator, PopupWithForm } from '../components';
 import * as messages from '../utils/messages';
 import {
   POPUPS, POPUP_DATA, FORM_CHECK, FORM_DATA, ERROR_DATA,
