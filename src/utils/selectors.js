@@ -39,6 +39,8 @@ export const IMAGE = {
 export const POPUP_DATA = {
   buttonClose: '.popup__btn_action_close',
   openedClass: 'popup_opened',
+  noScrollClass: 'page_no-scroll',
+
 };
 
 export const FORM_DATA = {

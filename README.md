@@ -52,6 +52,9 @@ https://kateworks.github.io/mesto/
 
 
 -----------------------
+popups -no scroll!!!
+delete - add errorMessage
+
 readme - json placeholder link
 footer: mail, wikiway and jsonplaceholder links
 message about not saving

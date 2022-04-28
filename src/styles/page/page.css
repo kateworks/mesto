@@ -19,6 +19,12 @@
   margin: 0;
 }
 
+.page_no-scroll {
+  height: 100vh;
+  overflow-y: hidden;
+}
+
+
 @media screen and (max-width: 1280px) {
   .page {
     width: 100%;
