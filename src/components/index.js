@@ -3,6 +3,7 @@ import Card from './Card';
 import ErrorMessage from './ErrorMessage';
 import FormValidator from './FormValidator';
 import Popup from './Popup';
+import PopupWithMessage from './PopupWithMessage';
 import PopupWithForm from './PopupWithForm';
 import PopupWithImage from './PopupWithImage';
 import PopupWithSubmit from './PopupWithSubmit';
@@ -15,6 +16,7 @@ export {
   ErrorMessage,
   FormValidator,
   Popup,
+  PopupWithMessage,
   PopupWithForm,
   PopupWithImage,
   PopupWithSubmit,

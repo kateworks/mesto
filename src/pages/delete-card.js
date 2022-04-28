@@ -1,5 +1,7 @@
-import { PopupWithSubmit } from '../components';
-import { FORM_CHECK, POPUPS, POPUP_DATA } from '../utils/selectors';
+import { ErrorMessage, PopupWithSubmit } from '../components';
+import {
+  ERROR_DATA, FORM_CHECK, POPUPS, POPUP_DATA,
+} from '../utils/selectors';
 import * as messages from '../utils/messages';
 import api from '../utils/api';
 
@@ -7,11 +9,13 @@ import api from '../utils/api';
 const popupConfirm = new PopupWithSubmit(
   POPUPS.confirm,
   POPUP_DATA,
+  ERROR_DATA,
   (card) => { deleteCard(card); },
 );
 
-const selector = `${POPUPS.confirm} ${FORM_CHECK.submitBtnSelector}`;
-const buttonConfirm = document.querySelector(selector);
+const formConfirm = document.querySelector(`${POPUPS.confirm} ${FORM_CHECK.formSelector}`);
+const buttonConfirm = formConfirm.querySelector(FORM_CHECK.submitBtnSelector);
+const errorMessage = new ErrorMessage(formConfirm, ERROR_DATA);
 
 // Удаление карточки
 function deleteCard(card) {
@@ -19,12 +23,15 @@ function deleteCard(card) {
   api.deleteCard(card.getCardId())
     .then(() => {
       card.delete();
+      errorMessage.toggle();
+      popupConfirm.close();
     })
-    .catch((err) => {
-      console.log(`${messages.DELETE_ERROR} ${messages.ERROR} ${err}.`);
+    .catch((error) => {
+      const message = `${messages.DELETE_ERROR} ${messages.ERROR} ${error}.`;
+      console.log(message);
+      errorMessage.toggle(message);
     })
     .finally(() => {
-      popupConfirm.close();
       buttonConfirm.textContent = messages.YES;
     });
 }

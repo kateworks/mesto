@@ -62,7 +62,10 @@ const btnNewCard = document.querySelector(PROFILE_BUTTONS.add);
 const btnSubmitCard = formNewCard.querySelector(FORM_CHECK.submitBtnSelector);
 
 const popupNewCard = new PopupWithForm(
-  POPUPS.createCard, POPUP_DATA, FORM_DATA,
+  POPUPS.createCard,
+  POPUP_DATA,
+  ERROR_DATA,
+  FORM_DATA,
   (item) => { saveNewCard(item); },
 );
 

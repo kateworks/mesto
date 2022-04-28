@@ -46,10 +46,9 @@ export const POPUP_DATA = {
 export const FORM_DATA = {
   form: FORM_CHECK.formSelector,
   input: FORM_CHECK.inputSelector,
-  error: FORM_CHECK.submitErrorSelector,
 };
 
 export const ERROR_DATA = {
-  selector: FORM_CHECK.submitErrorSelector,
+  errorSelector: FORM_CHECK.submitErrorSelector,
   visibleClass: FORM_CHECK.errorVisibleClass,
 };

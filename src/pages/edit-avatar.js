@@ -18,6 +18,7 @@ const buttonSubmitAvatar = formChangeAvatar.querySelector(FORM_CHECK.submitBtnSe
 const popupChangeAvatar = new PopupWithForm(
   POPUPS.changeAvatar,
   POPUP_DATA,
+  ERROR_DATA,
   FORM_DATA,
   (data) => { saveUserAvatar(data); },
 );

@@ -1,8 +1,3 @@
-//--------------------------------------------------------------------------------------
-// Модуль Popup.js
-// Класс Popup
-//--------------------------------------------------------------------------------------
-
 export default class Popup {
   constructor(popupSelector, { buttonClose, openedClass, noScrollClass }) {
     this._popup = document.querySelector(popupSelector);

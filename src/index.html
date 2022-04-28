@@ -166,14 +166,13 @@
     -->
     <div class="popup popup_content_confirm">
       <div class="popup__container">
-        <button type="button" class="popup__btn popup__btn_action_close shaded"
-          title="Закрыть окно без подтверждения">
+        <button type="button" class="popup__btn popup__btn_action_close shaded" title="Закрыть окно без подтверждения">
         </button>
         <form class="popup__form popup__form_size_s" name="confirm">
           <h3 class="popup__heading">Вы уверены?</h3>
-          <button tabindex="3" type="submit" value="Да"
-            class="popup__btn popup__btn_action_submit">
-              Да
+          <span class="popup__error popup__error_submit" id="submit-error">Ошибка</span>
+          <button tabindex="3" type="submit" value="Да" class="popup__btn popup__btn_action_submit">
+            Да
           </button>
         </form>
       </div>

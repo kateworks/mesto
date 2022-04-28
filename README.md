@@ -52,12 +52,12 @@ https://kateworks.github.io/mesto/
 
 
 -----------------------
-popups -no scroll!!!
-delete - add errorMessage
+delete - высота, когда скрывать
 
 readme - json placeholder link
 footer: mail, wikiway and jsonplaceholder links
 message about not saving
+
 верстка (профиль, форма редактирования аватара, popups - 320px)
 
 

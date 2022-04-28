@@ -1,13 +1,8 @@
-//--------------------------------------------------------------------------------------
-// Модуль PopupWithSubmit.js
-// Класс PopupWithSubmit
-//--------------------------------------------------------------------------------------
+import PopupWithMessage from './PopupWithMessage';
 
-import Popup from './Popup';
-
-export default class PopupWithSubmit extends Popup {
-  constructor(selector, classes, submitHandler) {
-    super(selector, classes);
+export default class PopupWithSubmit extends PopupWithMessage {
+  constructor(selector, classes, errorClasses, submitHandler) {
+    super(selector, classes, errorClasses);
     this._submitHandler = submitHandler;
   }
 

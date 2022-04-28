@@ -18,6 +18,7 @@ const buttonSubmitProfile = formEditProfile.querySelector(FORM_CHECK.submitBtnSe
 const popupEditProfile = new PopupWithForm(
   POPUPS.editProfile,
   POPUP_DATA,
+  ERROR_DATA,
   FORM_DATA,
   (data) => { saveUserProfile(data); },
 );
