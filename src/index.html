@@ -2,28 +2,23 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Интерактивная страница для размещения фотографий (учебный проект)">
+	<meta name="author" content="Екатерина Пожидаева">
   <!-- <link rel="stylesheet" href="pages/index.css"> -->
-  <title>Сервис Mesto</title>
+  <title>Проект Mesto</title>
 </head>
 <body>
   <div class="page">
 
-    <!-- ***************************************************************
-      Шапка сайта
-    -->
     <header class="header">
       <img class="header__logo" src="<%=require('./icons/header-logo.svg')%>"
         alt="Логотип сервиса Mesto-Russia">
     </header>
 
-    <!-- ************************************************************
-      Содержимое сайта
-    -->
     <main class="content">
-
       <section class="profile">
-
         <div class="profile__avatar">
           <img
             class="profile__image"
@@ -41,8 +36,7 @@
           <p class="profile__work">Frontend-разработчик</p>
         </div>
 
-        <button class="profile__btn profile__btn_action_add shaded"
-          title="Добавить фотографию">
+        <button class="profile__btn profile__btn_action_add shaded" title="Добавить фотографию">
         </button>
       </section>
 
@@ -51,13 +45,42 @@
       </section>
     </main>
 
-    <!-- ***************************************************************
-      Подвал сайта
-    -->
     <footer class="footer">
-      <p class="footer__copyright">© 2020 Mesto Russia</p>
+      <ul class="footer__list">
+        <p class="footer__item">
+          <a 
+            class="footer__link" 
+            href="https://my-json-server.typicode.com/kateworks/data" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            title="Fake Online REST server for teams"
+          >My JSON Server
+          </a>      
+        </p>
+        <p class="footer__item">
+          <a 
+            class="footer__link" 
+            href="https://wikiway.com/russia/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            title="Адрес сайта с фотографиями России"
+          >Wikiway
+          </a>      
+        </p>
+        <p class="footer__item">
+          <a 
+            class="footer__link" 
+            href="mailto:pozhidaeva.e.a.work@gmail.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            title="Откройте ссылку чтобы написать мне"
+          >&#169; 2020-2022 Екатерина Пожидаева
+          </a>      
+        </p>
+  
+      </ul>
     </footer>
-
+  
     <!-- ***************************************************************
       Всплывающее окно редактирования профиля
     -->

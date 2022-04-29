@@ -8,4 +8,9 @@
 @import url(./profile/profile.css);
 @import url(./popup/popup.css);
 @import url(./popup/_opened/popup_opened.css);
+
+
 @import url(./footer/footer.css);
+@import url(./footer/__list/footer__list.css);
+@import url(./footer/__item/footer__item.css);
+@import url(./footer/__link/footer__link.css);

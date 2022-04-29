@@ -52,13 +52,17 @@ https://kateworks.github.io/mesto/
 
 
 -----------------------
+
+card - щелкните для просмотра
+верстка (профиль, форма редактирования аватара, popups - 320px)
+
+
 delete - высота, когда скрывать
+modules
 
 readme - json placeholder link
-footer: mail, wikiway and jsonplaceholder links
 message about not saving
 
-верстка (профиль, форма редактирования аватара, popups - 320px)
 
 
 main:
