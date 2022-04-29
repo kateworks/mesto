@@ -20,3 +20,5 @@ export const AVATAR_ERROR = 'Невозможно обновить аватар 
 export const PROFILE_ERROR = 'Невозможно обновить профиль пользователя.';
 
 export const YES = 'Да';
+
+export const VIEW_CARD = 'Для просмотра карточки щелкните по ней';

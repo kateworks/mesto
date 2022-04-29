@@ -25,6 +25,15 @@ https://kateworks.github.io/mesto/
 
 Для сборки проекта используется Webpack.
 
+**Примечание.**
+
+Для выполнения запросов к API использовался фиктивный REST сервер
+[My JSON Server](https://my-json-server.typicode.com/), поэтому
+введенная информация не сохраняется после закрытия или перезагрузки страницы.
+
+Исходные данные можно посмотреть здесь:
+https://my-json-server.typicode.com/kateworks/data
+
 
 ## Запуск проекта
 
@@ -53,16 +62,13 @@ https://kateworks.github.io/mesto/
 
 -----------------------
 
-card - щелкните для просмотра
-верстка (профиль, форма редактирования аватара, popups - 320px)
-
+верстка 
+(профиль, 
+форма редактирования аватара, 
+popups - 320px)
 
 delete - высота, когда скрывать
 modules
-
-readme - json placeholder link
-message about not saving
-
 
 
 main:

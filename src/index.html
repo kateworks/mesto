@@ -47,17 +47,7 @@
 
     <footer class="footer">
       <ul class="footer__list">
-        <p class="footer__item">
-          <a 
-            class="footer__link" 
-            href="https://my-json-server.typicode.com/kateworks/data" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            title="Fake Online REST server for teams"
-          >My JSON Server
-          </a>      
-        </p>
-        <p class="footer__item">
+        <li class="footer__item">
           <a 
             class="footer__link" 
             href="https://wikiway.com/russia/" 
@@ -66,8 +56,20 @@
             title="Адрес сайта с фотографиями России"
           >Wikiway
           </a>      
-        </p>
-        <p class="footer__item">
+        </li>
+        
+        <li class="footer__item">
+          <a 
+            class="footer__link" 
+            href="https://my-json-server.typicode.com/kateworks/data" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            title="Fake Online REST server for teams"
+          >My JSON Server
+          </a>      
+        </li>
+
+        <li class="footer__item">
           <a 
             class="footer__link" 
             href="mailto:pozhidaeva.e.a.work@gmail.com" 
@@ -76,7 +78,7 @@
             title="Откройте ссылку чтобы написать мне"
           >&#169; 2020-2022 Екатерина Пожидаева
           </a>      
-        </p>
+        </li>
   
       </ul>
     </footer>
@@ -173,8 +175,7 @@
     -->
     <div tabindex="0" class="popup popup_content_image">
       <div tabindex="1" class="popup__image-box">
-        <button type="button" class="popup__btn popup__btn_action_close shaded"
-          title="Закрыть окно просмотра">
+        <button type="button" class="popup__btn popup__btn_action_close shaded" title="Закрыть окно просмотра">
         </button>
 
         <figure class="popup__figure">
@@ -211,14 +212,12 @@
       <div class="card__description">
         <h2 class="card__title"></h2>
         <div class="card__like-group">
-          <button class="card__btn card__btn_action_like shaded"
-            title="Нравится">
+          <button class="card__btn card__btn_action_like shaded" title="Нравится">
           </button>
           <span class="card__like-num">0</span>
         </div>
       </div>
-      <button class="card__btn card__btn_action_del shaded"
-        title="Удалить">
+      <button class="card__btn card__btn_action_del shaded" title="Удалить карточку">
       </button>
     </li>
   </template>

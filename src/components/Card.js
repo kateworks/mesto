@@ -1,7 +1,4 @@
-//--------------------------------------------------------------------------------------
-// Модуль Card.js
-// Класс Card
-//--------------------------------------------------------------------------------------
+import { VIEW_CARD } from '../utils/messages';
 
 export default class Card {
   constructor({
@@ -87,6 +84,7 @@ export default class Card {
 
     this._image.src = this._link;
     this._image.alt = this._title;
+    this._image.title = VIEW_CARD;
     return this._element;
   }
 }

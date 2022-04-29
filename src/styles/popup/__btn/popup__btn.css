@@ -1,5 +1,5 @@
-
 .popup__btn {
+  display: block;
   background: none;
   box-shadow: none;
   border: none;

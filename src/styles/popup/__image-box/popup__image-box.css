@@ -1,6 +1,5 @@
-
 .popup__image-box {
-  max-width: 75vw;
+  width: 75vw;
   height: 75vh;
   position: relative;
 
