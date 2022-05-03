@@ -50,17 +50,6 @@
         <li class="footer__item">
           <a 
             class="footer__link" 
-            href="https://wikiway.com/russia/" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            title="Адрес сайта с фотографиями России"
-          >Wikiway
-          </a>      
-        </li>
-        
-        <li class="footer__item">
-          <a 
-            class="footer__link" 
             href="https://my-json-server.typicode.com/kateworks/data" 
             target="_blank" 
             rel="noopener noreferrer"
@@ -69,6 +58,17 @@
           </a>      
         </li>
 
+        <li class="footer__item">
+          <a 
+            class="footer__link" 
+            href="https://wikiway.com/russia/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            title="Адрес сайта с фотографиями России"
+          >Wikiway
+          </a>      
+        </li>
+        
         <li class="footer__item">
           <a 
             class="footer__link" 
@@ -92,7 +92,7 @@
           title="Закрыть форму без сохранения данных">
         </button>
 
-        <form class="popup__form popup__form_size_l" name="edit-profile">
+        <form class="popup__form" name="edit-profile">
           <h3 class="popup__heading">Редактировать профиль</h3>
 
           <label class="popup__field">
@@ -104,10 +104,9 @@
           <label class="popup__field">
             <input tabindex="2" type="text" id="info" name="info" maxlength="200" minlength="2"
                 class="popup__item popup__item_type_info" placeholder="О себе" required>
-            <span class="popup__error" id="info-error">Ошибка</span>
+            <span class="popup__error popup__error_submit" id="info-error">Ошибка</span>
           </label>
 
-          <span class="popup__error popup__error_submit" id="submit-error">Ошибка</span>
           <button tabindex="3" type="submit" value="Сохранить" class="popup__btn popup__btn_action_submit">
             Сохранить
           </button>
@@ -119,20 +118,19 @@
       Всплывающее окно изменения аватара
     -->
     <div class="popup popup_content_avatar">
-      <div class="popup__container">
+      <div class="popup__container popup__container_size_m">
         <button type="button" class="popup__btn popup__btn_action_close shaded" title="Закрыть форму без сохранения данных">
         </button>
 
-        <form class="popup__form popup__form_size_m" name="edit-profile">
+        <form class="popup__form" name="edit-profile">
           <h3 class="popup__heading">Обновить аватар</h3>
 
           <label class="popup__field">
             <input type="url" id="avatar" name="avatar" pattern="https?://.+"
               class="popup__item popup__item_type_info" placeholder="Ссылка на картинку" required>
-            <span class="popup__error" id="avatar-error">Ошибка</span>
+            <span class="popup__error popup__error_submit" id="avatar-error">Ошибка</span>
           </label>
 
-          <span class="popup__error popup__error_submit" id="submit-error">Ошибка</span>
           <button type="submit" value="Сохранить" class="popup__btn popup__btn_action_submit">
             Сохранить
           </button>
@@ -141,13 +139,13 @@
     </div>
 
     <!-- ***************************************************************
-      Всплывающее окно добавления фотографии
+      Всплывающее окно добавления карточки
     -->
     <div tabindex="0" class="popup popup_content_card">
       <div tabindex="0" class="popup__container">
         <button tabindex="4" type="button" class="popup__btn popup__btn_action_close shaded" title="Закрыть форму без сохранения данных">
         </button>
-        <form class="popup__form popup__form_size_l" name="add-place">
+        <form class="popup__form" name="add-place">
           <h3 class="popup__heading">Новое место</h3>
 
           <label class="popup__field">
@@ -159,10 +157,9 @@
           <label class="popup__field">
             <input tabindex="2" type="url" id="link" name="link" pattern="https?://.+"
               class="popup__item popup__item_type_info" placeholder="Ссылка на картинку" required>
-              <span class="popup__error" id="link-error">Ошибка</span>
+              <span class="popup__error popup__error_submit" id="link-error">Ошибка</span>
           </label>
 
-          <span class="popup__error popup__error_submit" id="submit-error">Ошибка</span>
           <button tabindex="3" type="submit" value="Создать" class="popup__btn popup__btn_action_submit">
             Создать
           </button>
@@ -189,13 +186,15 @@
       Всплывающее окно подтверждения
     -->
     <div class="popup popup_content_confirm">
-      <div class="popup__container">
+      <div class="popup__container popup__container_size_s">
         <button type="button" class="popup__btn popup__btn_action_close shaded" title="Закрыть окно без подтверждения">
         </button>
-        <form class="popup__form popup__form_size_s" name="confirm">
+        <form class="popup__form" name="confirm">
           <h3 class="popup__heading">Вы уверены?</h3>
+
           <span class="popup__error popup__error_submit" id="submit-error">Ошибка</span>
-          <button tabindex="3" type="submit" value="Да" class="popup__btn popup__btn_action_submit">
+          <button tabindex="3" type="submit" value="Да" 
+            class="popup__btn popup__btn_action_submit popup__btn_action_submit_del">
             Да
           </button>
         </form>

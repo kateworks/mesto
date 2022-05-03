@@ -62,12 +62,8 @@ https://my-json-server.typicode.com/kateworks/data
 
 -----------------------
 
-верстка 
-(профиль, 
-форма редактирования аватара, 
-popups - 320px)
+верстка - профиль
 
-delete - высота, когда скрывать
 modules
 
 

@@ -12,6 +12,7 @@ export default class PopupWithMessage extends Popup {
     const errorVisible = this._errorVisibleClass;
     if (this._popupErrorMessage.classList.contains(errorVisible)) {
       this._popupErrorMessage.classList.remove(errorVisible);
+      this._popupErrorMessage.textContent = '-';
     }
   }
 

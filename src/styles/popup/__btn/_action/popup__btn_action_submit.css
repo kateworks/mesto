@@ -1,29 +1,27 @@
-
 .popup__btn_action_submit {
   height: 50px;
+  margin-top: 28px;
 
   font-size: 18px;
   font-weight: normal;
   line-height: 22px;  
   text-align: center;
 
-  background-color: #000;
   color: #fff;
+  background-color: #000;
   border-radius: 2px;
-
-  transition: background-color .3s linear;
-  margin-top: 20px;
+  transition: all 0.5s ease;
 }
 
 .popup__btn_action_submit:hover {
-  background-color: rgba(0, 0, 0, .8); 
+  background-color: rgba(0, 0, 0, 0.8); 
 }
 
 .popup__btn_action_submit:disabled {
-  background-color: #fff;
   color: #000;
+  background-color: #fff;
   border: 1px solid #000;
-  opacity: .2;
+  opacity: 0.2;
 }
 
 .popup__btn_action_submit:disabled:hover {
@@ -31,5 +29,22 @@
 }
 
 .popup__btn_action_submit:focus {
-  background-color: rgba(0, 0, 0, .8);
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+.popup__btn_action_submit_del {
+  margin-top: 0;
+}
+
+@media screen and (max-width: 700px) {
+  .popup__btn_action_submit {
+    height: 46px;
+    margin-top: 25px;
+  }
+}
+
+@media screen and (max-height: 400px) {
+  .popup__btn_action_submit {
+    margin-top: 10px;
+  }
 }

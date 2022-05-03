@@ -10,13 +10,19 @@
 }
 
 @media 
-screen and (max-width: 400px),
-screen and (max-height: 400px) {
+screen and (max-width: 430px),
+screen and (max-height: 430px) {
   .popup__btn_action_close {
     width: 20px;
     height: 20px;
     top: -36px;
     right: 0px;
+  }
+}
+
+@media screen and (max-height: 420px){
+  .popup__btn_action_close {
+    top: -28px;
   }
 }
 
