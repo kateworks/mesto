@@ -59,15 +59,3 @@ https://my-json-server.typicode.com/kateworks/data
 
     Создает финальную сборку проекта, готовую для развертывания, в папке `dist`
 
-
------------------------
-
-modules
-
-main:
-- merge dev
-- push
-- publish
-
-final: delete package-log and push
-

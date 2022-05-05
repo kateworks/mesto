@@ -1,7 +1,5 @@
-
 .popup__figure {
-  height: 100%;
-
+  display: block;
   padding: 0;
   margin: 0;
 }

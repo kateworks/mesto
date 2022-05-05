@@ -54,13 +54,9 @@ const addListItem = (item) => {
 // Форма добавления карточки
 //--------------------------------------------------------------------------------------
 
-const formNewCardSelector = `${POPUPS.createCard} ${FORM_CHECK.formSelector}`;
-const formNewCard = document.querySelector(formNewCardSelector);
-const formNewCardValidation = new FormValidator(FORM_CHECK, formNewCard);
-const errorMessage = new ErrorMessage(formNewCard, ERROR_DATA);
-
 const btnNewCard = document.querySelector(PROFILE_BUTTONS.add);
-const btnSubmitCard = formNewCard.querySelector(FORM_CHECK.submitBtnSelector);
+const formNewCard = document.querySelector(`${POPUPS.createCard} ${FORM_CHECK.formSelector}`);
+const formNewCardValidation = new FormValidator(FORM_CHECK, formNewCard);
 
 const popupNewCard = new PopupWithForm(
   POPUPS.createCard,
@@ -71,6 +67,9 @@ const popupNewCard = new PopupWithForm(
 );
 
 function saveNewCard(item) {
+  const btnSubmitCard = formNewCard.querySelector(FORM_CHECK.submitBtnSelector);
+  const errorMessage = new ErrorMessage(formNewCard, ERROR_DATA);
+
   btnSubmitCard.textContent = messages.SAVING;
 
   const newItem = {
