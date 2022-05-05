@@ -1,4 +1,3 @@
-
 .card__btn_action_like {
   width: 20px;
   height: 20px;
@@ -7,7 +6,7 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 20px 20px;
-  transition: .3s ease-in-out;
+  transition: all 0.3s ease;
 }
 
 .card__btn_action_like:hover {

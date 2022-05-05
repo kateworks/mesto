@@ -1,21 +1,10 @@
-
-@import url(./__description/profile__description.css);
-@import url(./__avatar/profile__avatar.css);
-@import url(./__image/profile__image.css);
-
-@import url(./__name/profile__name.css);
-@import url(./__work/profile__work.css);
-
-@import url(./__btn/profile__btn.css);
-@import url(./__btn/_action/profile__btn_action_edit.css);
-@import url(./__btn/_action/profile__btn_action_add.css);
-
 .profile {
-  max-width: 882px;
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   justify-content: flex-start;
+  align-items: center;
 
+  max-width: 882px;
   padding: 0;
   padding-top: 40px;
   margin: 0 auto;
@@ -28,7 +17,7 @@
   }
 }
 
-@media screen and (max-width: 730px) {
+@media screen and (max-width: 600px) {
   .profile {
     flex-direction: column;
     align-items: center;

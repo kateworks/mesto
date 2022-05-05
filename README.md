@@ -68,8 +68,6 @@ modules
 
 
 main:
-- add tag
-- push tag
 - merge dev
 - push
 - publish

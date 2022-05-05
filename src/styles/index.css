@@ -2,7 +2,11 @@
 @import url(../vendor/fonts/fonts.css);
 @import url(./page/page.css);
 @import url(./shaded/shaded.css);
+@import url(./text/text.css);
+
 @import url(./header/header.css);
+@import url(./header/__logo/header__logo.css);
+
 @import url(./photo-grid/photo-grid.css);
 
 @import url(./card/card.css);
@@ -17,6 +21,15 @@
 @import url(./card/__btn/_action/card__btn_action_del.css);
 
 @import url(./profile/profile.css);
+@import url(./profile/__description/profile__description.css);
+@import url(./profile/__avatar/profile__avatar.css);
+@import url(./profile/__image/profile__image.css);
+@import url(./profile/__name-container/profile__name-container.css);
+@import url(./profile/__name/profile__name.css);
+@import url(./profile/__work/profile__work.css);
+@import url(./profile/__btn/profile__btn.css);
+@import url(./profile/__btn/_action/profile__btn_action_edit.css);
+@import url(./profile/__btn/_action/profile__btn_action_add.css);
 
 @import url(./popup/popup.css);
 @import url(./popup/_content/popup_content.css);
