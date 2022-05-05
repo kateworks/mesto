@@ -14,10 +14,11 @@ import initialCards from '../utils/cards-init';
 import * as messages from '../utils/messages';
 import api from '../utils/api';
 import userProfile from '../utils/profile';
-import like from './like-card';
-import popupConfirm from './delete-card';
-import { popupChangeAvatar, formChangeAvatarValidation } from './edit-avatar';
-import { popupEditProfile, formEditProfileValidation } from './edit-profile';
+
+import {
+  like, formChangeAvatarValidation, popupChangeAvatar, popupConfirm,
+  formEditProfileValidation, popupEditProfile,
+} from '../modules';
 
 import {
   Card, ErrorMessage, FormValidator, PopupWithImage, PopupWithForm, Section,

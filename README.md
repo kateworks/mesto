@@ -62,10 +62,7 @@ https://my-json-server.typicode.com/kateworks/data
 
 -----------------------
 
-верстка - профиль
-
 modules
-
 
 main:
 - merge dev

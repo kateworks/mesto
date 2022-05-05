@@ -1,18 +1,14 @@
-import { ErrorMessage, FormValidator, PopupWithForm } from '../components';
-import * as messages from '../utils/messages';
 import {
   POPUPS, POPUP_DATA, FORM_CHECK, FORM_DATA, ERROR_DATA,
 } from '../utils/selectors';
+import * as messages from '../utils/messages';
+import { ErrorMessage, FormValidator, PopupWithForm } from '../components';
 
 import api from '../utils/api';
 import userProfile from '../utils/profile';
 
-const formEditProfileSelector = `${POPUPS.editProfile} ${FORM_CHECK.formSelector}`;
-const formEditProfile = document.querySelector(formEditProfileSelector);
-const errorMessage = new ErrorMessage(formEditProfile, ERROR_DATA);
-
+const formEditProfile = document.querySelector(`${POPUPS.editProfile} ${FORM_CHECK.formSelector}`);
 const formEditProfileValidation = new FormValidator(FORM_CHECK, formEditProfile);
-const buttonSubmitProfile = formEditProfile.querySelector(FORM_CHECK.submitBtnSelector);
 
 // Окно редактирования профиля пользователя
 const popupEditProfile = new PopupWithForm(
@@ -23,8 +19,10 @@ const popupEditProfile = new PopupWithForm(
   (data) => { saveUserProfile(data); },
 );
 
-// Сохранение профиля на сервере
 function saveUserProfile(userData) {
+  const buttonSubmitProfile = formEditProfile.querySelector(FORM_CHECK.submitBtnSelector);
+  const errorMessage = new ErrorMessage(formEditProfile, ERROR_DATA);
+
   buttonSubmitProfile.textContent = messages.SAVING;
   api.patchUserProfile(userData)
     .then((result) => {

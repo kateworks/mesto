@@ -1,7 +1,7 @@
-import { ErrorMessage, PopupWithSubmit } from '../components';
 import {
   ERROR_DATA, FORM_CHECK, POPUPS, POPUP_DATA,
 } from '../utils/selectors';
+import { ErrorMessage, PopupWithSubmit } from '../components';
 import * as messages from '../utils/messages';
 import api from '../utils/api';
 
@@ -13,12 +13,11 @@ const popupConfirm = new PopupWithSubmit(
   (card) => { deleteCard(card); },
 );
 
-const formConfirm = document.querySelector(`${POPUPS.confirm} ${FORM_CHECK.formSelector}`);
-const buttonConfirm = formConfirm.querySelector(FORM_CHECK.submitBtnSelector);
-const errorMessage = new ErrorMessage(formConfirm, ERROR_DATA);
-
-// Удаление карточки
 function deleteCard(card) {
+  const formConfirm = document.querySelector(`${POPUPS.confirm} ${FORM_CHECK.formSelector}`);
+  const buttonConfirm = formConfirm.querySelector(FORM_CHECK.submitBtnSelector);
+  const errorMessage = new ErrorMessage(formConfirm, ERROR_DATA);
+
   buttonConfirm.textContent = messages.DELETION;
   api.deleteCard(card.getCardId())
     .then(() => {

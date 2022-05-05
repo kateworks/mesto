@@ -1,18 +1,14 @@
-import { ErrorMessage, FormValidator, PopupWithForm } from '../components';
-import * as messages from '../utils/messages';
 import {
   POPUPS, POPUP_DATA, FORM_CHECK, FORM_DATA, ERROR_DATA,
 } from '../utils/selectors';
+import { ErrorMessage, FormValidator, PopupWithForm } from '../components';
+import * as messages from '../utils/messages';
 
 import api from '../utils/api';
 import userProfile from '../utils/profile';
 
-const formChangeAvatarSelector = `${POPUPS.changeAvatar} ${FORM_CHECK.formSelector}`;
-const formChangeAvatar = document.querySelector(formChangeAvatarSelector);
-const errorMessage = new ErrorMessage(formChangeAvatar, ERROR_DATA);
-
+const formChangeAvatar = document.querySelector(`${POPUPS.changeAvatar} ${FORM_CHECK.formSelector}`);
 const formChangeAvatarValidation = new FormValidator(FORM_CHECK, formChangeAvatar);
-const buttonSubmitAvatar = formChangeAvatar.querySelector(FORM_CHECK.submitBtnSelector);
 
 // Окно редактирования аватара пользователя
 const popupChangeAvatar = new PopupWithForm(
@@ -23,8 +19,10 @@ const popupChangeAvatar = new PopupWithForm(
   (data) => { saveUserAvatar(data); },
 );
 
-// Сохранение аватара на сервере
 function saveUserAvatar(data) {
+  const buttonSubmitAvatar = formChangeAvatar.querySelector(FORM_CHECK.submitBtnSelector);
+  const errorMessage = new ErrorMessage(formChangeAvatar, ERROR_DATA);
+
   buttonSubmitAvatar.textContent = messages.SAVING;
   api.patchNewAvatar(data)
     .then((res) => {
