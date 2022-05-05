@@ -1,13 +1,9 @@
-//--------------------------------------------------------------------------------------
-// Модуль Popup.js
-// Класс Popup
-//--------------------------------------------------------------------------------------
-
 export default class Popup {
-  constructor(popupSelector, { buttonClose, openedClass }) {
+  constructor(popupSelector, { buttonClose, openedClass, noScrollClass }) {
     this._popup = document.querySelector(popupSelector);
     this._closeButton = this._popup.querySelector(buttonClose);
     this._openedClass = openedClass;
+    this._noScrollClass = noScrollClass;
     this._handleEscClose = this._handleEscClose.bind(this);
   }
 
@@ -27,12 +23,14 @@ export default class Popup {
   open() {
     this._popup.classList.add(this._openedClass);
     document.addEventListener('keydown', this._handleEscClose);
+    document.body.classList.add(this._noScrollClass);
   }
 
   close() {
     if (this._popup.classList.contains(this._openedClass)) {
       this._popup.classList.remove(this._openedClass);
       document.removeEventListener('keydown', this._handleEscClose);
+      document.body.classList.remove(this._noScrollClass);
     }
   }
 }

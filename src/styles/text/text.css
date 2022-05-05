@@ -1,0 +1,9 @@
+.text {
+  overflow: hidden;
+  min-width: 0;
+  padding: 0;
+  margin: 0;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: #fff;
+}

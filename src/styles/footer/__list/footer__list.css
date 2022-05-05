@@ -1,0 +1,8 @@
+.footer__list {
+  list-style: none;
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 18px;
+  padding: 0;
+  margin: 0;
+}

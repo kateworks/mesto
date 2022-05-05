@@ -1,7 +1,4 @@
-//--------------------------------------------------------------------------------------
-// Модуль Card.js
-// Класс Card
-//--------------------------------------------------------------------------------------
+import { VIEW_CARD } from '../utils/messages';
 
 export default class Card {
   constructor({
@@ -51,15 +48,20 @@ export default class Card {
 
   setLikes(likes) { this._likes = likes; }
 
+  getLikes() { return this._likes; }
+
   getCardId() { return this._id; }
 
   isLiked() { return this._isLiked; }
 
   setLikeGroup(userId) {
-    this._isLiked = this._likes.some((user) => user._id === userId);
+    this._isLiked = this._likes.some((item) => item === userId);
     this._numLikes.textContent = String(this._likes.length);
-    if (this._likes.length) this._setLikeButton();
-    else this._unsetLikeButton();
+    if (this._likes.length) {
+      this._setLikeButton();
+    } else {
+      this._unsetLikeButton();
+    }
   }
 
   createCard(userId) {
@@ -82,6 +84,7 @@ export default class Card {
 
     this._image.src = this._link;
     this._image.alt = this._title;
+    this._image.title = VIEW_CARD;
     return this._element;
   }
 }

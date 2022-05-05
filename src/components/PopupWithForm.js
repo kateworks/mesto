@@ -1,13 +1,10 @@
-//--------------------------------------------------------------------------------------
-// Модуль PopupWithForm.js
-// Класс PopupWithForm
-//--------------------------------------------------------------------------------------
+import PopupWithMessage from './PopupWithMessage';
 
-import Popup from './Popup';
+// Popup ---> PopupWithMessage ---> PopupWithForm
 
-export default class PopupWithForm extends Popup {
-  constructor(selector, classes, { form, input }, submitHandler) {
-    super(selector, classes);
+export default class PopupWithForm extends PopupWithMessage {
+  constructor(selector, classes, errorClasses, { form, input }, submitHandler) {
+    super(selector, classes, errorClasses);
     this._form = this._popup.querySelector(form);
     this._inputList = Array.from(this._form.querySelectorAll(input));
     this._submitHandler = submitHandler;
@@ -33,6 +30,12 @@ export default class PopupWithForm extends Popup {
     this._popup.addEventListener('submit', (evt) => {
       evt.preventDefault();
       this._submitHandler(this._getInputValues());
+    });
+
+    this._inputList.forEach((input) => {
+      input.addEventListener('click', () => {
+        super.hideErrorMessage();
+      });
     });
   }
 

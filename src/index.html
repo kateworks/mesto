@@ -2,28 +2,23 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="Интерактивная страница для размещения фотографий (учебный проект)">
+	<meta name="author" content="Екатерина Пожидаева">
   <!-- <link rel="stylesheet" href="pages/index.css"> -->
-  <title>Сервис Mesto</title>
+  <title>Проект Mesto</title>
 </head>
 <body>
   <div class="page">
 
-    <!-- ***************************************************************
-      Шапка сайта
-    -->
     <header class="header">
-      <img class="header__logo" src="<%=require('./images/header-logo.svg')%>"
+      <img class="header__logo" src="<%=require('./icons/header-logo.svg')%>"
         alt="Логотип сервиса Mesto-Russia">
     </header>
 
-    <!-- ************************************************************
-      Содержимое сайта
-    -->
     <main class="content">
-
       <section class="profile">
-
         <div class="profile__avatar">
           <img
             class="profile__image"
@@ -34,16 +29,14 @@
         </div>
 
         <div class="profile__description">
-          <h1 class="profile__name">Екатерина Пожидаева</h1>
-          <button class="profile__btn profile__btn_action_edit shaded"
-            title="Редактировать профиль">
-          </button>
-          <p class="profile__work">Студентка Яндекс.Практикума</p>
+          <div class="profile__name-container">
+            <h1 class="text profile__name">Екатерина</h1>
+            <button class="profile__btn profile__btn_action_edit shaded" title="Редактировать профиль"></button>  
+          </div>
+          <p class="text profile__work">Frontend-разработчик</p>
         </div>
 
-        <button class="profile__btn profile__btn_action_add shaded"
-          title="Добавить фотографию">
-        </button>
+        <button class="profile__btn profile__btn_action_add shaded" title="Добавить фотографию"></button>
       </section>
 
       <section class="photo-grid">
@@ -51,13 +44,44 @@
       </section>
     </main>
 
-    <!-- ***************************************************************
-      Подвал сайта
-    -->
     <footer class="footer">
-      <p class="footer__copyright">© 2020 Mesto Russia</p>
-    </footer>
+      <ul class="footer__list">
+        <li class="footer__item">
+          <a 
+            class="footer__link" 
+            href="https://my-json-server.typicode.com/kateworks/data" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            title="Fake Online REST server for teams"
+          >My JSON Server
+          </a>      
+        </li>
 
+        <li class="footer__item">
+          <a 
+            class="footer__link" 
+            href="https://wikiway.com/russia/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            title="Адрес сайта с фотографиями России"
+          >Wikiway
+          </a>      
+        </li>
+        
+        <li class="footer__item">
+          <a 
+            class="footer__link" 
+            href="mailto:pozhidaeva.e.a.work@gmail.com" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            title="Откройте ссылку чтобы написать мне"
+          >&#169; 2020-2022 Екатерина Пожидаева
+          </a>      
+        </li>
+  
+      </ul>
+    </footer>
+  
     <!-- ***************************************************************
       Всплывающее окно редактирования профиля
     -->
@@ -66,7 +90,8 @@
         <button tabindex="4" type="button" class="popup__btn popup__btn_action_close shaded"
           title="Закрыть форму без сохранения данных">
         </button>
-        <form class="popup__form popup__form_size_l" name="edit-profile">
+
+        <form class="popup__form" name="edit-profile">
           <h3 class="popup__heading">Редактировать профиль</h3>
 
           <label class="popup__field">
@@ -78,12 +103,11 @@
           <label class="popup__field">
             <input tabindex="2" type="text" id="info" name="info" maxlength="200" minlength="2"
                 class="popup__item popup__item_type_info" placeholder="О себе" required>
-            <span class="popup__error" id="info-error">Ошибка</span>
+            <span class="popup__error popup__error_submit" id="info-error">Ошибка</span>
           </label>
 
-          <button tabindex="3" type="submit" value="Сохранить"
-            class="popup__btn popup__btn_action_submit">
-              Сохранить
+          <button tabindex="3" type="submit" value="Сохранить" class="popup__btn popup__btn_action_submit">
+            Сохранить
           </button>
         </form>
       </div>
@@ -93,36 +117,34 @@
       Всплывающее окно изменения аватара
     -->
     <div class="popup popup_content_avatar">
-      <div class="popup__container">
-        <button type="button" class="popup__btn popup__btn_action_close shaded"
-          title="Закрыть форму без сохранения данных">
+      <div class="popup__container popup__container_size_m">
+        <button type="button" class="popup__btn popup__btn_action_close shaded" title="Закрыть форму без сохранения данных">
         </button>
-        <form class="popup__form popup__form_size_m" name="edit-profile">
+
+        <form class="popup__form" name="edit-profile">
           <h3 class="popup__heading">Обновить аватар</h3>
 
           <label class="popup__field">
             <input type="url" id="avatar" name="avatar" pattern="https?://.+"
               class="popup__item popup__item_type_info" placeholder="Ссылка на картинку" required>
-              <span class="popup__error" id="avatar-error">Ошибка</span>
+            <span class="popup__error popup__error_submit" id="avatar-error">Ошибка</span>
           </label>
 
-          <button type="submit" value="Сохранить"
-            class="popup__btn popup__btn_action_submit">
-              Сохранить
+          <button type="submit" value="Сохранить" class="popup__btn popup__btn_action_submit">
+            Сохранить
           </button>
         </form>
       </div>
     </div>
 
     <!-- ***************************************************************
-      Всплывающее окно добавления фотографии
+      Всплывающее окно добавления карточки
     -->
     <div tabindex="0" class="popup popup_content_card">
       <div tabindex="0" class="popup__container">
-        <button tabindex="4" type="button" class="popup__btn popup__btn_action_close shaded"
-          title="Закрыть форму без сохранения данных">
+        <button tabindex="4" type="button" class="popup__btn popup__btn_action_close shaded" title="Закрыть форму без сохранения данных">
         </button>
-        <form class="popup__form popup__form_size_l" name="add-place">
+        <form class="popup__form" name="add-place">
           <h3 class="popup__heading">Новое место</h3>
 
           <label class="popup__field">
@@ -134,12 +156,11 @@
           <label class="popup__field">
             <input tabindex="2" type="url" id="link" name="link" pattern="https?://.+"
               class="popup__item popup__item_type_info" placeholder="Ссылка на картинку" required>
-              <span class="popup__error" id="link-error">Ошибка</span>
+              <span class="popup__error popup__error_submit" id="link-error">Ошибка</span>
           </label>
 
-          <button tabindex="3" type="submit" value="Создать"
-            class="popup__btn popup__btn_action_submit">
-              Создать
+          <button tabindex="3" type="submit" value="Создать" class="popup__btn popup__btn_action_submit">
+            Создать
           </button>
         </form>
       </div>
@@ -150,8 +171,7 @@
     -->
     <div tabindex="0" class="popup popup_content_image">
       <div tabindex="1" class="popup__image-box">
-        <button type="button" class="popup__btn popup__btn_action_close shaded"
-          title="Закрыть окно просмотра">
+        <button type="button" class="popup__btn popup__btn_action_close shaded" title="Закрыть окно просмотра">
         </button>
 
         <figure class="popup__figure">
@@ -165,15 +185,16 @@
       Всплывающее окно подтверждения
     -->
     <div class="popup popup_content_confirm">
-      <div class="popup__container">
-        <button type="button" class="popup__btn popup__btn_action_close shaded"
-          title="Закрыть окно без подтверждения">
+      <div class="popup__container popup__container_size_s">
+        <button type="button" class="popup__btn popup__btn_action_close shaded" title="Закрыть окно без подтверждения">
         </button>
-        <form class="popup__form popup__form_size_s" name="confirm">
+        <form class="popup__form" name="confirm">
           <h3 class="popup__heading">Вы уверены?</h3>
-          <button tabindex="3" type="submit" value="Да"
-            class="popup__btn popup__btn_action_submit">
-              Да
+
+          <span class="popup__error popup__error_submit" id="submit-error">Ошибка</span>
+          <button tabindex="3" type="submit" value="Да" 
+            class="popup__btn popup__btn_action_submit popup__btn_action_submit_del">
+            Да
           </button>
         </form>
       </div>
@@ -189,14 +210,12 @@
       <div class="card__description">
         <h2 class="card__title"></h2>
         <div class="card__like-group">
-          <button class="card__btn card__btn_action_like shaded"
-            title="Нравится">
+          <button class="card__btn card__btn_action_like shaded" title="Нравится">
           </button>
           <span class="card__like-num">0</span>
         </div>
       </div>
-      <button class="card__btn card__btn_action_del shaded"
-        title="Удалить">
+      <button class="card__btn card__btn_action_del shaded" title="Удалить карточку">
       </button>
     </li>
   </template>

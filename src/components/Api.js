@@ -16,7 +16,7 @@ export default class Api {
   }
 
   getUserInfo() {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}/profile`, {
       method: 'GET',
       headers: this._headers,
     })
@@ -41,7 +41,7 @@ export default class Api {
   }
 
   patchNewAvatar(link) {
-    return fetch(`${this._baseUrl}/users/me/avatar`, {
+    return fetch(`${this._baseUrl}/profile`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify(link),
@@ -50,7 +50,7 @@ export default class Api {
   }
 
   patchUserProfile(data) {
-    return fetch(`${this._baseUrl}/users/me`, {
+    return fetch(`${this._baseUrl}/profile`, {
       method: 'PATCH',
       headers: this._headers,
       body: JSON.stringify({ name: data.name, about: data.info }),
@@ -58,18 +58,20 @@ export default class Api {
       .then((res) => this._handleResponse(res));
   }
 
-  likeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: 'PUT',
+  likeCard(cardId, likes) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'PATCH',
       headers: this._headers,
+      body: JSON.stringify({ likes }),
     })
       .then((res) => this._handleResponse(res));
   }
 
-  unlikeCard(cardId) {
-    return fetch(`${this._baseUrl}/cards/likes/${cardId}`, {
-      method: 'DELETE',
+  unlikeCard(cardId, likes) {
+    return fetch(`${this._baseUrl}/cards/${cardId}`, {
+      method: 'PATCH',
       headers: this._headers,
+      body: JSON.stringify({ likes }),
     })
       .then((res) => this._handleResponse(res));
   }

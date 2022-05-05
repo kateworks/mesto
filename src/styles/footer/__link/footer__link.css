@@ -1,0 +1,10 @@
+.footer__link {
+  text-decoration: none;
+  font: inherit;
+  color: inherit;
+  transition: all 0.5s ease;
+}
+
+.footer__link:hover {
+  color: #545454;
+}
